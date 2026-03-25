@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="201a7b6bae1f491daf51c40339573f2c" Name="Diagram1">
+        <EntityTypeShape EntityType="BokiDBModel.BAIHOC" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.CAUHOI" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.CHITIKETQUA" Width="1.5" PointX="9.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.DAPAN" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.HOCSINH" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.KETQUA" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.LOP" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.MONHOC" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BokiDBModel.TAIKHOAN" Width="1.5" PointX="3.75" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="BokiDBModel.FK_BAIHOC_LOP" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_BAIHOC_MONHOC" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_CAUHOI_BAIHOC" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_KETQUA_BAIHOC" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_CHITIKETQUA_CAUHOI" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_DAPAN_CAUHOI" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_CHITIKETQUA_DAPAN" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_CHITIKETQUA_KETQUA" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_HOCSINH_LOP" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_HOCSINH_TAIKHOAN" ManuallyRouted="false" />
+        <AssociationConnector Association="BokiDBModel.FK_KETQUA_HOCSINH" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
