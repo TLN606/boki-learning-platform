@@ -1,69 +1,38 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Boki</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #F8FAFC;
-            color: #334155;
-        }
-
-        .admin-card {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border: 1px solid #F1F5F9;
-        }
-
-        .sidebar-link {
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 700;
-            color: #64748B;
-            transition: all 0.2s;
-        }
-
-        .sidebar-link:hover {
-            background-color: #F1F5F9;
-            color: #3B82F6;
-        }
-
-        .sidebar-link.active {
-            background-color: #E0F2FE;
-            color: #2563EB;
-            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(186, 230, 253, 0.5);
-        }
-
-        .stat-icon-wrapper {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/theme.js"></script>
 </head>
 
-<body class="flex h-screen overflow-hidden">
+<body class="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col hidden md:flex h-full z-20 shadow-sm relative">
-        <div class="h-20 flex items-center px-6 border-b border-slate-100">
+    <aside class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col hidden md:flex h-full z-20 shadow-sm relative">
+        <div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-700">
             <div
                 class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-xl font-black text-white shadow-md">
                 B</div>
-            <span class="text-xl font-black text-slate-800 ml-3 tracking-tight">Boki Admin</span>
+            <span class="text-xl font-black text-slate-800 dark:text-slate-100 ml-3 tracking-tight">Boki Admin</span>
         </div>
 
         <div class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
@@ -74,13 +43,13 @@
             <a href="admin-results.html" class="sidebar-link"><span>📈</span> Kết quả</a>
         </div>
 
-        <div class="p-4 border-t border-slate-100">
+        <div class="p-4 border-t border-slate-100 dark:border-slate-700">
             <div class="flex items-center gap-3 px-2 py-3">
                 <div
                     class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">
                     AD</div>
                 <div>
-                    <h5 class="font-bold text-slate-800 text-sm">Quản trị viên</h5>
+                    <h5 class="font-bold text-slate-800 dark:text-slate-100 text-sm">Quản trị viên</h5>
                     <a href="login.html" class="text-xs text-rose-500 font-bold hover:underline">Đăng xuất</a>
                 </div>
             </div>
@@ -90,19 +59,19 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col h-full overflow-hidden relative">
         <!-- Topbar Mobile -->
-        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10 md:hidden">
+        <header class="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-6 z-10 md:hidden">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-black text-white">B
                 </div>
-                <span class="font-black text-slate-800">Admin</span>
+                <span class="font-black text-slate-800 dark:text-slate-100">Admin</span>
             </div>
-            <button class="text-2xl text-slate-500">☰</button>
+            <button class="text-2xl text-slate-500 dark:text-slate-400">☰</button>
         </header>
 
         <!-- Topbar Desktop (Search & Quick Add) -->
         <header
-            class="h-20 bg-white border-b border-slate-200 hidden md:flex items-center justify-between px-8 z-10 shrink-0">
-            <h1 class="text-2xl font-black text-slate-800">Dashboard</h1>
+            class="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 hidden md:flex items-center justify-between px-8 z-10 shrink-0">
+            <h1 class="text-2xl font-black text-slate-800 dark:text-slate-100">Dashboard</h1>
             <div class="flex gap-4">
                 <a href="admin-students.html"
                     class="bg-blue-50 text-blue-600 font-bold px-4 py-2 rounded-xl hover:bg-blue-100 transition">+ Thêm
@@ -114,7 +83,7 @@
         </header>
 
         <!-- Dashboard Content -->
-        <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50">
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50 dark:bg-slate-900">
 
             <!-- Stats Row -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -122,32 +91,32 @@
                 <div class="admin-card p-6 flex items-center gap-4">
                     <div class="stat-icon-wrapper bg-blue-100 text-blue-600">👥</div>
                     <div>
-                        <p class="text-slate-500 font-bold text-sm">Tổng học sinh</p>
-                        <h3 class="text-2xl font-black text-slate-800">1,254</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold text-sm">Tổng học sinh</p>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-slate-100">1,254</h3>
                     </div>
                 </div>
                 <!-- Stat Card 2 -->
                 <div class="admin-card p-6 flex items-center gap-4">
                     <div class="stat-icon-wrapper bg-emerald-100 text-emerald-600">📚</div>
                     <div>
-                        <p class="text-slate-500 font-bold text-sm">Tổng bài học</p>
-                        <h3 class="text-2xl font-black text-slate-800">142</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold text-sm">Tổng bài học</p>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-slate-100">142</h3>
                     </div>
                 </div>
                 <!-- Stat Card 3 -->
                 <div class="admin-card p-6 flex items-center gap-4">
                     <div class="stat-icon-wrapper bg-pink-100 text-pink-600">❓</div>
                     <div>
-                        <p class="text-slate-500 font-bold text-sm">Tổng câu hỏi</p>
-                        <h3 class="text-2xl font-black text-slate-800">1,840</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold text-sm">Tổng câu hỏi</p>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-slate-100">1,840</h3>
                     </div>
                 </div>
                 <!-- Stat Card 4 -->
                 <div class="admin-card p-6 flex items-center gap-4">
                     <div class="stat-icon-wrapper bg-orange-100 text-orange-600">📈</div>
                     <div>
-                        <p class="text-slate-500 font-bold text-sm">Lượt thi hôm qua</p>
-                        <h3 class="text-2xl font-black text-slate-800">8,521</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold text-sm">Lượt thi hôm qua</p>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-slate-100">8,521</h3>
                     </div>
                 </div>
             </div>
@@ -158,7 +127,7 @@
                 <!-- Recent Students -->
                 <div class="admin-card p-6">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-black text-slate-800">Học sinh mới đăng ký</h2>
+                        <h2 class="text-xl font-black text-slate-800 dark:text-slate-100">Học sinh mới đăng ký</h2>
                         <a href="admin-students.html" class="text-blue-500 font-bold text-sm hover:underline">Xem tất
                             cả</a>
                     </div>
@@ -166,7 +135,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-slate-400 font-bold border-b border-slate-100">
+                                <tr class="text-slate-400 font-bold border-b border-slate-100 dark:border-slate-700">
                                     <th class="pb-3 pt-1 px-2">Họ tên</th>
                                     <th class="pb-3 pt-1 px-2 text-center">Lớp</th>
                                     <th class="pb-3 pt-1 px-2 text-right">Ngày tham gia</th>
@@ -174,32 +143,32 @@
                             </thead>
                             <tbody class="text-sm">
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Nguyễn Minh Hoàng</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Nguyễn Minh Hoàng</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold text-xs">Lớp
                                             3</span></td>
-                                    <td class="py-3 px-2 text-right text-slate-500 font-medium">10 phút trước</td>
+                                    <td class="py-3 px-2 text-right text-slate-500 dark:text-slate-400 font-medium">10 phút trước</td>
                                 </tr>
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Trần Lan Anh</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Trần Lan Anh</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold text-xs">Lớp
                                             2</span></td>
-                                    <td class="py-3 px-2 text-right text-slate-500 font-medium">1 giờ trước</td>
+                                    <td class="py-3 px-2 text-right text-slate-500 dark:text-slate-400 font-medium">1 giờ trước</td>
                                 </tr>
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Lê Quốc Tuấn</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Lê Quốc Tuấn</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold text-xs">Lớp
                                             5</span></td>
-                                    <td class="py-3 px-2 text-right text-slate-500 font-medium">3 giờ trước</td>
+                                    <td class="py-3 px-2 text-right text-slate-500 dark:text-slate-400 font-medium">3 giờ trước</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-3 px-2 font-bold text-slate-700">Phạm Mai Hương</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Phạm Mai Hương</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold text-xs">Lớp
                                             4</span></td>
-                                    <td class="py-3 px-2 text-right text-slate-500 font-medium">Hôm qua</td>
+                                    <td class="py-3 px-2 text-right text-slate-500 dark:text-slate-400 font-medium">Hôm qua</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -209,7 +178,7 @@
                 <!-- Latest Results -->
                 <div class="admin-card p-6">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-black text-slate-800">Kết quả thi mới nhất</h2>
+                        <h2 class="text-xl font-black text-slate-800 dark:text-slate-100">Kết quả thi mới nhất</h2>
                         <a href="admin-results.html" class="text-blue-500 font-bold text-sm hover:underline">Xem tất
                             cả</a>
                     </div>
@@ -217,7 +186,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-slate-400 font-bold border-b border-slate-100">
+                                <tr class="text-slate-400 font-bold border-b border-slate-100 dark:border-slate-700">
                                     <th class="pb-3 pt-1 px-2">Học sinh</th>
                                     <th class="pb-3 pt-1 px-2">Bài thi</th>
                                     <th class="pb-3 pt-1 px-2 text-center">Điểm</th>
@@ -225,29 +194,29 @@
                             </thead>
                             <tbody class="text-sm">
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Nguyễn Minh Hoàng</td>
-                                    <td class="py-3 px-2 text-slate-500 font-medium">Phép nhân lớn hơn (Toán 3)</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Nguyễn Minh Hoàng</td>
+                                    <td class="py-3 px-2 text-slate-500 dark:text-slate-400 font-medium">Phép nhân lớn hơn (Toán 3)</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md font-black text-xs">10/10</span>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Trần Lan Anh</td>
-                                    <td class="py-3 px-2 text-slate-500 font-medium">Tập đọc: Gọi bạn (Văn 2)</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Trần Lan Anh</td>
+                                    <td class="py-3 px-2 text-slate-500 dark:text-slate-400 font-medium">Tập đọc: Gọi bạn (Văn 2)</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-md font-black text-xs">8/10</span>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-slate-50">
-                                    <td class="py-3 px-2 font-bold text-slate-700">Lê Quốc Tuấn</td>
-                                    <td class="py-3 px-2 text-slate-500 font-medium">Hình học (Toán 5)</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Lê Quốc Tuấn</td>
+                                    <td class="py-3 px-2 text-slate-500 dark:text-slate-400 font-medium">Hình học (Toán 5)</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded-md font-black text-xs">3/10</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="py-3 px-2 font-bold text-slate-700">Phạm Mai Hương</td>
-                                    <td class="py-3 px-2 text-slate-500 font-medium">My Pets (Anh 4)</td>
+                                    <td class="py-3 px-2 font-bold text-slate-700 dark:text-slate-200">Phạm Mai Hương</td>
+                                    <td class="py-3 px-2 text-slate-500 dark:text-slate-400 font-medium">My Pets (Anh 4)</td>
                                     <td class="py-3 px-2 text-center"><span
                                             class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md font-black text-xs">9/10</span>
                                     </td>
@@ -258,8 +227,16 @@
                 </div>
 
             </div>
-        </main>
+    </main>
     </div>
+
+
+    <!-- Floating Dark Mode Toggle -->
+    <button id="theme-toggle" class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 hover:scale-110 active:scale-95 transition-all cursor-pointer text-slate-600 dark:text-slate-300">
+        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+    </button>
+
 </body>
 
 </html>

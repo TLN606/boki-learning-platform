@@ -1,45 +1,28 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kết quả bài thi - Boki</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; color: #334155; }
-        .clay-card {
-            background: #ffffff; border-radius: 2rem;
-            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
-        }
-        .clay-card-yellow {
-            background: #FEF3C7; border-radius: 2rem;
-            box-shadow: 8px 8px 16px rgba(252, 211, 77, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(251, 191, 36, 0.2);
-        }
-        .clay-btn-primary {
-            background: #3B82F6; color: white; border-radius: 9999px; display: inline-block; text-align: center;
-            box-shadow: 6px 6px 12px rgba(59, 130, 246, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(29, 78, 216, 0.5);
-            transition: all 0.2s ease; font-weight: 800;
-        }
-        .clay-btn-primary:active { box-shadow: inset 4px 4px 8px rgba(29, 78, 216, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
-        .clay-btn-secondary {
-            background: #F8FAFC; color: #3B82F6; border-radius: 9999px; display: inline-block; text-align: center; font-weight: 800;
-            box-shadow: 6px 6px 12px rgba(166, 180, 200, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
-            transition: all 0.2s;
-        }
-        .clay-btn-secondary:active { box-shadow: inset 4px 4px 8px rgba(166, 180, 200, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.8); transform: scale(0.96); }
-        
-        .floating-bg-shape { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.5; border-radius: 50%; }
-        
-        /* Celebration animation */
-        @keyframes bounce-scale {
-            0%, 100% { transform: scale(1) translateY(0); }
-            50% { transform: scale(1.05) translateY(-10px); }
-        }
-        .animate-celebrate { animation: bounce-scale 2s infinite ease-in-out; }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/theme.js"></script>
 </head>
-<body class="relative min-h-screen flex flex-col items-center py-10 px-4">
+<body class="relative min-h-screen flex flex-col items-center py-10 px-4 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
     <!-- Confetti Background (mock) -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 flex flex-wrap justify-between opacity-30">
         <span class="text-4xl absolute top-10 left-10 animate-bounce">✨</span>
@@ -57,8 +40,8 @@
         <p class="text-yellow-700 font-bold mb-8 text-lg">Bé đã xuất sắc hoàn thành bài ôn tập.</p>
         
         <div class="inline-block animate-celebrate mb-8">
-            <div class="w-48 h-48 bg-white rounded-full flex items-center justify-center border-[12px] border-emerald-400 shadow-xl relative">
-                <div class="absolute -top-4 -right-4 text-4xl bg-white rounded-full p-2 shadow-sm border border-slate-100">🏆</div>
+            <div class="w-48 h-48 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center border-[12px] border-emerald-400 shadow-xl relative">
+                <div class="absolute -top-4 -right-4 text-4xl bg-white dark:bg-slate-800 rounded-full p-2 shadow-sm border border-slate-100 dark:border-slate-700">🏆</div>
                 <div class="text-5xl font-black text-emerald-500 text-center leading-none mt-2">
                     4/5<br>
                     <span class="text-emerald-300 text-xl block mt-1">Điểm</span>
@@ -79,13 +62,13 @@
 
     <!-- Answers Review -->
     <div class="w-full max-w-3xl relative z-10 space-y-4">
-        <h2 class="text-2xl font-black text-slate-800 mb-6 pl-4">Cùng xem lại bài làm nhé 🕵️‍♂️</h2>
+        <h2 class="text-2xl font-black text-slate-800 dark:text-slate-100 mb-6 pl-4">Cùng xem lại bài làm nhé 🕵️‍♂️</h2>
         
         <!-- Correct Answer -->
         <div class="clay-card p-6 flex flex-col md:flex-row gap-6 items-start border-l-8 border-emerald-400">
             <div class="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-black text-2xl">✅</div>
             <div class="flex-grow">
-                <p class="text-slate-800 font-bold text-lg mb-3">Câu 1: Mẹ mua 5 giỏ cam, mỗi giỏ có 4 quả. Hỏi mẹ mua tất cả bao nhiêu quả cam?</p>
+                <p class="text-slate-800 dark:text-slate-100 font-bold text-lg mb-3">Câu 1: Mẹ mua 5 giỏ cam, mỗi giỏ có 4 quả. Hỏi mẹ mua tất cả bao nhiêu quả cam?</p>
                 <div class="bg-emerald-50 text-emerald-700 p-4 rounded-xl font-medium inline-block w-full">
                     <strong>Bé đã chọn:</strong> 20 quả cam
                 </div>
@@ -96,7 +79,7 @@
         <div class="clay-card p-6 flex flex-col md:flex-row gap-6 items-start border-l-8 border-rose-400">
             <div class="shrink-0 w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-black text-2xl">❌</div>
             <div class="flex-grow">
-                <p class="text-slate-800 font-bold text-lg mb-3">Câu 2: 4 x 6 bằng bao nhiêu?</p>
+                <p class="text-slate-800 dark:text-slate-100 font-bold text-lg mb-3">Câu 2: 4 x 6 bằng bao nhiêu?</p>
                 <div class="bg-rose-50 text-rose-700 p-4 rounded-xl font-medium mb-3">
                     <strong>Bé đã chọn:</strong> 20
                 </div>
@@ -113,12 +96,31 @@
         <div class="clay-card p-6 flex flex-col md:flex-row gap-6 items-start border-l-8 border-emerald-400">
             <div class="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-black text-2xl">✅</div>
             <div class="flex-grow">
-                <p class="text-slate-800 font-bold text-lg mb-3">Câu 3: Kết quả của phép tính 4 x 2 là?</p>
+                <p class="text-slate-800 dark:text-slate-100 font-bold text-lg mb-3">Câu 3: Kết quả của phép tính 4 x 2 là?</p>
                 <div class="bg-emerald-50 text-emerald-700 p-4 rounded-xl font-medium inline-block w-full">
                     <strong>Bé đã chọn:</strong> 8
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md pt-8 pb-6 border-t border-slate-200 dark:border-slate-700 mt-12 w-full">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <span class="text-xl font-black text-slate-800 dark:text-white tracking-tight mb-2">Boki</span>
+            <p class="text-slate-500 dark:text-slate-400 font-medium mb-4 max-w-sm text-sm">Nền tảng học tập vui nhộn, giúp bé phát triển tư duy xuất chúng mỗi ngày.</p>
+            <div class="w-full border-t border-slate-100 dark:border-slate-700 pt-4 text-slate-400 dark:text-slate-500 font-bold text-xs mt-2">
+                <p>&copy; 2026 Boki Education. Không ngừng sáng tạo.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Dark Mode Toggle -->
+    <button id="theme-toggle" class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 hover:scale-110 active:scale-95 transition-all cursor-pointer text-slate-600 dark:text-slate-300">
+        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+    </button>
+
 </body>
 </html>

@@ -1,76 +1,124 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký - Boki</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#ecfdf5', 100: '#d1fae5', 500: '#10b981', 600: '#059669', 900: '#064e3b' }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; overflow: hidden; }
-        .clay-card {
-            background: #ffffff; border-radius: 2rem;
-            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
-        }
-        .clay-input {
-            background: #F1F5F9; border-radius: 1rem; border: none; outline: none; padding: 1rem 1.5rem; width: 100%;
-            box-shadow: inset 4px 4px 8px rgba(166, 180, 200, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
-            transition: all 0.2s;
-        }
-        .clay-input:focus { box-shadow: inset 6px 6px 10px rgba(166, 180, 200, 0.4), inset -6px -6px 10px rgba(255, 255, 255, 1); }
-        .clay-btn-primary {
-            background: #10B981; color: white; border-radius: 9999px;
-            box-shadow: 6px 6px 12px rgba(16, 185, 129, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(4, 120, 87, 0.5);
-            transition: all 0.2s ease; font-weight: 800; width: 100%; padding: 1rem; display: block; text-align: center;
-        }
-        .clay-btn-primary:active { box-shadow: inset 4px 4px 8px rgba(4, 120, 87, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
-        .floating-bg-shape { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.5; border-radius: 50%; }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/theme.js"></script>
 </head>
-<body class="relative min-h-screen flex items-center justify-center p-4">
-    <div class="floating-bg-shape bg-emerald-400 w-96 h-96 top-[-100px] right-[-100px]"></div>
-    <div class="floating-bg-shape bg-yellow-400 w-96 h-96 bottom-[-100px] left-[-100px]"></div>
-    
-    <div class="clay-card p-10 max-w-md w-full relative z-10 transition-transform duration-300 hover:scale-[1.02]">
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-black text-slate-800 tracking-tight">Tạo tài khoản</h1>
-            <p class="text-slate-500 font-medium mt-2">Cùng tham gia với 10,000+ bé khác! 🌟</p>
-        </div>
-        
-        <form action="login.html" method="GET" class="space-y-4">
-            <div>
-                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="fullname">Họ và tên bé</label>
-                <input type="text" id="fullname" class="clay-input" placeholder="Nguyễn Minh Hoàng" required>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="grade">Khối lớp</label>
-                    <select id="grade" class="clay-input appearance-none bg-white text-slate-700 cursor-pointer">
-                        <option value="2">Lớp 2</option>
-                        <option value="3">Lớp 3</option>
-                        <option value="4">Lớp 4</option>
-                        <option value="5">Lớp 5</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="dob">Năm sinh</label>
-                    <input type="number" id="dob" class="clay-input" placeholder="2016" min="2010" max="2018" required>
-                </div>
-            </div>
-            <div>
-                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="username">Tên đăng nhập</label>
-                <input type="text" id="username" class="clay-input" placeholder="beminhhoang" required>
-            </div>
-            <div>
-                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="password">Mật khẩu</label>
-                <input type="password" id="password" class="clay-input" placeholder="••••••••" required>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 flex flex-col min-h-screen relative p-4 sm:p-8">
+
+    <!-- Background Ornaments -->
+    <div class="floating-bg-shape bg-emerald-400 dark:bg-emerald-600 w-96 h-96 top-[-100px] right-[-100px]"></div>
+    <div class="floating-bg-shape bg-yellow-400 dark:bg-yellow-600 w-96 h-96 bottom-[-100px] left-[-100px]"></div>
+
+    <!-- Top Navigation Tools -->
+    <div class="fixed top-4 left-4 right-4 z-50 flex justify-between pointer-events-none">
+        <a href="landing.html" class="pointer-events-auto flex items-center gap-2 p-2 px-4 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm border border-white/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-300 hover:text-brand-500 dark:hover:text-brand-400 font-bold transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Trang chủ
+        </a>
+        <button id="theme-toggle" class="pointer-events-auto p-2 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm border border-white/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 transition cursor-pointer text-slate-600 dark:text-slate-300">
+            <!-- Sun icon -->
+            <svg id="theme-toggle-light-icon" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <!-- Moon icon -->
+            <svg id="theme-toggle-dark-icon" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Register Form -->
+    <div class="flex-grow flex items-center justify-center my-12 relative z-10 w-full">
+        <div class="clay-card bg-white dark:bg-slate-800 p-8 sm:p-10 max-w-lg w-full transition-transform duration-300 hover:scale-[1.01] flex flex-col items-center">
+            
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-black text-slate-800 dark:text-white tracking-tight mb-2">Tạo tài khoản</h1>
+                <p class="text-slate-500 dark:text-slate-400 font-medium flex items-center justify-center gap-2">
+                    Tham gia với 10,000+ bé!
+                    <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                </p>
             </div>
             
-            <button type="submit" class="clay-btn-primary text-xl mt-4">Đăng ký hoàn tất!</button>
-        </form>
-        
-        <div class="mt-6 text-center text-slate-500 font-medium text-sm">
-            Đã có tài khoản? <a href="login.html" class="text-blue-500 hover:text-blue-600 font-bold">Đăng nhập</a>
+            <form action="login.html" method="GET" class="space-y-5 w-full">
+                <!-- Name -->
+                <div class="relative">
+                    <label class="block text-slate-700 dark:text-slate-300 font-bold mb-1 ml-2 text-sm" for="fullname">Họ và tên bé</label>
+                    <div class="relative">
+                        <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <input type="text" id="fullname" class="clay-input" placeholder="Ví dụ: Nguyễn Minh Hoàng" required>
+                    </div>
+                </div>
+
+                <!-- Grid constraints -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <!-- Grade -->
+                    <div class="relative">
+                        <label class="block text-slate-700 dark:text-slate-300 font-bold mb-1 ml-2 text-sm" for="grade">Khối lớp</label>
+                        <div class="relative">
+                            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            <!-- Removed manual background arrow logic, added absolute SVG arrow below and appearance-none to select -->
+                            <select id="grade" class="clay-input cursor-pointer font-medium relative appearance-none pr-10">
+                                <option value="2">Lớp 2</option>
+                                <option value="3">Lớp 3</option>
+                                <option value="4">Lớp 4</option>
+                                <option value="5">Lớp 5</option>
+                            </select>
+                            <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Year -->
+                    <div class="relative">
+                        <label class="block text-slate-700 dark:text-slate-300 font-bold mb-1 ml-2 text-sm" for="dob">Năm sinh</label>
+                        <div class="relative">
+                            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <input type="number" id="dob" class="clay-input" placeholder="2016" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Username Input -->
+                <div class="relative">
+                    <label class="block text-slate-700 dark:text-slate-300 font-bold mb-1 ml-2 text-sm" for="username">Tên đăng nhập</label>
+                    <div class="relative">
+                        <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <input type="text" id="username" class="clay-input" placeholder="beminhhoang" required>
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="relative">
+                    <label class="block text-slate-700 dark:text-slate-300 font-bold mb-1 ml-2 text-sm" for="password">Mật khẩu</label>
+                    <div class="relative">
+                        <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <input type="password" id="password" class="clay-input" placeholder="••••••••" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="clay-btn-green text-xl mt-6 w-full py-4 flex items-center justify-center gap-2">
+                    Đăng ký hoàn tất!
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </button>
+            </form>
+            
+            <div class="mt-8 text-center text-slate-500 dark:text-slate-400 font-medium text-sm w-full border-t border-slate-100 dark:border-slate-700 pt-6">
+                Đã có tài khoản? <a href="login.html" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-bold transition">Đăng nhập</a>
+            </div>
         </div>
     </div>
 </body>
