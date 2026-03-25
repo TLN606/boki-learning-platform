@@ -1,0 +1,75 @@
+@{
+    ViewBag.Title = "Bảng Nhân 6 - Luyện Tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="flex flex-col gap-6 max-w-3xl mx-auto w-full">
+    <!-- Header: Progress & Timer -->
+    <div class="flex justify-between items-center mb-4">
+        <a href="/Lesson/Detail/4" class="text-boki-dark/50 hover:text-boki-blue font-bold text-sm transition flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm"><i class="fas fa-times text-slate-400"></i> Dừng bài</a>
+        <div class="bg-white px-5 py-2.5 rounded-full shadow-clay-sm border-2 border-white flex items-center gap-2 font-black text-boki-dark text-lg">
+            <i class="fas fa-hourglass-half text-boki-orange animate-pulse"></i> 05:00
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="clay-card bg-white p-5 rounded-3xl border-none shadow-sm flex items-center gap-4">
+        <div class="font-black text-boki-blue whitespace-nowrap px-2">Câu 1/5</div>
+        <div class="w-full h-4 bg-boki-gray rounded-full overflow-hidden shadow-inner border border-slate-100 p-0.5">
+            <div class="bg-gradient-to-r from-boki-blue to-boki-purple h-full w-1/5 rounded-full shadow-md"></div>
+        </div>
+        <div class="text-boki-orange text-2xl drop-shadow-sm px-1 flex animate-spin" style="animation-duration: 4s;"><i class="fas fa-star"></i></div>
+    </div>
+
+    <!-- Question Box -->
+    <section class="clay-card min-h-[16rem] bg-white p-8 md:p-12 relative overflow-hidden rounded-[2.5rem] flex items-center justify-center text-center mt-2 border-none">
+        <div class="absolute -top-10 left-10 w-40 h-40 bg-boki-purple/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-10 right-10 w-40 h-40 bg-boki-yellow/20 rounded-full blur-3xl"></div>
+        
+        <h2 class="text-3xl md:text-4xl font-black text-boki-dark leading-normal relative z-10 break-words drop-shadow-sm">Kết quả của phép tính: <br/> <br/><span class="text-boki-blue text-6xl tracking-widest px-8 py-4 bg-slate-50/50 rounded-2xl shadow-inner border border-slate-100 inline-block">6 x 3 = ?</span></h2>
+    </section>
+
+    <!-- Answers Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+        <!-- Option A -->
+        <label class="clay-card bg-white p-6 rounded-2xl cursor-pointer group hover:border-boki-orange transition border-[3px] border-transparent flex items-center gap-5 relative overflow-hidden transform hover:-translate-y-1">
+            <input type="radio" name="answer" class="peer hidden" value="A">
+            <div class="w-14 h-14 bg-boki-gray rounded-xl flex items-center justify-center font-black text-boki-dark/50 text-2xl shadow-inner peer-checked:bg-boki-orange peer-checked:text-white transition">A</div>
+            <div class="text-2xl font-black text-boki-dark peer-checked:text-boki-orange transition">15</div>
+            <div class="absolute inset-0 border-[3px] border-boki-orange rounded-2xl opacity-0 peer-checked:opacity-100 transition pointer-events-none"></div>
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 text-boki-orange text-3xl opacity-0 peer-checked:opacity-100 transition transform peer-checked:scale-110"><i class="fas fa-check-circle"></i></div>
+        </label>
+        
+        <!-- Option B -->
+        <label class="clay-card bg-white p-6 rounded-2xl cursor-pointer group hover:border-boki-blue transition border-[3px] border-transparent flex items-center gap-5 relative overflow-hidden transform hover:-translate-y-1">
+            <input type="radio" name="answer" class="peer hidden" value="B">
+            <div class="w-14 h-14 bg-boki-gray rounded-xl flex items-center justify-center font-black text-boki-dark/50 text-2xl shadow-inner peer-checked:bg-boki-blue peer-checked:text-white transition">B</div>
+            <div class="text-2xl font-black text-boki-dark peer-checked:text-boki-blue transition">18</div>
+            <div class="absolute inset-0 border-[3px] border-boki-blue rounded-2xl opacity-0 peer-checked:opacity-100 transition pointer-events-none"></div>
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 text-boki-blue text-3xl opacity-0 peer-checked:opacity-100 transition transform peer-checked:scale-110"><i class="fas fa-check-circle"></i></div>
+        </label>
+        
+        <!-- Option C -->
+        <label class="clay-card bg-white p-6 rounded-2xl cursor-pointer group hover:border-boki-green transition border-[3px] border-transparent flex items-center gap-5 relative overflow-hidden transform hover:-translate-y-1">
+            <input type="radio" name="answer" class="peer hidden" value="C">
+            <div class="w-14 h-14 bg-boki-gray rounded-xl flex items-center justify-center font-black text-boki-dark/50 text-2xl shadow-inner peer-checked:bg-boki-green peer-checked:text-white transition">C</div>
+            <div class="text-2xl font-black text-boki-dark peer-checked:text-boki-green transition">24</div>
+            <div class="absolute inset-0 border-[3px] border-boki-green rounded-2xl opacity-0 peer-checked:opacity-100 transition pointer-events-none"></div>
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 text-boki-green text-3xl opacity-0 peer-checked:opacity-100 transition transform peer-checked:scale-110"><i class="fas fa-check-circle"></i></div>
+        </label>
+        
+        <!-- Option D -->
+        <label class="clay-card bg-white p-6 rounded-2xl cursor-pointer group hover:border-boki-pink transition border-[3px] border-transparent flex items-center gap-5 relative overflow-hidden transform hover:-translate-y-1">
+            <input type="radio" name="answer" class="peer hidden" value="D">
+            <div class="w-14 h-14 bg-boki-gray rounded-xl flex items-center justify-center font-black text-boki-dark/50 text-2xl shadow-inner peer-checked:bg-boki-pink peer-checked:text-white transition">D</div>
+            <div class="text-2xl font-black text-boki-dark peer-checked:text-boki-pink transition">12</div>
+            <div class="absolute inset-0 border-[3px] border-boki-pink rounded-2xl opacity-0 peer-checked:opacity-100 transition pointer-events-none"></div>
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 text-boki-pink text-3xl opacity-0 peer-checked:opacity-100 transition transform peer-checked:scale-110"><i class="fas fa-check-circle"></i></div>
+        </label>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end mt-8 border-t border-slate-200 pt-8 mb-12">
+        <a href="/Quiz/Result" class="clay-btn clay-primary px-12 py-5 text-xl flex items-center justify-center gap-3 w-full sm:w-auto shadow-[inset_-4px_-4px_8px_rgba(0,0,0,0.15),inset_4px_4px_8px_rgba(255,255,255,0.3),0_15px_30px_rgba(74,144,226,0.3)]">Câu Kế Tiếp <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>

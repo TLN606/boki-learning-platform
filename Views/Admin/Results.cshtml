@@ -1,0 +1,157 @@
+@{
+    ViewBag.Title = "Kết Quả Học Tập";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card overflow-hidden">
+    <!-- Filter Bar -->
+    <div class="p-6 border-b border-slate-200 bg-white flex flex-col xl:flex-row justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-auto">
+            <div class="relative w-full sm:w-auto">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" placeholder="Tìm tên học sinh..." class="bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:border-boki-blue focus:ring-1 focus:ring-boki-blue w-full sm:w-[15rem] transition cursor-text">
+            </div>
+            <select class="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-4 text-sm font-bold text-slate-600 focus:outline-none transition cursor-pointer">
+                <option>Chọn Bài Học</option>
+                <option>Bảng Nhân 6</option>
+                <option>Viết đoạn văn</option>
+            </select>
+            <input type="date" class="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-4 text-sm font-bold text-slate-600 focus:outline-none transition cursor-pointer">
+        </div>
+        
+        <button class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 px-5 py-2.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center justify-center gap-2">
+            <i class="fas fa-file-excel text-green-600"></i> Xuất Báo Cáo
+        </button>
+    </div>
+    
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full admin-table whitespace-nowrap min-w-[900px]">
+            <thead>
+                <tr>
+                    <th class="w-16">Mã KQ</th>
+                    <th>Học Sinh</th>
+                    <th>Bài Kiểm Tra</th>
+                    <th>Điểm Số</th>
+                    <th>Trạng Thái</th>
+                    <th>Ngày Làm</th>
+                    <th class="text-right">Chi Tiết</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="group hover:bg-slate-50 transition">
+                    <td class="text-slate-400 text-xs font-mono">#KQ8590</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-boki-purple/10 text-boki-purple flex items-center justify-center font-bold text-xs uppercase">HN</div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Hoàng Minh Ngọc</span>
+                                <span class="text-[0.65rem] text-slate-400 font-mono">hs1@boki.edu.vn</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-black border border-slate-200 flex items-center w-fit gap-2">
+                            <i class="fas fa-book-open text-boki-blue"></i> Bảng Nhân 6
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex flex-col">
+                            <span class="font-black text-lg text-green-500">100đ</span>
+                            <span class="text-xs font-bold text-slate-400">Đúng 5/5 câu</span>
+                        </div>
+                    </td>
+                    <td><span class="bg-green-100 text-green-700 font-bold px-2 py-1 rounded text-[0.65rem] uppercase tracking-wide">Xuất Sắc</span></td>
+                    <td class="text-sm font-medium text-slate-600">
+                        15:30 <br/>
+                        <span class="text-xs text-slate-400">Ngày 24/10/2025</span>
+                    </td>
+                    <td class="text-right">
+                        <button class="px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-xs font-black transition flex items-center gap-2 ml-auto">
+                            Xem bài làm <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </td>
+                </tr>
+                
+                <tr class="group hover:bg-slate-50 transition">
+                    <td class="text-slate-400 text-xs font-mono">#KQ8589</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-boki-blue/10 text-boki-blue flex items-center justify-center font-bold text-xs uppercase">DA</div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Trần Duy Anh</span>
+                                <span class="text-[0.65rem] text-slate-400 font-mono">hs2@boki.edu.vn</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-black border border-slate-200 flex items-center w-fit gap-2">
+                            <i class="fas fa-book-open text-boki-blue"></i> Bảng Nhân 6
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex flex-col">
+                            <span class="font-black text-lg text-orange-500">80đ</span>
+                            <span class="text-xs font-bold text-slate-400">Đúng 4/5 câu</span>
+                        </div>
+                    </td>
+                    <td><span class="bg-orange-100 text-orange-700 font-bold px-2 py-1 rounded text-[0.65rem] uppercase tracking-wide">Khá Tốt</span></td>
+                    <td class="text-sm font-medium text-slate-600">
+                        14:15 <br/>
+                        <span class="text-xs text-slate-400">Ngày 24/10/2025</span>
+                    </td>
+                    <td class="text-right">
+                        <button class="px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-xs font-black transition flex items-center gap-2 ml-auto">
+                            Xem bài làm <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                 <tr class="group hover:bg-slate-50 transition">
+                    <td class="text-slate-400 text-xs font-mono">#KQ8588</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-xs uppercase">TD</div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Dương Trí Dũng</span>
+                                <span class="text-[0.65rem] text-slate-400 font-mono">hs3@boki.edu.vn</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-black border border-slate-200 flex items-center w-fit gap-2">
+                            <i class="fas fa-book-open text-boki-blue"></i> Unit 1: Vocabulary
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex flex-col">
+                            <span class="font-black text-lg text-red-500">40đ</span>
+                            <span class="text-xs font-bold text-slate-400">Đúng 2/5 câu</span>
+                        </div>
+                    </td>
+                    <td><span class="bg-red-100 text-red-700 font-bold px-2 py-1 rounded text-[0.65rem] uppercase tracking-wide">Cần cố gắng</span></td>
+                    <td class="text-sm font-medium text-slate-600">
+                        09:00 <br/>
+                        <span class="text-xs text-slate-400">Ngày 24/10/2025</span>
+                    </td>
+                    <td class="text-right">
+                        <button class="px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-xs font-black transition flex items-center gap-2 ml-auto">
+                            Xem bài làm <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Standard Pagination -->
+    <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-between items-center text-sm font-bold text-slate-500">
+        <div>Hiển thị 1-3 của 8,590 kết quả</div>
+        <div class="flex gap-1 shadow-sm">
+            <button class="w-8 h-8 flex items-center justify-center rounded-l border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-left text-xs"></i></button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-boki-blue bg-boki-blue text-white">1</button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition">2</button>
+            <button class="w-8 h-8 flex items-center justify-center rounded-r border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-right text-xs"></i></button>
+        </div>
+    </div>
+</div>

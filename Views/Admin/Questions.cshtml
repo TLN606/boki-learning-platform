@@ -1,0 +1,103 @@
+@{
+    ViewBag.Title = "Quản lý Ngân Hàng Câu Hỏi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card overflow-hidden">
+    <div class="p-6 border-b border-slate-200 bg-white flex flex-col xl:flex-row justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-auto">
+            <div class="relative w-full sm:w-auto">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" placeholder="Tìm kiếm nội dung câu hỏi..." class="bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:border-boki-blue focus:ring-1 focus:ring-boki-blue w-full sm:w-[20rem] transition cursor-text">
+            </div>
+            <select class="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-4 text-sm font-bold text-slate-600 focus:outline-none focus:border-boki-blue focus:ring-1 focus:ring-boki-blue transition cursor-pointer">
+                <option>Lọc theo Bài Học</option>
+                <option>Bảng Nhân 6 (Lớp 3)</option>
+                <option>Tập làm văn (Lớp 5)</option>
+            </select>
+        </div>
+        
+        <button class="bg-boki-purple hover:bg-purple-600 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center justify-center gap-2">
+            <i class="fas fa-plus"></i> Soạn Câu Hỏi Mới
+        </button>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="w-full admin-table min-w-[800px]"> <!-- min w prevents squishing complex answer layout -->
+            <thead>
+                <tr>
+                    <th class="w-16">ID</th>
+                    <th class="w-2/5">Nội Dung Câu Hỏi</th>
+                    <th class="w-1/4">Thuộc Bài Học</th>
+                    <th class="text-right">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="group">
+                    <td class="text-slate-400 text-xs font-mono align-top pt-5">#CH01</td>
+                    <td class="align-top">
+                        <div class="font-black text-slate-800 text-base mb-3 bg-slate-50 p-3 rounded-xl border border-slate-100 flex gap-2">
+                             <div class="text-boki-purple mt-0.5"><i class="fas fa-quote-left text-sm opacity-50"></i></div> 
+                             Kết quả của phép tính 6 x 3 là bao nhiêu?
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">A.</span> 15</div>
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">B.</span> 18</div>
+                            <div class="bg-green-50 border-2 border-green-200 text-sm font-black px-3 py-2 rounded-lg text-green-700 shadow-sm relative"><span class="text-green-500 mr-2">C.</span> 24 <i class="fas fa-check-circle absolute right-3 top-1/2 -translate-y-1/2 text-green-500"></i></div>
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">D.</span> 12</div>
+                        </div>
+                        <p class="text-[0.7rem] text-slate-400 mt-2 font-bold"><i class="fas fa-info-circle mr-1"></i> Bảng DAPAN nối FK IsDeleted = 0.</p>
+                    </td>
+                    <td class="align-top pt-5">
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-black border border-slate-200 block w-fit mb-1"><i class="fas fa-book-open text-boki-blue mr-1"></i> Bảng Nhân 6</span>
+                        <span class="text-xs text-slate-400 font-medium ml-1">Lớp 3 • Môn Toán</span>
+                    </td>
+                    <td class="text-right align-top pt-5">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition tooltip" title="Chỉnh sửa chi tiết"><i class="fas fa-edit"></i></button>
+                            <button class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition tooltip" title="Xóa câu hỏi"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="group border-t-4 border-slate-50">
+                    <td class="text-slate-400 text-xs font-mono align-top pt-5">#CH02</td>
+                    <td class="align-top">
+                        <div class="font-black text-slate-800 text-base mb-3 bg-slate-50 p-3 rounded-xl border border-slate-100 flex gap-2">
+                             <div class="text-boki-purple mt-0.5"><i class="fas fa-quote-left text-sm opacity-50"></i></div> 
+                             Mẹ có 6 hộp bánh, mỗi hộp có 5 cái. Mẹ có tất cả bao nhiêu cái bánh?
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">A.</span> 25</div>
+                            <div class="bg-green-50 border-2 border-green-200 text-sm font-black px-3 py-2 rounded-lg text-green-700 shadow-sm relative"><span class="text-green-500 mr-2">B.</span> 30 <i class="fas fa-check-circle absolute right-3 top-1/2 -translate-y-1/2 text-green-500"></i></div>
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">C.</span> 24</div>
+                            <div class="bg-white border text-sm font-bold px-3 py-2 rounded-lg text-slate-600"><span class="text-slate-400 mr-2">D.</span> 35</div>
+                        </div>
+                    </td>
+                    <td class="align-top pt-5">
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-black border border-slate-200 block w-fit mb-1"><i class="fas fa-book-open text-boki-blue mr-1"></i> Bảng Nhân 6</span>
+                        <span class="text-xs text-slate-400 font-medium ml-1">Lớp 3 • Môn Toán</span>
+                    </td>
+                    <td class="text-right align-top pt-5">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition tooltip" title="Chỉnh sửa chi tiết"><i class="fas fa-edit"></i></button>
+                            <button class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition tooltip" title="Xóa câu hỏi"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Standard Pagination -->
+    <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-between items-center text-sm font-bold text-slate-500">
+        <div>Hiển thị 1-2 của 620 câu hỏi</div>
+        <div class="flex gap-1 shadow-sm">
+            <button class="w-8 h-8 flex items-center justify-center rounded-l border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-left text-xs"></i></button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-boki-blue bg-boki-blue text-white">1</button>
+            <button class="w-8 h-8 flex items-center justify-center rounded-r border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-right text-xs"></i></button>
+        </div>
+    </div>
+</div>

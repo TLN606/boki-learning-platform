@@ -1,0 +1,134 @@
+@{
+    ViewBag.Title = "Danh sách Bài Học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="flex flex-col gap-8">
+    <!-- Header & Filter -->
+    <section class="clay-card p-8 bg-white border-none relative overflow-hidden rounded-[2.5rem]">
+        <div class="absolute inset-0 bg-gradient-to-r from-boki-blue/5 to-transparent"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <h1 class="text-3xl font-black text-boki-dark mb-2">📚 Thư viện Bài Học</h1>
+                <p class="font-bold text-boki-dark/60">Khám phá vũ trụ tri thức cùng Boki</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 items-center">
+                <!-- Filter Lớp -->
+                <div class="relative">
+                    <select class="clay-btn px-6 py-3 bg-white text-boki-dark font-bold appearance-none pr-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-boki-blue/50 cursor-pointer">
+                        <option>Tất cả Khối Lớp</option>
+                        <option>Lớp 2</option>
+                        <option selected>Lớp 3</option>
+                        <option>Lớp 4</option>
+                        <option>Lớp 5</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-boki-dark/40 pointer-events-none"></i>
+                </div>
+                
+                <!-- Filter Môn -->
+                <div class="relative">
+                    <select class="clay-btn px-6 py-3 bg-white text-boki-dark font-bold appearance-none pr-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-boki-blue/50 cursor-pointer">
+                        <option>Tất cả Môn Học</option>
+                        <option selected>Toán Học</option>
+                        <option>Tiếng Việt</option>
+                        <option>Tiếng Anh</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-boki-dark/40 pointer-events-none"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Bài Tập Toán -->
+        <div class="clay-card bg-white p-6 md:p-8 flex flex-col group border-[3px] border-boki-blue/10 hover:border-boki-blue/40 transition-all duration-300 relative overflow-hidden rounded-[2rem]">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-boki-blue/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="flex justify-between items-start mb-6 relative z-10">
+                <div class="w-16 h-16 bg-boki-blue/10 text-boki-blue rounded-full border-4 border-white shadow-sm flex items-center justify-center text-3xl group-hover:scale-110 group-hover:rotate-6 transition duration-300">🔢</div>
+                <div class="flex flex-col items-end gap-2">
+                    <span class="px-3 py-1 bg-boki-blue/10 text-boki-blue rounded-full text-xs font-black tracking-wide">LỚP 3</span>
+                    <span class="px-3 py-1 bg-green-100 text-green-600 rounded-lg text-[0.65rem] font-black uppercase shadow-sm">Siêu Dễ</span>
+                </div>
+            </div>
+            
+            <h3 class="text-xl font-black text-boki-dark mb-3 group-hover:text-boki-blue transition leading-tight relative z-10">Bài 1: Phép Cộng Trừ Dưới 100</h3>
+            <p class="text-sm font-bold text-boki-dark/50 mb-6 flex-grow relative z-10 line-clamp-2">Ôn tập lại các phép tính cơ bản đã học ở lớp 2 để sẵn sàng bứt phá.</p>
+            
+            <div class="flex items-center gap-4 text-xs font-black text-boki-dark/40 mb-6 relative z-10 bg-slate-50 py-2 px-3 rounded-xl border border-slate-100">
+                <div class="flex items-center gap-1.5"><i class="fas fa-book-open text-boki-blue"></i> Lý thuyết</div>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                <div class="flex items-center gap-1.5"><i class="fas fa-question-circle text-boki-orange"></i> 5 Câu</div>
+            </div>
+            
+            <div class="flex gap-3 relative z-10">
+                <a href="/Lesson/Detail/1" class="flex-1 clay-btn text-center py-3 text-boki-dark font-bold text-sm bg-white hover:text-boki-blue">Lý thuyết <i class="fas fa-eye ml-1"></i></a>
+                <a href="/Quiz/Index/1" class="flex-1 clay-btn clay-primary text-center py-3 text-sm">Zô Thi! 🚀</a>
+            </div>
+        </div>
+
+        <!-- Bài Tập Toán 2 -->
+        <div class="clay-card bg-white p-6 md:p-8 flex flex-col group border-[3px] border-boki-blue/10 hover:border-boki-blue/40 transition-all duration-300 relative overflow-hidden rounded-[2rem]">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-boki-blue/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="flex justify-between items-start mb-6 relative z-10">
+                <div class="w-16 h-16 bg-boki-blue/10 text-boki-blue rounded-full border-4 border-white shadow-sm flex items-center justify-center text-3xl group-hover:scale-110 group-hover:rotate-6 transition duration-300">📐</div>
+                <div class="flex flex-col items-end gap-2">
+                    <span class="px-3 py-1 bg-boki-blue/10 text-boki-blue rounded-full text-xs font-black tracking-wide">LỚP 3</span>
+                    <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-lg text-[0.65rem] font-black uppercase shadow-sm">Vừa Phải</span>
+                </div>
+            </div>
+            
+            <h3 class="text-xl font-black text-boki-dark mb-3 group-hover:text-boki-blue transition leading-tight relative z-10">Bài 2: Làm Quen Hình Tam Giác</h3>
+            <p class="text-sm font-bold text-boki-dark/50 mb-6 flex-grow relative z-10 line-clamp-2">Nhận biết các cạnh, các góc và tính chu vi hình tam giác thông minh.</p>
+            
+            <div class="flex items-center gap-4 text-xs font-black text-boki-dark/40 mb-6 relative z-10 bg-slate-50 py-2 px-3 rounded-xl border border-slate-100">
+                <div class="flex items-center gap-1.5"><i class="fas fa-book-open text-boki-blue"></i> Lý thuyết</div>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                <div class="flex items-center gap-1.5"><i class="fas fa-question-circle text-boki-orange"></i> 10 Câu</div>
+            </div>
+            
+            <div class="flex gap-3 relative z-10">
+                <a href="/Lesson/Detail/2" class="flex-1 clay-btn text-center py-3 text-boki-dark font-bold text-sm bg-white hover:text-boki-blue">Lý thuyết <i class="fas fa-eye ml-1"></i></a>
+                <a href="/Quiz/Index/2" class="flex-1 clay-btn clay-primary text-center py-3 text-sm">Zô Thi! 🚀</a>
+            </div>
+        </div>
+        
+        <!-- Locked Card -->
+        <div class="clay-card bg-slate-50 p-6 md:p-8 flex flex-col group border-[3px] border-slate-200 relative overflow-hidden rounded-[2rem] opacity-70">
+            <div class="absolute inset-0 bg-white/50 z-20 backdrop-blur-[2px] flex items-center justify-center transition-all duration-300 group-hover:backdrop-blur-0">
+                 <div class="bg-slate-800 text-white px-5 py-3 rounded-full font-black shadow-2xl flex items-center gap-2 transform -rotate-3 border-2 border-slate-700/50 group-hover:scale-110 transition"><i class="fas fa-lock"></i> Đang Khóa</div>
+            </div>
+            
+            <div class="flex justify-between items-start mb-6 relative z-10 grayscale">
+                <div class="w-16 h-16 bg-boki-blue/10 text-boki-blue rounded-full border-4 border-white shadow-sm flex items-center justify-center text-3xl">✖️</div>
+                <div class="flex flex-col items-end gap-2">
+                    <span class="px-3 py-1 bg-boki-blue/10 text-boki-blue rounded-full text-xs font-black tracking-wide">LỚP 3</span>
+                    <span class="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-[0.65rem] font-black uppercase">Siêu Khó</span>
+                </div>
+            </div>
+            
+            <h3 class="text-xl font-black text-slate-500 mb-3 leading-tight relative z-10">Bài 3: Bảng Cửu Chương 7 & 8</h3>
+            <p class="text-sm font-bold text-slate-400 mb-6 flex-grow relative z-10 line-clamp-2">Nâng cao khả năng tính toán vượt trội với chuỗi phép tính dài.</p>
+            
+            <div class="flex gap-3 relative z-10 grayscale">
+                <button disabled title="Hoàn thành Bài 2 để mở khóa khóa này!" class="flex-1 rounded-full text-center py-3 text-slate-400 font-bold text-sm bg-slate-200 border-2 border-slate-300 cursor-not-allowed">Hoàn thành bài trước đã nha!</button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-6">
+        <div class="flex gap-2 clay-card px-4 py-3 bg-white w-fit rounded-full shadow-sm border-none">
+            <button class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-boki-dark/30 hover:text-boki-blue transition hover:bg-slate-50 cursor-pointer disabled:opacity-50"><i class="fas fa-chevron-left"></i></button>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center font-black bg-boki-blue/10 text-boki-blue shadow-inner">1</button>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-boki-dark/70 hover:bg-slate-50 transition">2</button>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-boki-dark/70 hover:bg-slate-50 transition">3</button>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-boki-dark/70 hover:text-boki-blue transition hover:bg-slate-50 cursor-pointer"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>

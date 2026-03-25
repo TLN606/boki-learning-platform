@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Boki Học Vui</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              boki: { blue: '#4A90E2', purple: '#9B51E0', orange: '#F2994A', yellow: '#F2C94C', green: '#27AE60', pink: '#FF7675', gray: '#F0F3F7', dark: '#2D3436' }
+            },
+            boxShadow: {
+                'clay': 'inset -8px -8px 16px rgba(0,0,0,0.05), inset 8px 8px 16px rgba(255,255,255,0.8), 10px 10px 20px rgba(0,0,0,0.05)',
+                'clay-sm': 'inset -4px -4px 8px rgba(0,0,0,0.05), inset 4px 4px 8px rgba(255,255,255,0.8), 5px 5px 10px rgba(0,0,0,0.05)',
+            },
+            fontFamily: { nunito: ['Nunito', 'sans-serif'], inter: ['Inter', 'sans-serif'] }
+          }
+        }
+      }
+    </script>
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #F0F3F7; color: #2D3436; overflow-x: hidden; }
+        .clay-card {
+            background-color: #F0F3F7; border-radius: 2rem;
+            box-shadow: inset -8px -8px 16px rgba(0,0,0,0.05), inset 8px 8px 16px rgba(255,255,255,0.8), 10px 10px 20px rgba(0,0,0,0.05);
+            border: 2px solid rgba(255,255,255,0.6);
+        }
+        .clay-btn {
+            background-color: #F0F3F7; border-radius: 9999px;
+            box-shadow: inset -4px -4px 8px rgba(0,0,0,0.05), inset 4px 4px 8px rgba(255,255,255,0.8), 5px 5px 10px rgba(0,0,0,0.05);
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 800; cursor: pointer;
+        }
+        .clay-btn:hover { transform: translateY(-2px); box-shadow: inset -4px -4px 8px rgba(0,0,0,0.05), inset 4px 4px 8px rgba(255,255,255,0.9), 5px 8px 15px rgba(0,0,0,0.08); }
+        .clay-btn:active { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.1), inset -4px -4px 8px rgba(255,255,255,0.6); transform: translateY(2px); }
+        .clay-primary {
+            background-color: #4A90E2; color: white; border: none;
+            box-shadow: inset -4px -4px 8px rgba(0,0,0,0.15), inset 4px 4px 8px rgba(255,255,255,0.2), 5px 5px 15px rgba(74,144,226,0.3);
+        }
+        .clay-primary:hover { box-shadow: inset -4px -4px 8px rgba(0,0,0,0.15), inset 4px 4px 8px rgba(255,255,255,0.3), 5px 8px 20px rgba(74,144,226,0.4); }
+        .clay-primary:active { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.3), inset -4px -4px 8px rgba(255,255,255,0.1); }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 px-4 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center clay-card px-6 py-3 rounded-full bg-white/40 backdrop-blur-md">
+            <a href="/Home/Index" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-boki-orange text-white rounded-full flex items-center justify-center font-black text-xl shadow-clay-sm">B</div>
+                <span class="text-2xl font-black text-boki-blue tracking-tight">Boki</span>
+            </a>
+            
+            <div class="hidden md:flex gap-8 font-extrabold text-boki-dark/60 text-lg">
+                <a href="/Home/Index" class="hover:text-boki-blue transition text-boki-blue">Trang chủ</a>
+                <a href="/Lesson/Index" class="hover:text-boki-orange transition">Bài học</a>
+                <a href="/Student/Dashboard" class="hover:text-boki-green transition">Tiến độ</a>
+            </div>
+            
+            <div class="flex gap-3">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/Student/Dashboard" class="clay-btn clay-primary px-6 py-2">Học ngay 🚀</a>
+                }
+                else
+                {
+                    <a href="/Auth/Login" class="clay-btn px-6 py-2 text-boki-dark">Đăng nhập</a>
+                    <a href="/Auth/Register" class="clay-btn clay-primary px-6 py-2 hidden sm:block">Khám phá</a>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="flex-grow w-full mx-auto pb-12">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto pt-16 pb-8 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.03)] text-center relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col items-center">
+            <div class="flex flex-col items-center gap-3 mb-8">
+                <div class="w-12 h-12 bg-boki-purple text-white rounded-2xl flex items-center justify-center font-black text-2xl rotate-12">B</div>
+                <span class="text-3xl font-black text-boki-dark">Boki</span>
+                <p class="text-lg font-bold text-boki-dark/50">"Học vui mỗi ngày!" 🌟</p>
+            </div>
+            
+            <div class="flex gap-4 mb-10">
+                <a href="#" class="w-12 h-12 clay-btn flex justify-center items-center text-boki-blue text-xl"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-12 h-12 clay-btn flex justify-center items-center text-boki-pink text-xl"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="w-12 h-12 clay-btn flex justify-center items-center text-boki-green text-xl"><i class="fab fa-tiktok"></i></a>
+            </div>
+            
+            <div class="w-full max-w-2xl border-t-2 border-dashed border-boki-gray pt-8 flex flex-col md:flex-row justify-between items-center text-boki-dark/40 font-bold text-sm">
+                <span>&copy; @DateTime.Now.Year Boki Edu Platform.</span>
+                <div class="flex gap-4 mt-2 md:mt-0">
+                    <a href="#" class="hover:text-boki-dark">Điều khoản</a>
+                    <a href="#" class="hover:text-boki-dark">Bảo mật</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background decorations -->
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-boki-yellow/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-boki-blue/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

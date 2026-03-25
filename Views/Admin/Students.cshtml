@@ -1,0 +1,188 @@
+@{
+    ViewBag.Title = "Quản lý Học Sinh";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card overflow-hidden">
+    <!-- Action Bar -->
+    <div class="p-6 border-b border-slate-200 bg-white flex flex-col sm:flex-row justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+            <div class="relative w-full sm:w-auto">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" placeholder="Tìm tên hoặc tài khoản..." class="bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:border-boki-blue focus:ring-1 focus:ring-boki-blue w-full sm:w-64 transition">
+            </div>
+            <select class="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-4 text-sm font-bold text-slate-600 focus:outline-none cursor-pointer focus:border-boki-blue focus:ring-1 focus:ring-boki-blue transition">
+                <option>Tất cả Khối Lớp</option>
+                <option>Lớp 2</option>
+                <option>Lớp 3</option>
+                <option>Lớp 4</option>
+                <option>Lớp 5</option>
+            </select>
+        </div>
+        
+        <button class="bg-boki-blue hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center justify-center gap-2" onclick="document.getElementById('modalThanhVien').classList.remove('hidden')">
+            <i class="fas fa-plus"></i> Thêm Học Sinh
+        </button>
+    </div>
+    
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full admin-table whitespace-nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Họ Tên</th>
+                    <th>Ngày Sinh</th>
+                    <th>Giới Tính</th>
+                    <th>Khối Lớp</th>
+                    <th>Tài Khoản Đăng Nhập</th>
+                    <th class="text-right">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="group">
+                    <td class="text-slate-400 text-xs font-mono">#HS001</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-boki-purple/10 text-boki-purple flex items-center justify-center font-bold text-xs uppercase">HN</div>
+                            <span class="font-bold text-slate-800">Hoàng Minh Ngọc</span>
+                        </div>
+                    </td>
+                    <td>15/08/2016</td>
+                    <td><span class="bg-pink-50 text-pink-600 px-2.5 py-1 rounded text-xs font-bold border border-pink-100">Nữ</span></td>
+                    <td><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded text-xs font-bold border border-slate-200">Lớp 3</span></td>
+                    <td class="font-mono text-xs text-slate-600">hs1@boki.edu.vn</td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition tooltip" title="Sửa"><i class="fas fa-edit"></i></button>
+                            <button class="w-8 h-8 rounded bg-orange-50 text-orange-600 hover:bg-orange-100 flex items-center justify-center transition tooltip" title="Reset Mật khẩu"><i class="fas fa-key"></i></button>
+                            <button class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition tooltip" title="Ngưng hoạt động"><i class="fas fa-ban"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="group">
+                    <td class="text-slate-400 text-xs font-mono">#HS002</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-boki-blue/10 text-boki-blue flex items-center justify-center font-bold text-xs uppercase">DA</div>
+                            <span class="font-bold text-slate-800">Trần Duy Anh</span>
+                        </div>
+                    </td>
+                    <td>20/12/2017</td>
+                    <td><span class="bg-blue-50 text-blue-600 px-2.5 py-1 rounded text-xs font-bold border border-blue-100">Nam</span></td>
+                    <td><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded text-xs font-bold border border-slate-200">Lớp 2</span></td>
+                    <td class="font-mono text-xs text-slate-600">hs2@boki.edu.vn</td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition"><i class="fas fa-edit"></i></button>
+                            <button class="w-8 h-8 rounded bg-orange-50 text-orange-600 hover:bg-orange-100 flex items-center justify-center transition"><i class="fas fa-key"></i></button>
+                            <button class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition"><i class="fas fa-ban"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                 <tr class="group">
+                    <td class="text-slate-400 text-xs font-mono">#HS003</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-xs uppercase">TD</div>
+                            <span class="font-bold text-slate-800">Dương Trí Dũng</span>
+                        </div>
+                    </td>
+                    <td>05/01/2014</td>
+                    <td><span class="bg-blue-50 text-blue-600 px-2.5 py-1 rounded text-xs font-bold border border-blue-100">Nam</span></td>
+                    <td><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded text-xs font-bold border border-slate-200">Lớp 5</span></td>
+                    <td class="font-mono text-xs text-slate-600">hs3@boki.edu.vn</td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition"><i class="fas fa-edit"></i></button>
+                            <button class="w-8 h-8 rounded bg-orange-50 text-orange-600 hover:bg-orange-100 flex items-center justify-center transition"><i class="fas fa-key"></i></button>
+                            <button class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition"><i class="fas fa-ban"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="p-4 border-t border-slate-200 bg-slate-50 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm font-bold text-slate-500">
+        <div>Hiển thị <span class="text-slate-800">1-10</span> của <span class="text-slate-800">1,245</span> học sinh</div>
+        <div class="flex gap-1 shadow-sm">
+            <button class="w-8 h-8 flex items-center justify-center rounded-l border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-left text-xs"></i></button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-boki-blue bg-boki-blue text-white">1</button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-slate-200 bg-white hover:bg-slate-100 transition text-slate-700 hover:text-boki-blue">2</button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-slate-200 bg-white hover:bg-slate-100 transition text-slate-700 hover:text-boki-blue">3</button>
+            <button class="w-8 h-8 flex items-center justify-center border-t border-b border-slate-200 bg-white hover:bg-slate-100 transition text-slate-700">...</button>
+            <button class="w-8 h-8 flex items-center justify-center rounded-r border border-slate-200 bg-white hover:bg-slate-100 transition"><i class="fas fa-chevron-right text-xs"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Thêm Mới -->
+<div id="modalThanhVien" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden transform transition-all scale-100 opacity-100">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <h3 class="text-xl font-black text-slate-800 flex items-center gap-2"><i class="fas fa-user-plus text-boki-blue"></i> Đăng ký Học Sinh</h3>
+            <button class="text-slate-400 hover:text-slate-600 hover:bg-slate-200 w-8 h-8 rounded-lg flex items-center justify-center transition" onclick="document.getElementById('modalThanhVien').classList.add('hidden')"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <form class="p-6 flex flex-col gap-5">
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Họ Tên Học Sinh <span class="text-red-500">*</span></label>
+                <input type="text" class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 font-medium outline-none transition text-slate-800" placeholder="VD: Nguyễn Văn A" required>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Ngày Sinh <span class="text-red-500">*</span></label>
+                    <input type="date" class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 font-medium outline-none transition text-slate-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Giới Tính <span class="text-red-500">*</span></label>
+                    <select class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 font-medium outline-none transition text-slate-600 cursor-pointer">
+                        <option>Nam</option>
+                        <option>Nữ</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Khối Lớp <span class="text-red-500">*</span></label>
+                <select class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 font-medium outline-none transition text-slate-600 cursor-pointer">
+                    <option>Lớp 2</option>
+                    <option selected>Lớp 3</option>
+                    <option>Lớp 4</option>
+                    <option>Lớp 5</option>
+                </select>
+            </div>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-slate-100"></div>
+                <span class="flex-shrink-0 mx-4 text-slate-400 text-xs font-bold uppercase tracking-widest">Tài khoản</span>
+                <div class="flex-grow border-t border-slate-100"></div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Email Đăng Nhập <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="email" class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 pl-10 font-medium outline-none transition" placeholder="student@boki.edu.vn" required>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Mật khẩu khởi tạo <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="password" class="w-full bg-slate-50 border border-slate-200 focus:border-boki-blue focus:ring-1 focus:ring-boki-blue rounded-lg px-4 py-2.5 pl-10 font-medium outline-none transition" placeholder="••••••••" required>
+                </div>
+                <p class="text-xs text-boki-green mt-2 font-bold"><i class="fas fa-shield-alt mr-1"></i> Passwords will be securely hashed by Identity Framework.</p>
+            </div>
+            
+            <div class="flex justify-end gap-3 mt-2 pt-5 border-t border-slate-100">
+                <button type="button" class="px-5 py-2.5 rounded-lg font-bold text-slate-600 hover:bg-slate-100 transition border border-slate-200" onclick="document.getElementById('modalThanhVien').classList.add('hidden')">Hủy</button>
+                <button type="submit" class="px-6 py-2.5 rounded-lg font-bold text-white bg-boki-blue hover:bg-blue-600 transition shadow-md flex items-center gap-2"><i class="fas fa-save"></i> Lưu Dữ Liệu</button>
+            </div>
+        </form>
+    </div>
+</div>
