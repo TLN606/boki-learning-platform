@@ -23,6 +23,11 @@
     <script src="assets/js/theme.js"></script>
 </head>
 <body class="relative min-h-screen flex flex-col items-center py-10 px-4 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <!-- Background Ornaments -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+        <div class="floating-bg-shape bg-emerald-300 w-96 h-96 top-[-100px] left-[-100px]"></div>
+        <div class="floating-bg-shape bg-yellow-300 w-96 h-96 bottom-[-100px] right-[-100px]"></div>
+    </div>
     <!-- Confetti Background (mock) -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 flex flex-wrap justify-between opacity-30">
         <span class="text-4xl absolute top-10 left-10 animate-bounce">✨</span>
@@ -31,8 +36,8 @@
         <span class="text-4xl absolute bottom-20 right-32 animate-pulse">✨</span>
     </div>
     
-    <div class="floating-bg-shape bg-emerald-300 w-96 h-96 top-[-100px] left-[-100px]"></div>
-    <div class="floating-bg-shape bg-yellow-300 w-96 h-96 bottom-[-100px] right-[-100px]"></div>
+    
+    
 
     <!-- Celebration Score Card -->
     <div class="w-full max-w-3xl clay-card-yellow p-10 md:p-14 text-center relative z-10 mb-10 overflow-hidden">
