@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm bài Quiz - Boki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; color: #334155; }
+        .clay-card {
+            background: #ffffff; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
+        }
+        .clay-btn-primary {
+            background: #3B82F6; color: white; border-radius: 9999px; display: inline-block; text-align: center;
+            box-shadow: 6px 6px 12px rgba(59, 130, 246, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(29, 78, 216, 0.5);
+            transition: all 0.2s ease; font-weight: 800;
+        }
+        .clay-btn-primary:active:not(:disabled) { box-shadow: inset 4px 4px 8px rgba(29, 78, 216, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
+        .clay-btn-primary:disabled { background: #94A3B8; box-shadow: none; cursor: not-allowed; opacity: 0.7; }
+        
+        /* Options styling */
+        .answer-option {
+            background: #ffffff; border-radius: 1.5rem; border: 3px solid transparent; outline: none; padding: 1.5rem; width: 100%;
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.9), inset -2px -2px 4px rgba(166, 180, 200, 0.2), 4px 4px 10px rgba(166, 180, 200, 0.2);
+            transition: all 0.2s; cursor: pointer; text-align: left;
+        }
+        .answer-option:hover { transform: translateY(-2px); box-shadow: 6px 6px 12px rgba(166, 180, 200, 0.3); }
+        .answer-option.selected {
+            background: #E0F2FE; border-color: #3B82F6;
+            box-shadow: inset 4px 4px 8px rgba(186, 230, 253, 0.8), inset -4px -4px 8px rgba(125, 211, 252, 0.3);
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-6 px-4">
+    <!-- Header with Timer and Progress -->
+    <header class="w-full max-w-4xl mx-auto flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3 clay-card px-6 py-3 rounded-full">
+            <span class="text-xl font-black text-slate-800 tracking-tight">Toán Học</span>
+            <div class="w-1 h-6 bg-slate-200"></div>
+            <span class="font-bold text-slate-500">Câu 1/5</span>
+        </div>
+
+        <div class="flex items-center gap-2 clay-card px-6 py-3 rounded-full text-rose-500">
+            <span class="text-xl">⏱️</span>
+            <span id="timer" class="text-xl font-black tracking-wider">05:00</span>
+        </div>
+        
+        <a href="lesson-detail.html" class="font-bold text-slate-400 hover:text-slate-600 transition">Thoát ✖</a>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="w-full max-w-4xl mx-auto mb-10 h-3 bg-slate-200 rounded-full shadow-inner overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-blue-400 to-blue-500 w-1/5 rounded-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] transition-all duration-500"></div>
+    </div>
+
+    <!-- Main Question Area -->
+    <main class="w-full max-w-4xl mx-auto flex-grow flex flex-col justify-center">
+        <!-- Question content -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-black text-slate-800 leading-tight mb-6">
+                Mẹ mua 5 giỏ cam, mỗi giỏ có 4 quả. Hỏi mẹ mua tất cả bao nhiêu quả cam?
+            </h1>
+        </div>
+
+        <!-- Options grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12" id="optionsContainer">
+            <button class="answer-option flex items-center gap-4 group">
+                <span class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400 group-[.selected]:bg-blue-500 group-[.selected]:text-white transition">A</span>
+                <span class="text-2xl font-bold text-slate-700">12 quả cam</span>
+            </button>
+            <button class="answer-option flex items-center gap-4 group">
+                <span class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400 group-[.selected]:bg-blue-500 group-[.selected]:text-white transition">B</span>
+                <span class="text-2xl font-bold text-slate-700">18 quả cam</span>
+            </button>
+            <button class="answer-option flex items-center gap-4 group">
+                <span class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400 group-[.selected]:bg-blue-500 group-[.selected]:text-white transition">C</span>
+                <span class="text-2xl font-bold text-slate-700">20 quả cam</span>
+            </button>
+            <button class="answer-option flex items-center gap-4 group">
+                <span class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400 group-[.selected]:bg-blue-500 group-[.selected]:text-white transition">D</span>
+                <span class="text-2xl font-bold text-slate-700">24 quả cam</span>
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center mt-auto border-t border-slate-200 pt-6">
+            <button class="font-bold text-slate-400 hover:text-slate-600 transition px-6 py-3">🔙 Câu trước</button>
+            <button id="nextBtn" class="clay-btn-primary px-10 py-4 text-xl" disabled>Câu tiếp theo 🚀</button>
+        </div>
+    </main>
+
+    <!-- Quiz logic (Vanilla JS) -->
+    <script>
+        // 1. Timer Logic
+        let timeLeft = 300; // 5 phút = 300 giây
+        const timerEl = document.getElementById('timer');
+        
+        const updateTimer = () => {
+            if (timeLeft <= 0) {
+                window.location.href = 'result.html';
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            timerEl.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            
+            // Đỏ dần khi sắp hết giờ
+            if (timeLeft < 60) {
+                timerEl.parentElement.classList.add('animate-pulse');
+            }
+        };
+        
+        setInterval(updateTimer, 1000);
+
+        // 2. Options Selection Logic
+        const options = document.querySelectorAll('.answer-option');
+        const nextBtn = document.getElementById('nextBtn');
+
+        options.forEach(opt => {
+            opt.addEventListener('click', () => {
+                // Remove selected class from all
+                options.forEach(o => o.classList.remove('selected'));
+                // Add to clicked
+                opt.classList.add('selected');
+                
+                // Enable next button
+                nextBtn.disabled = false;
+            });
+        });
+
+        // 3. Navigation (Mock submission on last question)
+        nextBtn.addEventListener('click', () => {
+            // Because this is a static prototype, we just redirect directly to result.html
+            // In a real app, we'd load the next question or submit.
+            window.location.href = 'result.html';
+        });
+    </script>
+</body>
+</html>

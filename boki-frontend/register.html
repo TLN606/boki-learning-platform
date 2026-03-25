@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - Boki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        .clay-card {
+            background: #ffffff; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
+        }
+        .clay-input {
+            background: #F1F5F9; border-radius: 1rem; border: none; outline: none; padding: 1rem 1.5rem; width: 100%;
+            box-shadow: inset 4px 4px 8px rgba(166, 180, 200, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+            transition: all 0.2s;
+        }
+        .clay-input:focus { box-shadow: inset 6px 6px 10px rgba(166, 180, 200, 0.4), inset -6px -6px 10px rgba(255, 255, 255, 1); }
+        .clay-btn-primary {
+            background: #10B981; color: white; border-radius: 9999px;
+            box-shadow: 6px 6px 12px rgba(16, 185, 129, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(4, 120, 87, 0.5);
+            transition: all 0.2s ease; font-weight: 800; width: 100%; padding: 1rem; display: block; text-align: center;
+        }
+        .clay-btn-primary:active { box-shadow: inset 4px 4px 8px rgba(4, 120, 87, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
+        .floating-bg-shape { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.5; border-radius: 50%; }
+    </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center p-4">
+    <div class="floating-bg-shape bg-emerald-400 w-96 h-96 top-[-100px] right-[-100px]"></div>
+    <div class="floating-bg-shape bg-yellow-400 w-96 h-96 bottom-[-100px] left-[-100px]"></div>
+    
+    <div class="clay-card p-10 max-w-md w-full relative z-10 transition-transform duration-300 hover:scale-[1.02]">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-black text-slate-800 tracking-tight">Tạo tài khoản</h1>
+            <p class="text-slate-500 font-medium mt-2">Cùng tham gia với 10,000+ bé khác! 🌟</p>
+        </div>
+        
+        <form action="login.html" method="GET" class="space-y-4">
+            <div>
+                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="fullname">Họ và tên bé</label>
+                <input type="text" id="fullname" class="clay-input" placeholder="Nguyễn Minh Hoàng" required>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="grade">Khối lớp</label>
+                    <select id="grade" class="clay-input appearance-none bg-white text-slate-700 cursor-pointer">
+                        <option value="2">Lớp 2</option>
+                        <option value="3">Lớp 3</option>
+                        <option value="4">Lớp 4</option>
+                        <option value="5">Lớp 5</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="dob">Năm sinh</label>
+                    <input type="number" id="dob" class="clay-input" placeholder="2016" min="2010" max="2018" required>
+                </div>
+            </div>
+            <div>
+                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="username">Tên đăng nhập</label>
+                <input type="text" id="username" class="clay-input" placeholder="beminhhoang" required>
+            </div>
+            <div>
+                <label class="block text-slate-700 font-bold mb-1 ml-2 text-sm" for="password">Mật khẩu</label>
+                <input type="password" id="password" class="clay-input" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="clay-btn-primary text-xl mt-4">Đăng ký hoàn tất!</button>
+        </form>
+        
+        <div class="mt-6 text-center text-slate-500 font-medium text-sm">
+            Đã có tài khoản? <a href="login.html" class="text-blue-500 hover:text-blue-600 font-bold">Đăng nhập</a>
+        </div>
+    </div>
+</body>
+</html>

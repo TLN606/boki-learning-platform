@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ học sinh - Boki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; color: #334155; }
+        .clay-card {
+            background: #ffffff; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
+        }
+        .clay-card-blue {
+            background: #E0F2FE; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(186, 230, 253, 0.8), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(125, 211, 252, 0.2);
+        }
+        .clay-card-pink {
+            background: #FCE7F3; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(253, 164, 175, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(244, 114, 182, 0.2);
+        }
+        .clay-card-yellow {
+            background: #FEF3C7; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(252, 211, 77, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(251, 191, 36, 0.2);
+        }
+        .clay-btn-primary {
+            background: #3B82F6; color: white; border-radius: 9999px; display: inline-block; text-align: center;
+            box-shadow: 6px 6px 12px rgba(59, 130, 246, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(29, 78, 216, 0.5);
+            transition: all 0.2s ease; font-weight: 800;
+        }
+        .clay-btn-primary:active { box-shadow: inset 4px 4px 8px rgba(29, 78, 216, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
+        .clay-btn-danger {
+            background: #EF4444; color: white; border-radius: 9999px; display: inline-block; text-align: center;
+            box-shadow: 6px 6px 12px rgba(239, 68, 68, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(185, 28, 28, 0.5);
+            transition: all 0.2s ease; font-weight: 800;
+        }
+        .clay-btn-danger:active { box-shadow: inset 4px 4px 8px rgba(185, 28, 28, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
+        .grade-tab.active { background-color: #3B82F6; color: white; box-shadow: inset 2px 2px 4px rgba(29, 78, 216, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+    <!-- App Header -->
+    <header class="bg-white/80 w-full backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-slate-100">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-xl font-black text-white shadow-md">B</div>
+                <span class="text-xl font-black text-slate-800 tracking-tight hidden sm:inline-block">Boki</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full">
+                    <span class="text-orange-500 font-bold">🔥 14</span>
+                    <span class="text-yellow-500 font-bold">⭐ 1,250</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                    <span class="font-bold text-slate-700 hidden sm:inline-block">Minh Hoàng</span>
+                </div>
+                <a href="login.html" class="clay-btn-danger px-4 py-2 text-sm ml-2">Thoát</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 mt-8">
+        <!-- Welcome Banner -->
+        <div class="clay-card-blue p-8 mb-10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+            <div class="relative z-10 w-full md:w-2/3">
+                <h1 class="text-3xl md:text-4xl font-black text-blue-900 mb-2">Chào Minh Hoàng! 🚀</h1>
+                <p class="text-blue-700 font-medium text-lg">Hôm nay bầu trời rất đẹp để học thêm điều mới. Bé đã sẵn sàng chưa?</p>
+            </div>
+            <div class="mt-6 md:mt-0 relative z-10">
+                <div class="text-6xl animate-bounce drop-shadow-lg">👨‍🚀</div>
+            </div>
+            <!-- decorative circles -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-10 right-20 w-32 h-32 bg-blue-400 opacity-20 rounded-full blur-xl"></div>
+        </div>
+
+        <!-- Progress Overview -->
+        <h2 class="text-2xl font-black text-slate-800 mb-4 px-2">Tiến độ của bé 🏆</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Streak -->
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-3xl shadow-inner">🔥</div>
+                <div>
+                    <p class="text-slate-500 font-bold text-sm uppercase tracking-wide">Chuỗi ngày học</p>
+                    <p class="text-3xl font-black text-orange-500">14 <span class="text-lg text-slate-600">ngày</span></p>
+                </div>
+            </div>
+            <!-- Avg Score -->
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-3xl shadow-inner">🎯</div>
+                <div>
+                    <p class="text-slate-500 font-bold text-sm uppercase tracking-wide">Điểm trung bình</p>
+                    <p class="text-3xl font-black text-emerald-500">9.5 <span class="text-lg text-slate-600">điểm</span></p>
+                </div>
+            </div>
+            <!-- Completion -->
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-3xl shadow-inner">📚</div>
+                <div class="w-full">
+                    <p class="text-slate-500 font-bold text-sm uppercase tracking-wide mb-1">Hoàn thành Lớp 3</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-full bg-slate-100 rounded-full h-3 shadow-inner overflow-hidden">
+                            <div class="bg-blue-500 h-3 rounded-full" style="width: 45%"></div>
+                        </div>
+                        <span class="font-black text-blue-600">45%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 px-2 gap-4">
+            <h2 class="text-2xl font-black text-slate-800">Chọn môn học tiếp theo</h2>
+            <!-- Grade Selector -->
+            <div class="bg-white p-1.5 rounded-2xl flex shadow-sm border border-slate-100 overflow-x-auto w-full md:w-auto">
+                <button class="px-5 py-2 rounded-xl font-bold text-sm text-slate-500 hover:bg-slate-50 transition min-w-[80px]">Lớp 2</button>
+                <button class="grade-tab active px-5 py-2 rounded-xl font-bold text-sm transition min-w-[80px]">Lớp 3</button>
+                <button class="px-5 py-2 rounded-xl font-bold text-sm text-slate-500 hover:bg-slate-50 transition min-w-[80px]">Lớp 4</button>
+                <button class="px-5 py-2 rounded-xl font-bold text-sm text-slate-500 hover:bg-slate-50 transition min-w-[80px]">Lớp 5</button>
+            </div>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <a href="lesson-list.html" class="clay-card-blue p-8 flex border-2 border-transparent hover:border-blue-200 hover:-translate-y-1 transition group">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-black text-blue-900 mb-2">Toán học</h3>
+                    <p class="text-blue-700 font-medium mb-4">12 bài học mới</p>
+                    <div class="bg-blue-200/50 rounded-full h-2 w-24 overflow-hidden">
+                        <div class="bg-blue-500 h-2 w-1/2 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="text-6xl group-hover:scale-110 transition-transform origin-bottom">🔢</div>
+            </a>
+            
+            <a href="lesson-list.html" class="clay-card-pink p-8 flex border-2 border-transparent hover:border-pink-200 hover:-translate-y-1 transition group">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-black text-pink-900 mb-2">Tiếng Việt</h3>
+                    <p class="text-pink-700 font-medium mb-4">5 bài học mới</p>
+                    <div class="bg-pink-200/50 rounded-full h-2 w-24 overflow-hidden">
+                        <div class="bg-pink-500 h-2 w-3/4 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="text-6xl group-hover:scale-110 transition-transform origin-bottom">📖</div>
+            </a>
+
+            <a href="lesson-list.html" class="clay-card-yellow p-8 flex border-2 border-transparent hover:border-yellow-200 hover:-translate-y-1 transition group">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-black text-yellow-900 mb-2">Tiếng Anh</h3>
+                    <p class="text-yellow-700 font-medium mb-4">8 bài học mới</p>
+                    <div class="bg-yellow-200/50 rounded-full h-2 w-24 overflow-hidden">
+                        <div class="bg-yellow-500 h-2 w-1/4 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="text-6xl group-hover:scale-110 transition-transform origin-bottom">🌍</div>
+            </a>
+        </div>
+
+        <!-- Recent Activity -->
+        <h2 class="text-2xl font-black text-slate-800 mb-4 px-2">Hoạt động gần đây</h2>
+        <div class="clay-card p-2 md:p-6 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-slate-400 font-bold border-b border-slate-100">
+                            <th class="p-4">Bài học</th>
+                            <th class="p-4 hidden sm:table-cell">Môn</th>
+                            <th class="p-4 hidden md:table-cell">Thời gian</th>
+                            <th class="p-4 text-center">Kết quả</th>
+                            <th class="p-4 text-right">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition">
+                            <td class="p-4">
+                                <div class="font-bold text-slate-800">Phép nhân trong phạm vi 1000</div>
+                                <div class="text-sm font-bold text-blue-500 sm:hidden">Toán - 2 giờ trước</div>
+                            </td>
+                            <td class="p-4 hidden sm:table-cell">
+                                <span class="bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-lg text-sm">Toán</span>
+                            </td>
+                            <td class="p-4 text-slate-500 font-medium hidden md:table-cell">2 giờ trước</td>
+                            <td class="p-4 text-center">
+                                <span class="font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-xl">10 / 10</span>
+                            </td>
+                            <td class="p-4 text-right">
+                                <a href="result.html" class="text-blue-500 hover:text-blue-700 font-bold text-sm bg-blue-50 px-3 py-2 rounded-lg">Xem lại</a>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition">
+                            <td class="p-4">
+                                <div class="font-bold text-slate-800">Tập đọc: Gọi bạn</div>
+                                <div class="text-sm font-bold text-pink-500 sm:hidden">Tiếng Việt - Hôm qua</div>
+                            </td>
+                            <td class="p-4 hidden sm:table-cell">
+                                <span class="bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-lg text-sm">Tiếng Việt</span>
+                            </td>
+                            <td class="p-4 text-slate-500 font-medium hidden md:table-cell">Hôm qua</td>
+                            <td class="p-4 text-center">
+                                <span class="font-black text-orange-500 bg-orange-50 px-3 py-1 rounded-xl">8 / 10</span>
+                            </td>
+                            <td class="p-4 text-right">
+                                <a href="result.html" class="text-blue-500 hover:text-blue-700 font-bold text-sm bg-blue-50 px-3 py-2 rounded-lg">Xem lại</a>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/50 transition">
+                            <td class="p-4">
+                                <div class="font-bold text-slate-800">My School Items</div>
+                                <div class="text-sm font-bold text-yellow-500 sm:hidden">Tiếng Anh - 2 ngày trước</div>
+                            </td>
+                            <td class="p-4 hidden sm:table-cell">
+                                <span class="bg-yellow-100 text-yellow-700 font-bold px-3 py-1 rounded-lg text-sm">Tiếng Anh</span>
+                            </td>
+                            <td class="p-4 text-slate-500 font-medium hidden md:table-cell">2 ngày trước</td>
+                            <td class="p-4 text-center">
+                                <span class="font-black text-blue-500 bg-blue-50 px-3 py-1 rounded-xl">Đang học</span>
+                            </td>
+                            <td class="p-4 text-right">
+                                <a href="lesson-detail.html" class="clay-btn-primary px-4 py-1.5 text-sm inline-block">Tiếp tục</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

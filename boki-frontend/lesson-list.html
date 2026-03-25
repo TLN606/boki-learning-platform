@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách bài học - Boki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #F8FAFC; color: #334155; }
+        .clay-card {
+            background: #ffffff; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
+        }
+        .clay-card-blue {
+            background: #E0F2FE; border-radius: 2rem;
+            box-shadow: 8px 8px 16px rgba(186, 230, 253, 0.8), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(125, 211, 252, 0.2);
+        }
+        .clay-btn-primary {
+            background: #3B82F6; color: white; border-radius: 9999px; display: inline-block; text-align: center;
+            box-shadow: 6px 6px 12px rgba(59, 130, 246, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(29, 78, 216, 0.5);
+            transition: all 0.2s ease; font-weight: 800;
+        }
+        .clay-btn-primary:active { box-shadow: inset 4px 4px 8px rgba(29, 78, 216, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.2); transform: scale(0.96); }
+        .clay-btn-secondary {
+            background: #F8FAFC; color: #3B82F6; border-radius: 9999px; display: inline-block; text-align: center; font-weight: 800;
+            box-shadow: 6px 6px 12px rgba(166, 180, 200, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(166, 180, 200, 0.1);
+            transition: all 0.2s;
+        }
+        .clay-btn-secondary:active { box-shadow: inset 4px 4px 8px rgba(166, 180, 200, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.8); transform: scale(0.96); }
+        .clay-input {
+            background: #F1F5F9; border-radius: 1rem; border: none; outline: none; padding: 0.75rem 1rem;
+            box-shadow: inset 4px 4px 8px rgba(166, 180, 200, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+    <!-- App Header -->
+    <header class="bg-white/80 w-full backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-slate-100 mb-8">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="student-dashboard.html" class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-xl font-black text-white shadow-md hover:scale-105 transition">B</a>
+                <span class="text-xl font-black text-slate-800 tracking-tight hidden sm:inline-block">Boki</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full">
+                    <span class="text-orange-500 font-bold">🔥 14</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4">
+        <!-- Breadcrumb & Filter Bar -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <div>
+                <div class="flex items-center gap-2 text-sm font-bold text-slate-400 mb-1">
+                    <a href="student-dashboard.html" class="hover:text-blue-500">Trang chủ</a>
+                    <span>/</span>
+                    <span class="text-slate-700">Lớp 3</span>
+                </div>
+                <h1 class="text-3xl font-black text-slate-800 flex items-center gap-3">
+                    <span class="text-4xl">🔢</span> Toán học vui
+                </h1>
+            </div>
+
+            <div class="flex flex-wrap gap-4 w-full md:w-auto">
+                <select class="clay-input w-full md:w-auto font-bold text-slate-600 appearance-none cursor-pointer">
+                    <option>Chủ đề: Tất cả</option>
+                    <option>Phép cộng trừ</option>
+                    <option>Phép nhân chia</option>
+                    <option>Hình học cơ bản</option>
+                </select>
+                <select class="clay-input w-full md:w-auto font-bold text-slate-600 appearance-none cursor-pointer">
+                    <option>Trạng thái: Chưa học</option>
+                    <option>Đã học xong</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Course Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <!-- Lesson Card 1 -->
+            <div class="clay-card p-6 flex flex-col h-full hover:-translate-y-1 transition duration-300">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-lg text-sm">Dễ</span>
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400">#1</div>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Bảng nhân 2 và 3</h3>
+                <p class="text-slate-500 font-medium text-sm mb-6 line-clamp-2">Làm quen với phép nhân cơ bản qua các ví dụ trái cây có quả và kẹo táo ngon lành.</p>
+                <div class="mt-auto flex gap-3">
+                    <div class="flex items-center gap-1 text-slate-400 text-sm font-bold flex-1">
+                        <span>📝</span> 10 câu
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 pt-4 border-t border-slate-100">
+                    <a href="lesson-detail.html" class="clay-btn-secondary py-2 flex-1 text-sm bg-white">Lý thuyết</a>
+                    <a href="quiz.html" class="clay-btn-primary py-2 flex-1 text-sm">Làm bài 🚀</a>
+                </div>
+            </div>
+
+            <!-- Lesson Card 2 -->
+            <div class="clay-card-blue p-6 flex flex-col h-full hover:-translate-y-1 transition duration-300 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-500 text-white font-bold text-xs px-3 py-1 rounded-bl-xl z-10">Bài mới</div>
+                <div class="flex justify-between items-start mb-4 relative z-10">
+                    <span class="bg-yellow-100 text-yellow-700 font-bold px-3 py-1 rounded-lg text-sm">Thiên tài</span>
+                    <div class="w-10 h-10 rounded-full bg-white/50 flex items-center justify-center font-black text-blue-400">#2</div>
+                </div>
+                <h3 class="text-xl font-black text-blue-900 mb-2 relative z-10">Phép nhân lớn hơn</h3>
+                <p class="text-blue-700 font-medium text-sm mb-6 line-clamp-2 relative z-10">Thử thách trí não với bảng nhân 4 và 5. Bạn sẽ tính toán nhanh như chớp!</p>
+                <div class="mt-auto flex gap-3 relative z-10">
+                    <div class="flex items-center gap-1 text-blue-500 text-sm font-bold flex-1">
+                        <span>📝</span> 15 câu
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 pt-4 border-t border-blue-200/50 relative z-10">
+                    <a href="lesson-detail.html" class="clay-btn-secondary py-2 flex-1 text-sm bg-blue-50">Lý thuyết</a>
+                    <a href="quiz.html" class="clay-btn-primary py-2 flex-1 text-sm">Làm bài 🚀</a>
+                </div>
+            </div>
+
+            <!-- Lesson Card 3 -->
+            <div class="clay-card p-6 flex flex-col h-full hover:-translate-y-1 transition duration-300 opacity-70">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-slate-100 text-slate-500 font-bold px-3 py-1 rounded-lg text-sm">Đã học</span>
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-emerald-500">✅</div>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Phép cộng có nhớ</h3>
+                <p class="text-slate-500 font-medium text-sm mb-6 line-clamp-2">Ôn tập lại phép cộng trong phạm vi 100 có nhớ để chuẩn bị cho các phép tính lớn mạnh hơn.</p>
+                <div class="mt-auto flex gap-3">
+                    <div class="flex items-center gap-1 text-slate-400 text-sm font-bold flex-1">
+                        <span>🏆</span> 10/10 điểm
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 pt-4 border-t border-slate-100">
+                    <a href="result.html" class="clay-btn-secondary py-2 flex-1 text-sm bg-white">Xem kết quả</a>
+                    <a href="quiz.html" class="clay-btn-secondary py-2 flex-1 text-sm !bg-slate-100 !text-slate-600">Làm lại</a>
+                </div>
+            </div>
+
+            <!-- Lesson Card 4 -->
+            <div class="clay-card p-6 flex flex-col h-full hover:-translate-y-1 transition duration-300 relative group overflow-hidden">
+                <div class="absolute inset-0 bg-slate-100/80 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center p-6 text-center shadow-[inset_0_0_20px_rgba(0,0,0,0.05)] rounded-[2rem] opacity-100 transition">
+                    <div class="text-4xl mb-3">🔒</div>
+                    <p class="font-bold text-slate-600 text-sm">Hoàn thành bài #2 để mở khóa</p>
+                </div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-red-100 text-red-700 font-bold px-3 py-1 rounded-lg text-sm">Khó nhằn</span>
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400">#3</div>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Tìm x và Y</h3>
+                <p class="text-slate-500 font-medium text-sm mb-6 line-clamp-2">Khởi đầu của đại số, giải mã bí ẩn con số bị giấu kín.</p>
+                <div class="mt-auto flex gap-3">
+                    <div class="flex items-center gap-1 text-slate-400 text-sm font-bold flex-1">
+                        <span>📝</span> 20 câu
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
