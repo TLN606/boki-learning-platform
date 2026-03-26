@@ -14,5 +14,10 @@ namespace Boki_ELearning.Controllers
             return View();
         }
 
+        public PartialViewResult About()
+        {
+            return PartialView();
+        }
+
     }
 }

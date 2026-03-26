@@ -1,0 +1,165 @@
+﻿@model Boki_ELearning.Models.ViewModels.LearningIndexViewModel
+@{
+    Layout = null;
+    var completionPercent = Model.TotalLessons > 0 ? (int)((Model.CompletedLessons * 100.0) / Model.TotalLessons) : 0;
+}
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang học tập - Boki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/templates/boki-frontend/assets/css/style.css">
+    <script src="/Content/templates/boki-frontend/assets/js/theme.js"></script>
+</head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <header class="bg-white/80 dark:bg-slate-800/80 w-full backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-slate-100 dark:border-slate-700">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="@Url.Action("Index", "Home")" class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-xl font-black text-white shadow-md">B</a>
+                <span class="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight hidden sm:inline-block">Boki</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="@Url.Action("Index", "Home")" class="font-bold text-slate-600 dark:text-slate-300 hover:text-brand-500 transition">Trang chủ</a>
+                <a href="@Url.Action("Logout", "Account")" class="font-bold text-red-500 hover:text-red-600 transition">Đăng xuất</a>
+                <button id="theme-toggle" class="p-2 rounded-full bg-white dark:bg-slate-800 shadow border border-slate-200 dark:border-slate-700 hover:scale-110 transition text-slate-600 dark:text-slate-300">
+                    <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="theme-toggle-dark-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 mt-8 flex-grow">
+        @if (TempData["Message"] != null)
+        {
+            <div class="mb-4 rounded-xl bg-emerald-100 text-emerald-700 font-bold text-sm px-4 py-3">
+                @TempData["Message"]
+            </div>
+        }
+        <div class="clay-card-blue p-8 mb-10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+            <div class="relative z-10 w-full md:w-2/3">
+                <h1 class="text-3xl md:text-4xl font-black text-blue-900 mb-2">Chào @Model.StudentName! 🚀</h1>
+                <p class="text-blue-700 font-medium text-lg">Lớp: @Model.ClassName. Hôm nay mình học tiếp nhé!</p>
+            </div>
+            <div class="mt-6 md:mt-0 relative z-10">
+                <div class="text-6xl animate-bounce drop-shadow-lg">📚</div>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-slate-800 dark:text-slate-100 mb-4 px-2">Tiến độ học tập</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-3xl shadow-inner">📘</div>
+                <div>
+                    <p class="text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-wide">Tổng bài học</p>
+                    <p class="text-3xl font-black text-blue-500">@Model.TotalLessons</p>
+                </div>
+            </div>
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-3xl shadow-inner">✅</div>
+                <div>
+                    <p class="text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-wide">Đã hoàn thành</p>
+                    <p class="text-3xl font-black text-emerald-500">@Model.CompletedLessons</p>
+                </div>
+            </div>
+            <div class="clay-card p-6 flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-3xl shadow-inner">🏁</div>
+                <div class="w-full">
+                    <p class="text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-wide mb-1">Tiến độ tổng</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-full bg-slate-100 rounded-full h-3 shadow-inner overflow-hidden">
+                            <div class="bg-blue-500 h-3 rounded-full" style="width: @completionPercent%"></div>
+                        </div>
+                        <span class="font-black text-blue-600">@completionPercent%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-slate-800 dark:text-slate-100 mb-4 px-2">Tiến độ theo môn</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            @if (Model.SubjectProgress != null && Model.SubjectProgress.Count > 0)
+            {
+                foreach (var subject in Model.SubjectProgress)
+                {
+                    var percent = subject.TotalLessons > 0 ? (int)((subject.CompletedLessons * 100.0) / subject.TotalLessons) : 0;
+                    <div class="clay-card p-6">
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white mb-2">@subject.SubjectName</h3>
+                        <p class="text-slate-500 dark:text-slate-400 font-medium mb-3">@subject.CompletedLessons/@subject.TotalLessons bài</p>
+                        <div class="w-full bg-slate-100 rounded-full h-3 shadow-inner overflow-hidden">
+                            <div class="bg-pink-500 h-3 rounded-full" style="width: @percent%"></div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="clay-card p-6 md:col-span-3">
+                    <p class="font-bold text-slate-600 dark:text-slate-300">Chưa có dữ liệu môn học.</p>
+                </div>
+            }
+        </div>
+
+        <h2 class="text-2xl font-black text-slate-800 dark:text-slate-100 mb-4 px-2">Danh sách bài học</h2>
+        <div class="clay-card p-2 md:p-6 overflow-hidden mb-12">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-slate-400 font-bold border-b border-slate-100 dark:border-slate-700">
+                            <th class="p-4">Bài học</th>
+                            <th class="p-4">Môn</th>
+                            <th class="p-4 text-center">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Lessons != null && Model.Lessons.Count > 0)
+                        {
+                            foreach (var lesson in Model.Lessons)
+                            {
+                                <tr class="border-b border-slate-50 hover:bg-slate-50 dark:bg-slate-900/50 transition">
+                                    <td class="p-4 font-bold text-slate-800 dark:text-slate-100">@lesson.LessonName</td>
+                                    <td class="p-4">
+                                        <span class="bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-lg text-sm">@lesson.SubjectName</span>
+                                    </td>
+                                    <td class="p-4 text-center">
+                                        @if (lesson.IsCompleted)
+                                        {
+                                            <span class="font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-xl">Đã xong</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="font-black text-orange-500 bg-orange-50 px-3 py-1 rounded-xl">Chưa học</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="p-4" colspan="3">Chưa có bài học.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

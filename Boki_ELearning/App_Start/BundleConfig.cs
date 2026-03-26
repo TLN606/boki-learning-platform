@@ -25,6 +25,12 @@ namespace Boki_ELearning
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/boki/css").Include(
+                      "~/Content/templates/boki-frontend/assets/css/style.css"));
+
+            bundles.Add(new ScriptBundle("~/boki/theme").Include(
+                      "~/Content/templates/boki-frontend/assets/js/theme.js"));
         }
     }
 }
