@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ngân Hàng Đề Thi - Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <header class="app-header reveal">
+      <div>
+        <p class="eyebrow">Boki E-Learning · Bản tách riêng</p>
+        <h1>Ngân hàng đề thi</h1>
+        <p class="subhead">Tạo, quản lý, lọc và xuất dữ liệu câu hỏi để đưa vào trang web chính.</p>
+      </div>
+      <div class="header-actions">
+        <button id="seedDataBtn" class="btn btn-ghost" type="button">Nạp dữ liệu mẫu</button>
+        <button id="exportBtn" class="btn btn-primary" type="button">Xuất JSON</button>
+        <button id="importBtn" class="btn btn-secondary" type="button">Nhập JSON</button>
+        <input id="importFileInput" type="file" accept="application/json" hidden />
+      </div>
+    </header>
+
+    <section class="stats-strip reveal" id="statsStrip" aria-label="Thống kê"></section>
+
+    <section class="workspace">
+      <aside class="panel form-panel reveal">
+        <div class="panel-heading">
+          <h2>Tạo / Sửa câu hỏi</h2>
+          <p>Thiết kế theo cấu trúc môn học, bài học và đáp án đúng/sai.</p>
+        </div>
+
+        <form id="questionForm" class="question-form">
+          <input id="editingId" type="hidden" />
+
+          <label>
+            <span>Môn học</span>
+            <input id="subjectInput" type="text" placeholder="Ví dụ: Toán" required />
+          </label>
+
+          <label>
+            <span>Bài học</span>
+            <input id="lessonInput" type="text" placeholder="Ví dụ: Phân số" required />
+          </label>
+
+          <div class="field-row">
+            <label>
+              <span>Độ khó</span>
+              <select id="difficultyInput" required>
+                <option value="">Chọn mức độ</option>
+                <option value="de">Dễ</option>
+                <option value="trungbinh">Trung bình</option>
+                <option value="kho">Khó</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Trạng thái</span>
+              <select id="statusInput" required>
+                <option value="active">Đang dùng</option>
+                <option value="draft">Nháp</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>Nội dung câu hỏi</span>
+            <textarea id="questionTextInput" rows="4" placeholder="Nhập nội dung câu hỏi" required></textarea>
+          </label>
+
+          <fieldset class="answers-fieldset">
+            <legend>Đáp án (chọn 1 đáp án đúng)</legend>
+            <div class="answer-item">
+              <input type="radio" name="correctAnswer" value="0" checked />
+              <input class="answer-text" type="text" placeholder="Đáp án A" required />
+            </div>
+            <div class="answer-item">
+              <input type="radio" name="correctAnswer" value="1" />
+              <input class="answer-text" type="text" placeholder="Đáp án B" required />
+            </div>
+            <div class="answer-item">
+              <input type="radio" name="correctAnswer" value="2" />
+              <input class="answer-text" type="text" placeholder="Đáp án C" required />
+            </div>
+            <div class="answer-item">
+              <input type="radio" name="correctAnswer" value="3" />
+              <input class="answer-text" type="text" placeholder="Đáp án D" required />
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit" id="saveBtn">Lưu câu hỏi</button>
+            <button class="btn btn-ghost" type="reset" id="resetBtn">Làm mới</button>
+          </div>
+        </form>
+      </aside>
+
+      <section class="panel list-panel reveal">
+        <div class="panel-heading">
+          <h2>Kho câu hỏi</h2>
+          <p>Tìm nhanh theo từ khóa, môn, bài học và độ khó.</p>
+        </div>
+
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Tìm theo nội dung câu hỏi..." />
+          <select id="subjectFilter">
+            <option value="">Tất cả môn học</option>
+          </select>
+          <select id="lessonFilter">
+            <option value="">Tất cả bài học</option>
+          </select>
+          <select id="difficultyFilter">
+            <option value="">Mọi mức độ</option>
+            <option value="de">Dễ</option>
+            <option value="trungbinh">Trung bình</option>
+            <option value="kho">Khó</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Môn học</th>
+                <th>Bài học</th>
+                <th>Nội dung</th>
+                <th>Độ khó</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="questionTableBody"></tbody>
+          </table>
+          <p class="empty-state" id="emptyState">Chưa có dữ liệu câu hỏi.</p>
+        </div>
+
+        <section class="exam-builder">
+          <div class="exam-builder-head">
+            <h3>Tạo đề nhanh</h3>
+            <p>Rút ngẫu nhiên câu hỏi theo tiêu chí hiện tại để kiểm tra nhanh.</p>
+          </div>
+          <div class="exam-builder-controls">
+            <input id="examCountInput" type="number" min="1" value="5" />
+            <button id="buildExamBtn" class="btn btn-secondary" type="button">Tạo đề</button>
+          </div>
+          <ol id="examResult" class="exam-result"></ol>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <template id="statItemTemplate">
+    <article class="stat-item">
+      <p class="stat-label"></p>
+      <p class="stat-value"></p>
+    </article>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>
