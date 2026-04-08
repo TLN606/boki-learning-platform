@@ -5,175 +5,283 @@
     ViewBag.AdminNav = "questions";
 }
 
-<div class="row g-3">
-    <div class="col-lg-5">
-        <div class="admin-card p-3">
-            <h6 class="fw-bold mb-3">@((Model.Editor.QuestionId.HasValue ? "Cập nhật câu hỏi" : "Tạo câu hỏi mới"))</h6>
-            @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post))
+<div class="admin-card p-3 mb-3">
+    @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
+    {
+        <div class="col-md-4">
+            <label class="form-label boki-form-label">Từ khóa</label>
+            <input class="form-control" name="keyword" value="@Model.Filter.Keyword" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label boki-form-label">Bài học</label>
+            <select class="form-select" name="lessonId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.LessonOptions)
+                {
+                    <option value="@option.LessonId" @(Model.Filter.LessonId == option.LessonId ? "selected" : "")>@option.LessonDisplay</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label boki-form-label">Độ khó</label>
+            <select class="form-select" name="difficulty">
+                <option value="">Tất cả</option>
+                <option value="De" @(Model.Filter.Difficulty == "De" ? "selected" : "")>Dễ</option>
+                <option value="TrungBinh" @(Model.Filter.Difficulty == "TrungBinh" ? "selected" : "")>TB</option>
+                <option value="Kho" @(Model.Filter.Difficulty == "Kho" ? "selected" : "")>Khó</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label boki-form-label">Trạng thái</label>
+            <select class="form-select" name="status">
+                <option value="">Tất cả</option>
+                <option value="Active" @(Model.Filter.Status == "Active" ? "selected" : "")>Active</option>
+                <option value="Draft" @(Model.Filter.Status == "Draft" ? "selected" : "")>Draft</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
+        </div>
+    }
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+        <a href="@Url.Action("Create", "QuestionBank")" class="btn btn-primary btn-sm">Tạo câu hỏi</a>
+        <a href="@Url.Action("Export", "QuestionBank")" class="btn btn-outline-secondary btn-sm">Export JSON</a>
+        @using (Html.BeginForm("Import", "QuestionBank", FormMethod.Post, new { enctype = "multipart/form-data", @class = "d-flex gap-2" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="file" class="form-control form-control-sm" name="file" accept=".json" required />
+            <button type="submit" class="btn btn-outline-success btn-sm">Import</button>
+        }
+    </div>
+</div>
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nội dung</th>
+                    <th>Bài học</th>
+                    <th>Mức</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Questions.Any())
+                {
+                    foreach (var item in Model.Questions)
+                    {
+                        <tr>
+                            <td>@item.QuestionId</td>
+                            <td>@item.QuestionText</td>
+                            <td>@item.ClassName - @item.SubjectName - @item.LessonName</td>
+                            <td>@item.Difficulty</td>
+                            <td>@item.Status</td>
+                            <td class="text-nowrap">
+                                <button type="button" class="btn btn-sm btn-outline-primary js-edit-question" data-question-id="@item.QuestionId">Sửa</button>
+                                @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.QuestionId" />
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" class="boki-empty">Không có câu hỏi phù hợp điều kiện lọc.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post, new { id = "editQuestionForm" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.Hidden("QuestionId", Model.Editor.QuestionId)
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editQuestionModalTitle">Cập nhật câu hỏi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="QuestionId" id="editQuestionId" />
+                    <div id="editQuestionError" class="alert alert-danger d-none" role="alert"></div>
 
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Bài học</label>
-                    <select class="form-select" name="LessonId" required>
-                        <option value="">-- Chọn bài học --</option>
-                        @foreach (var option in Model.LessonOptions)
-                        {
-                            <option value="@option.LessonId" @(option.LessonId == Model.Editor.LessonId ? "selected" : "")>@option.LessonDisplay</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Nội dung câu hỏi</label>
-                    <textarea class="form-control" name="QuestionText" rows="3" required>@Model.Editor.QuestionText</textarea>
-                </div>
-
-                <div class="row g-2 mb-2">
-                    <div class="col-md-6">
-                        <label class="form-label boki-form-label">Độ khó</label>
-                        <select class="form-select" name="Difficulty">
-                            <option value="De" @(Model.Editor.Difficulty == "De" ? "selected" : "")>Dễ</option>
-                            <option value="TrungBinh" @(Model.Editor.Difficulty == "TrungBinh" ? "selected" : "")>Trung bình</option>
-                            <option value="Kho" @(Model.Editor.Difficulty == "Kho" ? "selected" : "")>Khó</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label boki-form-label">Trạng thái</label>
-                        <select class="form-select" name="Status">
-                            <option value="Active" @(Model.Editor.Status == "Active" ? "selected" : "")>Active</option>
-                            <option value="Draft" @(Model.Editor.Status == "Draft" ? "selected" : "")>Draft</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Đáp án A</label>
-                    <input class="form-control" name="AnswerA" value="@Model.Editor.AnswerA" required />
-                </div>
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Đáp án B</label>
-                    <input class="form-control" name="AnswerB" value="@Model.Editor.AnswerB" required />
-                </div>
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Đáp án C</label>
-                    <input class="form-control" name="AnswerC" value="@Model.Editor.AnswerC" required />
-                </div>
-                <div class="mb-2">
-                    <label class="form-label boki-form-label">Đáp án D</label>
-                    <input class="form-control" name="AnswerD" value="@Model.Editor.AnswerD" required />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label boki-form-label">Đáp án đúng</label>
-                    <select class="form-select" name="CorrectIndex">
-                        <option value="0" @(Model.Editor.CorrectIndex == 0 ? "selected" : "")>A</option>
-                        <option value="1" @(Model.Editor.CorrectIndex == 1 ? "selected" : "")>B</option>
-                        <option value="2" @(Model.Editor.CorrectIndex == 2 ? "selected" : "")>C</option>
-                        <option value="3" @(Model.Editor.CorrectIndex == 3 ? "selected" : "")>D</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Lưu câu hỏi</button>
-                <a class="btn btn-outline-secondary" href="@Url.Action("Index", "QuestionBank")">Làm mới</a>
-            }
-        </div>
-    </div>
-
-    <div class="col-lg-7">
-        <div class="admin-card p-3 mb-3">
-            @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
-            {
-                <div class="col-md-4">
-                    <label class="form-label boki-form-label">Từ khóa</label>
-                    <input class="form-control" name="keyword" value="@Model.Filter.Keyword" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label boki-form-label">Bài học</label>
-                    <select class="form-select" name="lessonId">
-                        <option value="">Tất cả</option>
-                        @foreach (var option in Model.LessonOptions)
-                        {
-                            <option value="@option.LessonId" @(Model.Filter.LessonId == option.LessonId ? "selected" : "")>@option.LessonDisplay</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label boki-form-label">Độ khó</label>
-                    <select class="form-select" name="difficulty">
-                        <option value="">Tất cả</option>
-                        <option value="De" @(Model.Filter.Difficulty == "De" ? "selected" : "")>Dễ</option>
-                        <option value="TrungBinh" @(Model.Filter.Difficulty == "TrungBinh" ? "selected" : "")>TB</option>
-                        <option value="Kho" @(Model.Filter.Difficulty == "Kho" ? "selected" : "")>Khó</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label boki-form-label">Trạng thái</label>
-                    <select class="form-select" name="status">
-                        <option value="">Tất cả</option>
-                        <option value="Active" @(Model.Filter.Status == "Active" ? "selected" : "")>Active</option>
-                        <option value="Draft" @(Model.Filter.Status == "Draft" ? "selected" : "")>Draft</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
-                </div>
-            }
-            <div class="d-flex gap-2 mt-3">
-                <a href="@Url.Action("Export", "QuestionBank")" class="btn btn-outline-secondary btn-sm">Export JSON</a>
-                @using (Html.BeginForm("Import", "QuestionBank", FormMethod.Post, new { enctype = "multipart/form-data", @class = "d-flex gap-2" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="file" class="form-control form-control-sm" name="file" accept=".json" required />
-                    <button type="submit" class="btn btn-outline-success btn-sm">Import</button>
-                }
-            </div>
-        </div>
-
-        <div class="admin-card p-3">
-            <div class="table-responsive">
-                <table class="table boki-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nội dung</th>
-                            <th>Bài học</th>
-                            <th>Mức</th>
-                            <th>Trạng thái</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Questions.Any())
-                        {
-                            foreach (var item in Model.Questions)
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Bài học</label>
+                        <select class="form-select" name="LessonId" id="editLessonId" required>
+                            <option value="">-- Chọn bài học --</option>
+                            @foreach (var option in Model.LessonOptions)
                             {
-                                <tr>
-                                    <td>@item.QuestionId</td>
-                                    <td>@item.QuestionText</td>
-                                    <td>@item.ClassName - @item.SubjectName</td>
-                                    <td>@item.Difficulty</td>
-                                    <td>@item.Status</td>
-                                    <td class="text-nowrap">
-                                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Index", "QuestionBank", new { editId = item.QuestionId })">Sửa</a>
-                                        @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <input type="hidden" name="id" value="@item.QuestionId" />
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
-                                        }
-                                    </td>
-                                </tr>
+                                <option value="@option.LessonId">@option.LessonDisplay</option>
                             }
-                        }
-                        else
-                        {
-                            <tr><td colspan="6" class="boki-empty">Không có câu hỏi phù hợp điều kiện lọc.</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Nội dung câu hỏi</label>
+                        <textarea class="form-control" name="QuestionText" id="editQuestionText" rows="3" required></textarea>
+                    </div>
+
+                    <div class="row g-2 mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label boki-form-label">Độ khó</label>
+                            <select class="form-select" name="Difficulty" id="editDifficulty">
+                                <option value="De">Dễ</option>
+                                <option value="TrungBinh">Trung bình</option>
+                                <option value="Kho">Khó</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label boki-form-label">Trạng thái</label>
+                            <select class="form-select" name="Status" id="editStatus">
+                                <option value="Active">Active</option>
+                                <option value="Draft">Draft</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Đáp án A</label>
+                        <input class="form-control" name="AnswerA" id="editAnswerA" required />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Đáp án B</label>
+                        <input class="form-control" name="AnswerB" id="editAnswerB" required />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Đáp án C</label>
+                        <input class="form-control" name="AnswerC" id="editAnswerC" required />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label boki-form-label">Đáp án D</label>
+                        <input class="form-control" name="AnswerD" id="editAnswerD" required />
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label boki-form-label">Đáp án đúng</label>
+                        <select class="form-select" name="CorrectIndex" id="editCorrectIndex">
+                            <option value="0">A</option>
+                            <option value="1">B</option>
+                            <option value="2">C</option>
+                            <option value="3">D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="editQuestionSubmit">Lưu thay đổi</button>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        (function () {
+            var modalElement = document.getElementById('editQuestionModal');
+            if (!modalElement || typeof bootstrap === 'undefined') {
+                return;
+            }
+
+            var modalInstance = new bootstrap.Modal(modalElement);
+            var editDataUrl = '@Url.Action("EditData", "QuestionBank")';
+            var modalTitle = document.getElementById('editQuestionModalTitle');
+            var errorBox = document.getElementById('editQuestionError');
+            var submitButton = document.getElementById('editQuestionSubmit');
+            var editButtons = document.querySelectorAll('.js-edit-question');
+
+            function setFieldValue(id, value) {
+                var element = document.getElementById(id);
+                if (!element) {
+                    return;
+                }
+
+                element.value = value == null ? '' : value;
+            }
+
+            function showError(message) {
+                errorBox.textContent = message;
+                errorBox.classList.remove('d-none');
+            }
+
+            function hideError() {
+                errorBox.textContent = '';
+                errorBox.classList.add('d-none');
+            }
+
+            function populateEditor(data) {
+                setFieldValue('editQuestionId', data.QuestionId);
+                setFieldValue('editLessonId', data.LessonId);
+                setFieldValue('editQuestionText', data.QuestionText);
+                setFieldValue('editDifficulty', data.Difficulty);
+                setFieldValue('editStatus', data.Status);
+                setFieldValue('editAnswerA', data.AnswerA);
+                setFieldValue('editAnswerB', data.AnswerB);
+                setFieldValue('editAnswerC', data.AnswerC);
+                setFieldValue('editAnswerD', data.AnswerD);
+                setFieldValue('editCorrectIndex', data.CorrectIndex);
+            }
+
+            function resetEditor() {
+                setFieldValue('editQuestionId', '');
+                setFieldValue('editLessonId', '');
+                setFieldValue('editQuestionText', '');
+                setFieldValue('editDifficulty', 'TrungBinh');
+                setFieldValue('editStatus', 'Active');
+                setFieldValue('editAnswerA', '');
+                setFieldValue('editAnswerB', '');
+                setFieldValue('editAnswerC', '');
+                setFieldValue('editAnswerD', '');
+                setFieldValue('editCorrectIndex', '0');
+            }
+
+            for (var i = 0; i < editButtons.length; i++) {
+                editButtons[i].addEventListener('click', function () {
+                    var questionId = this.getAttribute('data-question-id');
+                    if (!questionId) {
+                        return;
+                    }
+
+                    hideError();
+                    modalTitle.textContent = 'Đang tải dữ liệu...';
+                    submitButton.disabled = true;
+                    resetEditor();
+                    modalInstance.show();
+
+                    fetch(editDataUrl + '?id=' + encodeURIComponent(questionId), {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error('load_failed');
+                            }
+
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            populateEditor(data);
+                            modalTitle.textContent = 'Cập nhật câu hỏi #' + data.QuestionId;
+                            submitButton.disabled = false;
+                        })
+                        .catch(function () {
+                            modalTitle.textContent = 'Cập nhật câu hỏi';
+                            showError('Không thể tải dữ liệu câu hỏi. Vui lòng đóng cửa sổ và thử lại.');
+                            submitButton.disabled = true;
+                        });
+                });
+            }
+        })();
+    </script>
+}

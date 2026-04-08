@@ -1,5 +1,7 @@
 # Boki Learning Platform 🎓
 
+*Note: [Vietnamese Version here (Tiếng Việt)](./README.vi.md).*
+
 Boki Learning Platform is an engaging, modern, and highly interactive educational portal designed to make learning a joyful experience. Featuring a playful **Claymorphism** UI, dynamic animations, and seamless dark mode integration, Boki ensures an intuitive experience for both students and administrators.
 
 ## ✨ Features

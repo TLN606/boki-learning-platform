@@ -288,6 +288,7 @@
     <Content Include="Views\Learning\Quiz.cshtml" />
     <Content Include="Views\Learning\Result.cshtml" />
     <Content Include="Views\Learning\Index.cshtml" />
+    <Content Include="Views\QuestionBank\Create.cshtml" />
     <Content Include="Views\QuestionBank\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

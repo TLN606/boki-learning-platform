@@ -19,7 +19,7 @@ namespace Boki_ELearning.Controllers
     {
         private readonly BokiDBEntities1 _db = new BokiDBEntities1();
 
-        public ActionResult Index(string keyword = null, int? lessonId = null, string difficulty = null, string status = null, int? editId = null)
+        public ActionResult Index(string keyword = null, int? lessonId = null, string difficulty = null, string status = null)
         {
             var filter = new QuestionBankFilterViewModel
             {
@@ -29,16 +29,40 @@ namespace Boki_ELearning.Controllers
                 Status = status
             };
 
-            var editor = editId.HasValue ? LoadEditor(editId.Value) : CreateDefaultEditor();
             var model = new QuestionBankPageViewModel
             {
                 Filter = filter,
-                Editor = editor,
                 LessonOptions = LoadLessonOptions(),
                 Questions = LoadQuestionList(filter)
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            var model = new QuestionBankPageViewModel
+            {
+                Editor = CreateDefaultEditor(),
+                LessonOptions = LoadLessonOptions(),
+                Filter = new QuestionBankFilterViewModel(),
+                Questions = new List<QuestionBankListItemViewModel>()
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditData(int id)
+        {
+            var editor = LoadEditor(id);
+            if (editor == null || !editor.QuestionId.HasValue)
+            {
+                return HttpNotFound();
+            }
+
+            return Json(editor, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -47,14 +71,20 @@ namespace Boki_ELearning.Controllers
         {
             if (!ModelState.IsValid)
             {
+                if (model.QuestionId.HasValue)
+                {
+                    TempData["Message"] = "Du lieu cap nhat khong hop le. Vui long thu lai.";
+                    return RedirectToAction("Index");
+                }
+
                 var page = new QuestionBankPageViewModel
                 {
                     Filter = new QuestionBankFilterViewModel(),
                     Editor = model,
                     LessonOptions = LoadLessonOptions(),
-                    Questions = LoadQuestionList(new QuestionBankFilterViewModel())
+                    Questions = new List<QuestionBankListItemViewModel>()
                 };
-                return View("Index", page);
+                return View("Create", page);
             }
 
             var normalizedDifficulty = NormalizeDifficulty(model.Difficulty);
@@ -79,7 +109,21 @@ namespace Boki_ELearning.Controllers
                         {
                             tx.Rollback();
                             ModelState.AddModelError("LessonId", "Bài học không tồn tại hoặc đã bị ẩn.");
-                            return RedirectToAction("Index");
+
+                            if (model.QuestionId.HasValue)
+                            {
+                                TempData["Message"] = "Khong tim thay bai hoc hop le de cap nhat cau hoi.";
+                                return RedirectToAction("Index");
+                            }
+
+                            var page = new QuestionBankPageViewModel
+                            {
+                                Filter = new QuestionBankFilterViewModel(),
+                                Editor = model,
+                                LessonOptions = LoadLessonOptions(),
+                                Questions = new List<QuestionBankListItemViewModel>()
+                            };
+                            return View("Create", page);
                         }
 
                         subjectId = Convert.ToInt32(lessonResult);
@@ -532,7 +576,7 @@ namespace Boki_ELearning.Controllers
 
                     if (!lessonId.HasValue)
                     {
-                        return CreateDefaultEditor();
+                        return null;
                     }
 
                     while (answers.Count < 4)
