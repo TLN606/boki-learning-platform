@@ -1,0 +1,100 @@
+@model Boki_ELearning.Models.ViewModels.AdminExamDetailViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Chi tiết đề thi";
+    ViewBag.AdminNav = "exams";
+    var statusValue = (Model.Status ?? string.Empty).ToUpperInvariant();
+}
+
+<div class="admin-card p-4 mb-3">
+    <div class="d-flex flex-wrap justify-content-between gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">@Model.ExamName</h4>
+            <div class="boki-subtitle">
+                Mã đề #@Model.ExamId · @Model.QuestionCount câu · @Model.DurationMinutes phút · Trạng thái: <strong>@Model.Status</strong>
+            </div>
+            <div class="boki-subtitle">
+                Tạo lúc: @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                @if (Model.OpenAt.HasValue)
+                {
+                    <span> · Mở: @Model.OpenAt.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                }
+                @if (Model.CloseAt.HasValue)
+                {
+                    <span> · Đóng: @Model.CloseAt.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                }
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            @if (statusValue != "PUBLISHED")
+            {
+                using (Html.BeginForm("Publish", "ExamAdmin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.ExamId" />
+                    <button class="btn btn-success" type="submit">Publish</button>
+                }
+            }
+            @if (statusValue != "CLOSED")
+            {
+                using (Html.BeginForm("Close", "ExamAdmin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.ExamId" />
+                    <button class="btn btn-outline-danger" type="submit">Đóng đề</button>
+                }
+            }
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "ExamAdmin")">Quay lại</a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-6">
+        <div class="admin-card p-3">
+            <h6 class="fw-bold">Môn đã chọn</h6>
+            @foreach (var subject in Model.Subjects)
+            {
+                <span class="boki-pill boki-pill-info me-1 mb-1">@subject</span>
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="admin-card p-3">
+            <h6 class="fw-bold">Lớp được giao</h6>
+            @foreach (var cls in Model.Classes)
+            {
+                <span class="boki-pill boki-pill-muted me-1 mb-1">@cls</span>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="admin-card p-3">
+    <h6 class="fw-bold">Kết quả theo học sinh</h6>
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Học sinh</th>
+                    <th>Lớp</th>
+                    <th>Số lần làm</th>
+                    <th>Điểm cao nhất</th>
+                    <th>Lần làm mới nhất</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.StudentResults)
+                {
+                    <tr>
+                        <td>@item.StudentName</td>
+                        <td>@item.ClassName</td>
+                        <td>@item.AttemptCount</td>
+                        <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
+                        <td>@(item.LatestAttemptAt.HasValue ? item.LatestAttemptAt.Value.ToString("dd/MM/yyyy HH:mm") : "-")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

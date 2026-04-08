@@ -1,0 +1,30 @@
+@model Boki_ELearning.Models.ViewModels.LessonDetailViewModel
+@{
+    ViewBag.Title = "Chi tiết bài học";
+}
+
+<div class="boki-card p-4 mb-3">
+    <h3 class="fw-bold mb-1">@Model.LessonName</h3>
+    <div class="boki-subtitle">@Model.ClassName · @Model.SubjectName</div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="boki-card p-4 mb-3">
+            <h5 class="fw-bold">Nội dung lý thuyết</h5>
+            <p class="mb-0" style="white-space:pre-line;">@Model.TheoryContent</p>
+        </div>
+        <div class="boki-card p-4">
+            <h5 class="fw-bold">Mẹo ghi nhớ</h5>
+            <p class="mb-0" style="white-space:pre-line;">@Model.TipContent</p>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="boki-card p-4">
+            <div class="mb-2 fw-semibold">Số câu hỏi quiz</div>
+            <div class="display-6 fw-bold text-primary">@Model.QuestionCount</div>
+            <a href="@Url.Action("Quiz", "Learning", new { id = Model.LessonId })" class="btn btn-primary w-100 mt-3">Làm quiz ngay</a>
+            <a href="@Url.Action("Index", "Learning")" class="btn btn-outline-secondary w-100 mt-2">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>

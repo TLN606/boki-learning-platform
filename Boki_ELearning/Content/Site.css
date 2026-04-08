@@ -1,20 +1,186 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+:root {
+    --boki-primary: #0d6efd;
+    --boki-bg: #f3f6fb;
+    --boki-text: #1f2937;
+    --boki-muted: #6b7280;
+    --boki-success: #198754;
+    --boki-warning: #f59e0b;
+    --boki-danger: #dc3545;
+    --boki-admin: #0f172a;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+body {
+    background: linear-gradient(180deg, #f7f9fd 0%, #eff4fb 100%);
+    color: var(--boki-text);
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+a {
+    text-decoration: none;
+}
+
+.boki-navbar {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.boki-brand {
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #0b3c89;
+}
+
+.boki-main {
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
+    min-height: calc(100vh - 140px);
+}
+
+.boki-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e6ecf5;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+.boki-card-header {
+    border-bottom: 1px solid #edf2f8;
+    background: #f9fbff;
+}
+
+.boki-subtitle {
+    color: var(--boki-muted);
+}
+
+.boki-stat {
+    border-radius: 14px;
+    border: 1px solid #dbe7fb;
+    background: linear-gradient(145deg, #ffffff, #f4f8ff);
+    padding: 1rem;
+}
+
+.boki-pill {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.boki-pill-success { background: #e9f9ef; color: #166534; }
+.boki-pill-warning { background: #fff7e5; color: #9a6700; }
+.boki-pill-info { background: #e8f0ff; color: #1d4ed8; }
+.boki-pill-muted { background: #eef2f7; color: #475569; }
+
+.boki-table th {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #64748b;
+}
+
+.boki-table td {
+    vertical-align: middle;
+}
+
+.boki-form-label {
+    font-weight: 600;
+}
+
+.boki-form-help {
+    color: var(--boki-muted);
+    font-size: 0.85rem;
+}
+
+.admin-shell {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    background: var(--boki-admin);
+    color: #cbd5e1;
+    padding: 1rem;
+}
+
+.admin-sidebar .logo {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+}
+
+.admin-link {
+    display: block;
+    color: #cbd5e1;
+    padding: 0.65rem 0.8rem;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.admin-link:hover,
+.admin-link.active {
+    background: rgba(59, 130, 246, 0.25);
+    color: #ffffff;
+}
+
+.admin-content {
+    background: #f3f7ff;
+}
+
+.admin-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 1.5rem;
+}
+
+.admin-main {
+    padding: 1.5rem;
+}
+
+.admin-card {
+    border-radius: 14px;
+    border: 1px solid #dce5f3;
+    background: #ffffff;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+.exam-question {
+    border: 1px solid #dce6f7;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #ffffff;
+}
+
+.exam-answer {
+    display: block;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0.55rem 0.75rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+.exam-answer:hover {
+    border-color: #93c5fd;
+    background: #f8fbff;
+}
+
+.footer-note {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 991px) {
+    .admin-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        padding-bottom: 0.6rem;
+    }
 }

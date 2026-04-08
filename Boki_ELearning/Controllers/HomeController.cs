@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Boki_ELearning.Helpers;
 
 namespace Boki_ELearning.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
         public ActionResult Index()
         {
+            if (Session[SessionKeys.AccountId] != null)
+            {
+                var role = Session[SessionKeys.Role] as string;
+                if (RoleHelper.IsAdmin(role))
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+
+                return RedirectToAction("Index", "Learning");
+            }
+
             return View();
         }
 
-        public PartialViewResult About()
+        public ActionResult About()
         {
-            return PartialView();
+            return View();
         }
-
     }
 }

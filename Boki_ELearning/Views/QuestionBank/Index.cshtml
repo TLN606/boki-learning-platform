@@ -1,0 +1,171 @@
+@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Ngân hàng câu hỏi";
+    ViewBag.AdminNav = "questions";
+}
+
+<div class="row g-3">
+    <div class="col-lg-5">
+        <div class="admin-card p-3">
+            <h6 class="fw-bold mb-3">@((Model.Editor.QuestionId.HasValue ? "Cập nhật câu hỏi" : "Tạo câu hỏi mới"))</h6>
+            @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("QuestionId", Model.Editor.QuestionId)
+
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Bài học</label>
+                    <select class="form-select" name="LessonId" required>
+                        <option value="">-- Chọn bài học --</option>
+                        @foreach (var option in Model.LessonOptions)
+                        {
+                            <option value="@option.LessonId" @(option.LessonId == Model.Editor.LessonId ? "selected" : "")>@option.LessonDisplay</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Nội dung câu hỏi</label>
+                    <textarea class="form-control" name="QuestionText" rows="3" required>@Model.Editor.QuestionText</textarea>
+                </div>
+
+                <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label boki-form-label">Độ khó</label>
+                        <select class="form-select" name="Difficulty">
+                            <option value="De" @(Model.Editor.Difficulty == "De" ? "selected" : "")>Dễ</option>
+                            <option value="TrungBinh" @(Model.Editor.Difficulty == "TrungBinh" ? "selected" : "")>Trung bình</option>
+                            <option value="Kho" @(Model.Editor.Difficulty == "Kho" ? "selected" : "")>Khó</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label boki-form-label">Trạng thái</label>
+                        <select class="form-select" name="Status">
+                            <option value="Active" @(Model.Editor.Status == "Active" ? "selected" : "")>Active</option>
+                            <option value="Draft" @(Model.Editor.Status == "Draft" ? "selected" : "")>Draft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Đáp án A</label>
+                    <input class="form-control" name="AnswerA" value="@Model.Editor.AnswerA" required />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Đáp án B</label>
+                    <input class="form-control" name="AnswerB" value="@Model.Editor.AnswerB" required />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Đáp án C</label>
+                    <input class="form-control" name="AnswerC" value="@Model.Editor.AnswerC" required />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label boki-form-label">Đáp án D</label>
+                    <input class="form-control" name="AnswerD" value="@Model.Editor.AnswerD" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label boki-form-label">Đáp án đúng</label>
+                    <select class="form-select" name="CorrectIndex">
+                        <option value="0" @(Model.Editor.CorrectIndex == 0 ? "selected" : "")>A</option>
+                        <option value="1" @(Model.Editor.CorrectIndex == 1 ? "selected" : "")>B</option>
+                        <option value="2" @(Model.Editor.CorrectIndex == 2 ? "selected" : "")>C</option>
+                        <option value="3" @(Model.Editor.CorrectIndex == 3 ? "selected" : "")>D</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lưu câu hỏi</button>
+                <a class="btn btn-outline-secondary" href="@Url.Action("Index", "QuestionBank")">Làm mới</a>
+            }
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="admin-card p-3 mb-3">
+            @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
+            {
+                <div class="col-md-4">
+                    <label class="form-label boki-form-label">Từ khóa</label>
+                    <input class="form-control" name="keyword" value="@Model.Filter.Keyword" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label boki-form-label">Bài học</label>
+                    <select class="form-select" name="lessonId">
+                        <option value="">Tất cả</option>
+                        @foreach (var option in Model.LessonOptions)
+                        {
+                            <option value="@option.LessonId" @(Model.Filter.LessonId == option.LessonId ? "selected" : "")>@option.LessonDisplay</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label boki-form-label">Độ khó</label>
+                    <select class="form-select" name="difficulty">
+                        <option value="">Tất cả</option>
+                        <option value="De" @(Model.Filter.Difficulty == "De" ? "selected" : "")>Dễ</option>
+                        <option value="TrungBinh" @(Model.Filter.Difficulty == "TrungBinh" ? "selected" : "")>TB</option>
+                        <option value="Kho" @(Model.Filter.Difficulty == "Kho" ? "selected" : "")>Khó</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label boki-form-label">Trạng thái</label>
+                    <select class="form-select" name="status">
+                        <option value="">Tất cả</option>
+                        <option value="Active" @(Model.Filter.Status == "Active" ? "selected" : "")>Active</option>
+                        <option value="Draft" @(Model.Filter.Status == "Draft" ? "selected" : "")>Draft</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
+                </div>
+            }
+            <div class="d-flex gap-2 mt-3">
+                <a href="@Url.Action("Export", "QuestionBank")" class="btn btn-outline-secondary btn-sm">Export JSON</a>
+                @using (Html.BeginForm("Import", "QuestionBank", FormMethod.Post, new { enctype = "multipart/form-data", @class = "d-flex gap-2" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="file" class="form-control form-control-sm" name="file" accept=".json" required />
+                    <button type="submit" class="btn btn-outline-success btn-sm">Import</button>
+                }
+            </div>
+        </div>
+
+        <div class="admin-card p-3">
+            <div class="table-responsive">
+                <table class="table boki-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nội dung</th>
+                            <th>Bài học</th>
+                            <th>Mức</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Questions)
+                        {
+                            <tr>
+                                <td>@item.QuestionId</td>
+                                <td>@item.QuestionText</td>
+                                <td>@item.ClassName - @item.SubjectName</td>
+                                <td>@item.Difficulty</td>
+                                <td>@item.Status</td>
+                                <td class="text-nowrap">
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Index", "QuestionBank", new { editId = item.QuestionId })">Sửa</a>
+                                    @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.QuestionId" />
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

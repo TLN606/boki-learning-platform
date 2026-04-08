@@ -1,0 +1,44 @@
+@model List<Boki_ELearning.Models.ViewModels.AdminExamListItemViewModel>
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Đề thi tổng hợp";
+    ViewBag.AdminNav = "exams";
+}
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="@Url.Action("Create", "ExamAdmin")">Tạo đề thi mới</a>
+</div>
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Mã đề</th>
+                    <th>Tên đề</th>
+                    <th>Số câu</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th>Được giao</th>
+                    <th>Ngày tạo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ExamId</td>
+                        <td>@item.ExamName</td>
+                        <td>@item.QuestionCount</td>
+                        <td>@item.DurationMinutes phút</td>
+                        <td>@item.Status</td>
+                        <td>@item.AssignedStudentCount học sinh</td>
+                        <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td><a class="btn btn-sm btn-outline-primary" href="@Url.Action("Detail", "ExamAdmin", new { id = item.ExamId })">Chi tiết</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

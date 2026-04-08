@@ -1,0 +1,34 @@
+@model List<Boki_ELearning.Models.ViewModels.AdminStudentListItemViewModel>
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Quản lý học sinh";
+    ViewBag.AdminNav = "students";
+}
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Mã HS</th>
+                    <th>Họ tên</th>
+                    <th>Lớp</th>
+                    <th>Email</th>
+                    <th>Số lần làm bài</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.StudentId</td>
+                        <td>@item.FullName</td>
+                        <td>@item.ClassName</td>
+                        <td>@item.Email</td>
+                        <td>@item.AttemptCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

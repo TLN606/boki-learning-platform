@@ -1,101 +1,72 @@
-﻿@{
-    var isLoggedIn = Session["AccountId"] != null;
-    var currentStudentName = Session["StudentName"] as string ?? "Hoc sinh";
+@using Boki_ELearning.Helpers
+@{
+    var isLoggedIn = Session[SessionKeys.AccountId] != null;
+    var role = Session[SessionKeys.Role] as string;
+    var studentName = Session[SessionKeys.StudentName] as string ?? "Học sinh";
 }
-
 <!DOCTYPE html>
-<html lang="vi" class="light">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - Boki ELearning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    fontFamily: { sans: ["Nunito", "sans-serif"] },
-                    colors: {
-                        brand: { 50: "#eff6ff", 100: "#dbeafe", 500: "#3b82f6", 600: "#2563eb", 900: "#1e3a8a" }
-                    }
-                }
-            }
-        };
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    @Styles.Render("~/boki/css")
-    @RenderSection("head", required: false)
+    @Styles.Render("~/Content/css")
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 flex flex-col min-h-screen relative">
-    <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
-        <div class="floating-bg-shape bg-blue-300 dark:bg-blue-600 w-96 h-96 top-[-100px] left-[-100px]"></div>
-        <div class="floating-bg-shape bg-pink-300 dark:bg-pink-600 w-80 h-80 top-[30%] right-[-50px]"></div>
-        <div class="floating-bg-shape bg-yellow-300 dark:bg-yellow-600 w-[500px] h-[500px] bottom-[-200px] left-[20%]"></div>
-    </div>
-
-    <header class="fixed top-4 left-4 right-4 z-50 flex justify-center pointer-events-none">
-        <nav class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between bg-white/70 dark:bg-slate-800/70 backdrop-blur-lg rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.4)] border border-white/50 dark:border-slate-700/50 pointer-events-auto transition-all">
-            <a class="flex items-center gap-3" href="@Url.Action("Index", "Home")">
-                <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-xl font-black text-white shadow-md">B</div>
-                <span class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">Boki</span>
-            </a>
-
-            <div class="flex items-center gap-4">
-                <a href="@Url.Action("Index", "Home")" class="font-bold text-slate-600 dark:text-slate-300 hover:text-brand-500 dark:hover:text-brand-400 transition">Trang ch&#7911;</a>
-
-                @if (isLoggedIn)
-                {
-                    <a href="@Url.Action("Index", "Learning")" class="font-bold text-slate-600 dark:text-slate-300 hover:text-brand-500 dark:hover:text-brand-400 transition hidden sm:block">H&#7885;c t&#7853;p</a>
-                    <span class="hidden md:block text-sm font-bold text-slate-500 dark:text-slate-300">Xin ch&#224;o, @currentStudentName</span>
-                    <a href="@Url.Action("Logout", "Account")" class="clay-btn-secondary px-5 py-2 text-sm">&#272;&#259;ng xu&#7845;t</a>
-                }
-                else
-                {
-                    <a href="@Url.Action("Login", "Account")" class="font-bold text-slate-600 dark:text-slate-300 hover:text-brand-500 dark:hover:text-brand-400 transition hidden sm:block">&#272;&#259;ng nh&#7853;p</a>
-                    <a href="@Url.Action("Register", "Account")" class="clay-btn-primary px-5 py-2 text-sm">&#272;&#259;ng k&#253;</a>
-                }
-
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition text-slate-600 dark:text-slate-300">
-                    <svg id="theme-toggle-light-icon" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    <svg id="theme-toggle-dark-icon" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                </button>
+<body>
+    <nav class="navbar navbar-expand-lg boki-navbar">
+        <div class="container">
+            <a class="navbar-brand boki-brand" href="@Url.Action("Index", "Home")">Boki ELearning</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bokiNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="bokiNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                    @if (isLoggedIn)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Learning")">Học tập</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "StudentExam")">Đề tổng hợp</a></li>
+                        if (RoleHelper.IsAdmin(role))
+                        {
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Dashboard", "Admin")">Quản lý</a></li>
+                        }
+                    }
+                </ul>
+                <ul class="navbar-nav">
+                    @if (isLoggedIn)
+                    {
+                        <li class="nav-item"><span class="nav-link">Xin chào, @studentName</span></li>
+                        <li class="nav-item"><a class="btn btn-outline-secondary btn-sm mt-1" href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="btn btn-outline-primary btn-sm mt-1 me-2" href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+                        <li class="nav-item"><a class="btn btn-primary btn-sm mt-1" href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main class="flex-grow pt-28">
-        @if (TempData["Message"] != null)
-        {
-            <div class="container mx-auto px-6 py-2">
-                <div class="clay-card bg-emerald-50 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 px-6 py-4 text-sm font-bold">
-                    @TempData["Message"]
-                </div>
-            </div>
-        }
-        @RenderBody()
+    <main class="boki-main">
+        <div class="container">
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-info">@TempData["Message"]</div>
+            }
+            @RenderBody()
+        </div>
     </main>
 
-    <footer class="bg-white dark:bg-slate-900 pt-12 pb-8 border-t border-slate-200 dark:border-slate-800 mt-auto rounded-t-[3rem] shadow-[0_-4px_20px_rgba(0,0,0,0.02)] relative z-10 w-full overflow-hidden">
-        <div class="container mx-auto px-6 flex flex-col items-center text-center">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-xl font-black text-white shadow-md">B</div>
-                <span class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">Boki</span>
-            </div>
-            <p class="text-slate-500 dark:text-slate-400 font-medium mb-6 max-w-md">N&#7873;n t&#7843;ng h&#7885;c t&#7853;p t&#432;&#417;ng t&#225;c d&#224;nh cho h&#7885;c sinh ti&#7875;u h&#7885;c v&#7899;i b&#224;i h&#7885;c sinh &#273;&#7897;ng v&#224; b&#224;i t&#7853;p tr&#7855;c nghi&#7879;m.</p>
-            <div class="w-full border-t border-slate-100 dark:border-slate-800 pt-6 text-slate-400 dark:text-slate-500 font-bold text-sm">
-                <p>&copy; @DateTime.Now.Year Boki ELearning.</p>
-            </div>
+    <footer class="border-top bg-white py-3">
+        <div class="container footer-note">
+            &copy; @DateTime.Now.Year Boki ELearning
         </div>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/boki/theme")
     @RenderSection("scripts", required: false)
 </body>
 </html>

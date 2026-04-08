@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
 using Boki_ELearning.Helpers;
 using Boki_ELearning.Models;
@@ -34,7 +35,7 @@ namespace Boki_ELearning.Controllers
                 return View(model);
             }
 
-            var loginIdentity = model.Email.Trim().ToLowerInvariant();
+            var loginIdentity = (model.Email ?? string.Empty).Trim().ToLowerInvariant();
             var account = _db.TAIKHOANs.FirstOrDefault(x =>
                 ((x.EMAIL ?? string.Empty).ToLower() == loginIdentity) ||
                 ((x.TENDANGNHAP ?? string.Empty).ToLower() == loginIdentity));
@@ -45,8 +46,10 @@ namespace Boki_ELearning.Controllers
                 return View(model);
             }
 
+            var normalizedRole = RoleHelper.Normalize(account.VAITRO);
             var student = _db.HOCSINHs.AsNoTracking().FirstOrDefault(x => x.MATAIKHOAN == account.MATAIKHOAN);
-            SignIn(account, student);
+
+            SignIn(account, student, normalizedRole);
 
             TempData["Message"] = "Đăng nhập thành công.";
             return RedirectToLocal(returnUrl);
@@ -71,7 +74,7 @@ namespace Boki_ELearning.Controllers
                 return View(model);
             }
 
-            var email = model.Email.Trim().ToLowerInvariant();
+            var email = (model.Email ?? string.Empty).Trim().ToLowerInvariant();
             var existed = _db.TAIKHOANs.Any(x =>
                 ((x.EMAIL ?? string.Empty).ToLower() == email) ||
                 ((x.TENDANGNHAP ?? string.Empty).ToLower() == email));
@@ -87,7 +90,7 @@ namespace Boki_ELearning.Controllers
             {
                 defaultClassId = EnsureDefaultClass();
             }
-            catch (Exception)
+            catch
             {
                 ModelState.AddModelError(string.Empty, "Không thể khởi tạo lớp mặc định. Vui lòng thử lại.");
                 return View(model);
@@ -102,44 +105,38 @@ namespace Boki_ELearning.Controllers
             TAIKHOAN account = null;
             try
             {
-                account = new TAIKHOAN
+                using (var scope = new TransactionScope())
                 {
-                    EMAIL = email,
-                    TENDANGNHAP = email,
-                    MATKHAU = PasswordHelper.Hash(model.Password),
-                    VAITRO = "HOCSINH"
-                };
-
-                _db.TAIKHOANs.Add(account);
-                _db.SaveChanges();
-
-                var student = new HOCSINH
-                {
-                    HOTEN = model.FullName.Trim(),
-                    MALOP = defaultClassId,
-                    MATAIKHOAN = account.MATAIKHOAN
-                };
-
-                _db.HOCSINHs.Add(student);
-                _db.SaveChanges();
-
-                SignIn(account, student);
-
-                TempData["Message"] = "Đăng ký thành công. Chào mừng bạn đến với Boki.";
-                return RedirectToAction("Index", "Learning");
-            }
-            catch (Exception)
-            {
-                if (account != null && account.MATAIKHOAN > 0)
-                {
-                    var createdAccount = _db.TAIKHOANs.FirstOrDefault(x => x.MATAIKHOAN == account.MATAIKHOAN);
-                    if (createdAccount != null)
+                    account = new TAIKHOAN
                     {
-                        _db.TAIKHOANs.Remove(createdAccount);
-                        _db.SaveChanges();
-                    }
-                }
+                        EMAIL = email,
+                        TENDANGNHAP = email,
+                        MATKHAU = PasswordHelper.Hash(model.Password),
+                        VAITRO = RoleHelper.Student
+                    };
 
+                    _db.TAIKHOANs.Add(account);
+                    _db.SaveChanges();
+
+                    var student = new HOCSINH
+                    {
+                        HOTEN = (model.FullName ?? string.Empty).Trim(),
+                        MALOP = defaultClassId,
+                        MATAIKHOAN = account.MATAIKHOAN
+                    };
+
+                    _db.HOCSINHs.Add(student);
+                    _db.SaveChanges();
+
+                    scope.Complete();
+                    SignIn(account, student, RoleHelper.Student);
+
+                    TempData["Message"] = "Đăng ký thành công. Chào mừng bạn đến với Boki.";
+                    return RedirectToAction("Index", "Learning");
+                }
+            }
+            catch
+            {
                 ModelState.AddModelError(string.Empty, "Không thể đăng ký lúc này. Vui lòng thử lại.");
                 return View(model);
             }
@@ -163,10 +160,10 @@ namespace Boki_ELearning.Controllers
             base.Dispose(disposing);
         }
 
-        private void SignIn(TAIKHOAN account, HOCSINH student)
+        private void SignIn(TAIKHOAN account, HOCSINH student, string normalizedRole)
         {
             Session[SessionKeys.AccountId] = account.MATAIKHOAN;
-            Session[SessionKeys.Role] = account.VAITRO ?? "HOCSINH";
+            Session[SessionKeys.Role] = normalizedRole;
             Session[SessionKeys.StudentName] = student != null && !string.IsNullOrWhiteSpace(student.HOTEN)
                 ? student.HOTEN
                 : (account.TENDANGNHAP ?? account.EMAIL);
@@ -188,6 +185,12 @@ namespace Boki_ELearning.Controllers
             if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
+            }
+
+            var role = Session[SessionKeys.Role] as string;
+            if (RoleHelper.IsAdmin(role))
+            {
+                return RedirectToAction("Dashboard", "Admin");
             }
 
             return RedirectToAction("Index", "Learning");

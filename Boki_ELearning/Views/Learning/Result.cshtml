@@ -1,0 +1,68 @@
+@model Boki_ELearning.Models.ViewModels.LessonResultViewModel
+@{
+    ViewBag.Title = "Kết quả quiz";
+}
+
+<div class="boki-card p-4 mb-3">
+    <h3 class="fw-bold mb-1">Kết quả: @Model.LessonName</h3>
+    <p class="mb-0 boki-subtitle">Nộp lúc @Model.SubmitAt.ToString("dd/MM/yyyy HH:mm")</p>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4">
+        <div class="boki-stat">
+            <div class="boki-subtitle">Điểm số</div>
+            <div class="fs-3 fw-bold text-primary">@Model.Score.ToString("0.##")/10</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="boki-stat">
+            <div class="boki-subtitle">Số câu đúng</div>
+            <div class="fs-3 fw-bold text-success">@Model.CorrectCount/@Model.TotalCount</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="boki-stat">
+            <div class="boki-subtitle">Kết quả</div>
+            <div class="fs-3 fw-bold @(Model.Score >= 5 ? "text-success" : "text-danger")">
+                @(Model.Score >= 5 ? "Đạt" : "Cần cố gắng")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="boki-card p-3 mb-3">
+    <h5 class="fw-bold px-2 pt-2">Chi tiết câu trả lời</h5>
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Câu hỏi</th>
+                    <th>Đáp án đã chọn</th>
+                    <th>Kết quả</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Questions)
+                {
+                    <tr>
+                        <td>@row.QuestionText</td>
+                        <td>@row.SelectedAnswer</td>
+                        <td>
+                            @if (row.IsCorrect)
+                            {
+                                <span class="boki-pill boki-pill-success">Đúng</span>
+                            }
+                            else
+                            {
+                                <span class="boki-pill boki-pill-warning">Sai</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a class="btn btn-primary" href="@Url.Action("Index", "Learning")">Quay lại trang học tập</a>

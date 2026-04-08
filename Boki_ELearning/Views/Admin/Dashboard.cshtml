@@ -1,0 +1,90 @@
+@model Boki_ELearning.Models.ViewModels.AdminDashboardViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Dashboard";
+    ViewBag.AdminNav = "dashboard";
+}
+
+<div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Tổng học sinh</div>
+            <div class="fs-3 fw-bold">@Model.TotalStudents</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Tổng bài học</div>
+            <div class="fs-3 fw-bold">@Model.TotalLessons</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Câu hỏi active</div>
+            <div class="fs-3 fw-bold">@Model.TotalQuestions</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Lượt làm đề tổng hợp</div>
+            <div class="fs-3 fw-bold">@Model.TotalExamAttempts</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-6">
+        <div class="admin-card p-3">
+            <h6 class="fw-bold">Học sinh gần đây</h6>
+            <div class="table-responsive">
+                <table class="table boki-table">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Lớp</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RecentStudents)
+                        {
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@item.ClassName</td>
+                                <td>@item.Email</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="admin-card p-3">
+            <h6 class="fw-bold">Kết quả gần đây</h6>
+            <div class="table-responsive">
+                <table class="table boki-table">
+                    <thead>
+                        <tr>
+                            <th>Học sinh</th>
+                            <th>Bài học</th>
+                            <th>Điểm</th>
+                            <th>Ngày làm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RecentResults)
+                        {
+                            <tr>
+                                <td>@item.StudentName</td>
+                                <td>@item.LessonName</td>
+                                <td>@item.Score.ToString("0.##")</td>
+                                <td>@item.SubmitAt.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

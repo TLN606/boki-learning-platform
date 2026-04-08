@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Boki Admin</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <div class="logo">Boki Admin</div>
+            <a class="admin-link @(ViewBag.AdminNav == "dashboard" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Tổng quan</a>
+            <a class="admin-link @(ViewBag.AdminNav == "students" ? "active" : "")" href="@Url.Action("Students", "Admin")">Học sinh</a>
+            <a class="admin-link @(ViewBag.AdminNav == "results" ? "active" : "")" href="@Url.Action("Results", "Admin")">Kết quả học tập</a>
+            <a class="admin-link @(ViewBag.AdminNav == "questions" ? "active" : "")" href="@Url.Action("Index", "QuestionBank")">Ngân hàng câu hỏi</a>
+            <a class="admin-link @(ViewBag.AdminNav == "exams" ? "active" : "")" href="@Url.Action("Index", "ExamAdmin")">Đề thi tổng hợp</a>
+            <a class="admin-link" href="@Url.Action("Index", "Learning")">Về trang học sinh</a>
+            <a class="admin-link" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+        </aside>
+        <div class="admin-content">
+            <header class="admin-topbar">
+                <h5 class="mb-0">@ViewBag.Title</h5>
+            </header>
+            <main class="admin-main">
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-info">@TempData["Message"]</div>
+                }
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,72 @@
+@model Boki_ELearning.Models.ViewModels.AdminExamCreatePageViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Tạo đề thi tổng hợp";
+    ViewBag.AdminNav = "exams";
+}
+
+<div class="admin-card p-4">
+    @using (Html.BeginForm("Create", "ExamAdmin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Tên đề thi</label>
+                @Html.TextBoxFor(x => x.Form.ExamName, new { @class = "form-control", placeholder = "Ví dụ: Đề tổng hợp tháng 4" })
+            </div>
+            <div class="col-md-3">
+                <label class="form-label boki-form-label">Số câu</label>
+                @Html.TextBoxFor(x => x.Form.QuestionCount, new { @class = "form-control", type = "number", min = "1", max = "200" })
+            </div>
+            <div class="col-md-3">
+                <label class="form-label boki-form-label">Thời gian (phút)</label>
+                @Html.TextBoxFor(x => x.Form.DurationMinutes, new { @class = "form-control", type = "number", min = "1", max = "240" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Mở đề lúc (tuỳ chọn)</label>
+                @Html.TextBoxFor(x => x.Form.OpenAt, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Đóng đề lúc (tuỳ chọn)</label>
+                @Html.TextBoxFor(x => x.Form.CloseAt, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            </div>
+        </div>
+
+        <hr />
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Môn học (chọn nhiều)</label>
+                <div class="border rounded p-3" style="max-height:240px; overflow:auto;">
+                    @foreach (var item in Model.SubjectOptions)
+                    {
+                        var isChecked = Model.Form.SubjectIds != null && Model.Form.SubjectIds.Contains(item.Id);
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="SubjectIds" value="@item.Id" @(isChecked ? "checked" : "") />
+                            <label class="form-check-label">@item.Name</label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Lớp (chọn nhiều)</label>
+                <div class="border rounded p-3" style="max-height:240px; overflow:auto;">
+                    @foreach (var item in Model.ClassOptions)
+                    {
+                        var isChecked = Model.Form.ClassIds != null && Model.Form.ClassIds.Contains(item.Id);
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ClassIds" value="@item.Id" @(isChecked ? "checked" : "") />
+                            <label class="form-check-label">@item.Name</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Tạo đề</button>
+            <a href="@Url.Action("Index", "ExamAdmin")" class="btn btn-outline-secondary">Quay lại</a>
+        </div>
+    }
+</div>

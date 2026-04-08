@@ -1,0 +1,36 @@
+@model List<Boki_ELearning.Models.ViewModels.AdminResultListItemViewModel>
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Kết quả học tập";
+    ViewBag.AdminNav = "results";
+}
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Mã KQ</th>
+                    <th>Học sinh</th>
+                    <th>Môn</th>
+                    <th>Bài học</th>
+                    <th>Điểm</th>
+                    <th>Ngày làm</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ResultId</td>
+                        <td>@item.StudentName</td>
+                        <td>@item.SubjectName</td>
+                        <td>@item.LessonName</td>
+                        <td>@item.Score.ToString("0.##")</td>
+                        <td>@item.SubmitAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

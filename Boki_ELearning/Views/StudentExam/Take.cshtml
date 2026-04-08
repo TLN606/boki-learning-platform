@@ -1,0 +1,36 @@
+@model Boki_ELearning.Models.ViewModels.StudentExamTakeViewModel
+@{
+    ViewBag.Title = "Làm đề tổng hợp";
+}
+
+<div class="boki-card p-4 mb-3">
+    <h3 class="fw-bold mb-1">@Model.ExamName</h3>
+    <div class="boki-subtitle">@Model.Questions.Count câu hỏi · @Model.DurationMinutes phút</div>
+</div>
+
+@using (Html.BeginForm("Submit", "StudentExam", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("ExamId", Model.ExamId)
+
+    for (var i = 0; i < Model.Questions.Count; i++)
+    {
+        var question = Model.Questions[i];
+        <div class="exam-question">
+            <div class="fw-semibold mb-2">Câu @question.Order: @question.QuestionText</div>
+            @Html.Hidden($"Answers[{i}].QuestionId", question.QuestionId)
+            @foreach (var answer in question.Answers)
+            {
+                <label class="exam-answer">
+                    <input type="radio" name="Answers[@i].AnswerId" value="@answer.AnswerId" />
+                    <span class="ms-1">@answer.AnswerText</span>
+                </label>
+            }
+        </div>
+    }
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Nộp đề</button>
+        <a href="@Url.Action("Index", "StudentExam")" class="btn btn-outline-secondary">Thoát</a>
+    </div>
+}

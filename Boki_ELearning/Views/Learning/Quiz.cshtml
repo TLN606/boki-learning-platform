@@ -1,0 +1,36 @@
+@model Boki_ELearning.Models.ViewModels.LessonQuizViewModel
+@{
+    ViewBag.Title = "Làm quiz";
+}
+
+<div class="boki-card p-4 mb-3">
+    <h3 class="fw-bold mb-1">@Model.LessonName</h3>
+    <div class="boki-subtitle">@Model.QuestionCount câu hỏi</div>
+</div>
+
+@using (Html.BeginForm("SubmitQuiz", "Learning", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("LessonId", Model.LessonId)
+
+    for (var i = 0; i < Model.Questions.Count; i++)
+    {
+        var question = Model.Questions[i];
+        <div class="exam-question">
+            <div class="fw-semibold mb-2">Câu @(i + 1): @question.QuestionText</div>
+            @Html.Hidden($"Answers[{i}].QuestionId", question.QuestionId)
+            @foreach (var answer in question.Answers)
+            {
+                <label class="exam-answer">
+                    <input type="radio" name="Answers[@i].AnswerId" value="@answer.AnswerId" required />
+                    <span class="ms-1">@answer.AnswerText</span>
+                </label>
+            }
+        </div>
+    }
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Nộp bài</button>
+        <a href="@Url.Action("Lesson", "Learning", new { id = Model.LessonId })" class="btn btn-outline-secondary">Quay lại bài học</a>
+    </div>
+}

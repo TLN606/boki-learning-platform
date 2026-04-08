@@ -55,6 +55,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,10 +128,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ExamAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearningController.cs" />
+    <Compile Include="Controllers\QuestionBankController.cs" />
+    <Compile Include="Controllers\StudentExamController.cs" />
+    <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
     <Compile Include="Filters\SessionAuthorizeAttribute.cs" />
+    <Compile Include="Helpers\DbConnectionHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\RoleHelper.cs" />
     <Compile Include="Helpers\SessionKeys.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,8 +197,12 @@
     <Compile Include="Models\TAIKHOAN.cs">
       <DependentUpon>BokiModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\AdminDashboardViewModels.cs" />
+    <Compile Include="Models\ViewModels\ExamViewModels.cs" />
+    <Compile Include="Models\ViewModels\LearningLessonViewModels.cs" />
     <Compile Include="Models\ViewModels\LearningIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\QuestionBankViewModels.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,6 +225,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="App_Data\Sql\20260409_BokiV1_ExamModule.sql" />
+    <Content Include="App_Data\Sql\20260409_Reset_Admin.sql" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\templates\boki-frontend\assets\css\style.css" />
     <Content Include="Content\templates\boki-frontend\assets\js\theme.js" />
@@ -261,22 +275,41 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\Results.cshtml" />
+    <Content Include="Views\Admin\Students.cshtml" />
+    <Content Include="Views\ExamAdmin\Create.cshtml" />
+    <Content Include="Views\ExamAdmin\Detail.cshtml" />
+    <Content Include="Views\ExamAdmin\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Learning\Lesson.cshtml" />
+    <Content Include="Views\Learning\Quiz.cshtml" />
+    <Content Include="Views\Learning\Result.cshtml" />
     <Content Include="Views\Learning\Index.cshtml" />
+    <Content Include="Views\QuestionBank\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\StudentExam\History.cshtml" />
+    <Content Include="Views\StudentExam\Index.cshtml" />
+    <Content Include="Views\StudentExam\Take.cshtml" />
+    <Content Include="Views\Layouts\_AdminLayout.cshtml" />
     <Content Include="Views\Layouts\_UserLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Sql\" />
     <Folder Include="Filters\" />
     <Folder Include="Helpers\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\ExamAdmin\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Layouts\" />
     <Folder Include="Views\Learning\" />
+    <Folder Include="Views\QuestionBank\" />
+    <Folder Include="Views\StudentExam\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
