@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki | Dang ky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Learning</span></a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link" href="index.html">Trang chu</a>
+        <a class="nav-link active" href="auth-register.html">Dang ky</a>
+        <a class="nav-link" href="auth-login.html">Dang nhap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-shell">
+      <aside class="auth-visual" style="background:linear-gradient(40deg, rgba(19, 23, 33, 0.67), rgba(56, 83, 120, 0.4)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80') center/cover;">
+        <div>
+          <p class="badge">Khoi tao tai khoan trong 1 phut</p>
+          <h2 style="font-size:2.4rem;margin-top:0.7rem;">Bat dau hanh trinh hoc co chien luoc.</h2>
+          <p style="margin-top:0.8rem;max-width:34ch;">Sau khi tao tai khoan, hoc sinh co the vao dashboard, chon bai hoc va lam quiz ngay.</p>
+        </div>
+      </aside>
+      <article class="surface auth-form">
+        <h1 style="font-size:2.7rem;">Dang ky tai khoan</h1>
+        <p style="margin-top:0.4rem;color:var(--text-muted);">Dung cho hoc sinh tieu hoc va phu huynh theo doi ket qua.</p>
+        <form>
+          <label for="fullName">Ho va ten</label>
+          <input id="fullName" type="text" placeholder="Nguyen Van A" required>
+          <label for="regEmail">Email</label>
+          <input id="regEmail" type="email" placeholder="hocvien@boki.vn" required>
+          <label for="class">Lop</label>
+          <select id="class">
+            <option>Lop 2A</option>
+            <option>Lop 2B</option>
+            <option>Lop 2C</option>
+            <option>Lop 2D</option>
+          </select>
+          <label for="regPwd">Mat khau</label>
+          <input id="regPwd" type="password" placeholder="Toi thieu 8 ky tu" required>
+          <a class="btn btn-primary" data-demo-submit="Dang ky thanh cong" href="student-dashboard.html">Tao tai khoan</a>
+        </form>
+        <p style="margin-top:1rem;color:var(--text-muted);">Da co tai khoan? <a href="auth-login.html" style="text-decoration:underline;">Dang nhap</a></p>
+      </article>
+    </section>
+  </main>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

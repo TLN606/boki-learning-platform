@@ -1,0 +1,56 @@
+﻿[
+  {
+    "id": "R-24001",
+    "student": "Nguyen Minh Chau",
+    "lesson": "Cong tru trong pham vi 100",
+    "score": 9.5,
+    "correct": "19/20",
+    "time": "13:42",
+    "date": "2026-04-08"
+  },
+  {
+    "id": "R-24002",
+    "student": "Tran Gia Han",
+    "lesson": "So sanh phan so co ban",
+    "score": 8,
+    "correct": "16/20",
+    "time": "15:10",
+    "date": "2026-04-08"
+  },
+  {
+    "id": "R-24003",
+    "student": "Le Quoc Bao",
+    "lesson": "Doc hieu: Khu vuon mua he",
+    "score": 7,
+    "correct": "14/20",
+    "time": "18:00",
+    "date": "2026-04-07"
+  },
+  {
+    "id": "R-24004",
+    "student": "Pham Ha My",
+    "lesson": "Family and Daily Activities",
+    "score": 9,
+    "correct": "18/20",
+    "time": "12:56",
+    "date": "2026-04-07"
+  },
+  {
+    "id": "R-24005",
+    "student": "Do Anh Thu",
+    "lesson": "Luyen viet doan van ngan",
+    "score": 9.7,
+    "correct": "19/20",
+    "time": "14:23",
+    "date": "2026-04-06"
+  },
+  {
+    "id": "R-24006",
+    "student": "Bui Gia Huy",
+    "lesson": "Co the nguoi va cham soc suc khoe",
+    "score": 6.4,
+    "correct": "13/20",
+    "time": "20:14",
+    "date": "2026-04-06"
+  }
+]

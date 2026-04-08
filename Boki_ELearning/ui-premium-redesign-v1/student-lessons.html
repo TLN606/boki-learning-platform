@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki | Danh sach bai hoc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Student</span></a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link" href="student-dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="student-lessons.html">Kho bai hoc</a>
+        <a class="nav-link" href="student-result.html">Ket qua</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="layout-app">
+    <aside class="sidebar pane">
+      <p class="badge">Hoc sinh</p>
+      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Minh Chau</h3>
+      <nav style="margin-top:1rem;">
+        <a href="student-dashboard.html">Tong quan <span>01</span></a>
+        <a class="active" href="student-lessons.html">Danh sach bai hoc <span>02</span></a>
+        <a href="student-lesson-detail.html">Chi tiet bai hoc <span>03</span></a>
+        <a href="student-quiz.html">Lam quiz <span>04</span></a>
+        <a href="student-result.html">Ket qua <span>05</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="breadcrumb"><a href="index.html">Boki</a> / <a href="student-dashboard.html">Hoc sinh</a> / <span>Danh sach bai hoc</span></div>
+      <section class="pane" style="padding:1.3rem;">
+        <div class="toolbar">
+          <h1 style="font-size:2.5rem;">Kho bai hoc</h1>
+          <a href="student-lesson-detail.html" class="btn btn-primary">Mo bai dang hoc</a>
+        </div>
+        <div class="toolbar" style="margin-top:1rem;">
+          <input class="field" placeholder="Tim theo ten bai hoc hoac mon hoc..." style="max-width:360px;">
+          <div class="toolbar">
+            <select style="width:180px;">
+              <option>Tat ca mon</option>
+              <option>Toan</option>
+              <option>Tieng Viet</option>
+              <option>Tieng Anh</option>
+            </select>
+            <select style="width:180px;">
+              <option>Tat ca trang thai</option>
+              <option>Dang hoc</option>
+              <option>Hoan thanh</option>
+              <option>Chua hoc</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:1rem;">
+          <table class="table">
+            <thead>
+              <tr><th>Ma</th><th>Mon</th><th>Ten bai hoc</th><th>Thoi luong</th><th>Tien do</th><th>Hanh dong</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>201</td><td>Toan</td><td>Cong tru trong pham vi 100</td><td>22 phut</td><td><span class="badge success">100%</span></td><td><a href="student-result.html">Xem ket qua</a></td></tr>
+              <tr><td>202</td><td>Toan</td><td>So sanh phan so co ban</td><td>26 phut</td><td><span class="badge">55%</span></td><td><a href="student-lesson-detail.html">Hoc tiep</a></td></tr>
+              <tr><td>203</td><td>Tieng Viet</td><td>Doc hieu: Khu vuon mua he</td><td>18 phut</td><td><span class="badge success">100%</span></td><td><a href="student-result.html">Xem ket qua</a></td></tr>
+              <tr><td>204</td><td>Tieng Viet</td><td>Luyen viet doan van ngan</td><td>28 phut</td><td><span class="badge">20%</span></td><td><a href="student-lesson-detail.html">Bat dau</a></td></tr>
+              <tr><td>205</td><td>TNXH</td><td>Co the nguoi va cham soc suc khoe</td><td>24 phut</td><td><span class="badge warn">0%</span></td><td><a href="student-lesson-detail.html">Bat dau</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

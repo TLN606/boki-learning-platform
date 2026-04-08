@@ -1,0 +1,111 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki | Dashboard hoc sinh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Student</span></a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link active" href="student-dashboard.html">Dashboard</a>
+        <a class="nav-link" href="student-lessons.html">Kho bai hoc</a>
+        <a class="nav-link" href="student-result.html">Ket qua</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Sang trang quan tri</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="layout-app">
+    <aside class="sidebar pane">
+      <p class="badge">Hoc sinh</p>
+      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Minh Chau</h3>
+      <p style="color:var(--text-muted);">Lop 2A</p>
+      <nav style="margin-top:1rem;">
+        <a class="active" href="student-dashboard.html">Tong quan <span>01</span></a>
+        <a href="student-lessons.html">Danh sach bai hoc <span>02</span></a>
+        <a href="student-lesson-detail.html">Chi tiet bai hoc <span>03</span></a>
+        <a href="student-quiz.html">Lam quiz <span>04</span></a>
+        <a href="student-result.html">Ket qua <span>05</span></a>
+      </nav>
+      <a class="btn btn-ghost" href="auth-login.html" style="margin-top:1rem;">Dang xuat</a>
+    </aside>
+
+    <main>
+      <div class="breadcrumb"><a href="index.html">Boki</a> / <span>Hoc sinh</span> / <span>Dashboard</span></div>
+      <section class="pane" style="padding:1.6rem;">
+        <h1 style="font-size:2.8rem;">Nhip hoc hom nay</h1>
+        <p style="margin-top:0.5rem;color:var(--text-muted);">Tiep tuc bai dang hoc va hoan thanh quiz truoc 21:00 de giu chuoi hoc tap.</p>
+        <div class="metric-row" style="margin-top:1rem;">
+          <div class="metric"><span>Tong bai hoc</span><strong>24</strong></div>
+          <div class="metric"><span>Da hoan thanh</span><strong>16</strong></div>
+          <div class="metric"><span>Quiz trung binh</span><strong>8.6</strong></div>
+          <div class="metric"><span>Ngay hoc lien tiep</span><strong>11</strong></div>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <article class="pane" style="padding:1.2rem;">
+          <div class="toolbar">
+            <h2>Bai hoc uu tien</h2>
+            <a href="student-lessons.html" class="btn btn-secondary">Xem tat ca</a>
+          </div>
+          <ul class="list-lines" style="margin-top:0.8rem;">
+            <li>
+              <div>
+                <strong>So sanh phan so co ban</strong>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Toan • 26 phut</p>
+              </div>
+              <a class="btn btn-primary" href="student-lesson-detail.html">Hoc tiep</a>
+            </li>
+            <li>
+              <div>
+                <strong>Luyen viet doan van ngan</strong>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Tieng Viet • 28 phut</p>
+              </div>
+              <a class="btn btn-secondary" href="student-lesson-detail.html">Bat dau</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="pane" style="padding:1.2rem;">
+          <h2>Tien do theo mon</h2>
+          <ul class="list-lines" style="margin-top:0.8rem;">
+            <li>
+              <div style="width:100%;">
+                <div class="toolbar"><strong>Toan</strong><span>72%</span></div>
+                <div class="progress-bar"><span data-progress="72"></span></div>
+              </div>
+            </li>
+            <li>
+              <div style="width:100%;">
+                <div class="toolbar"><strong>Tieng Viet</strong><span>63%</span></div>
+                <div class="progress-bar"><span data-progress="63"></span></div>
+              </div>
+            </li>
+            <li>
+              <div style="width:100%;">
+                <div class="toolbar"><strong>Tieng Anh</strong><span>49%</span></div>
+                <div class="progress-bar"><span data-progress="49"></span></div>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </section>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

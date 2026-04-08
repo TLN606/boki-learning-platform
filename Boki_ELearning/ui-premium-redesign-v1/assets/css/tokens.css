@@ -1,0 +1,30 @@
+﻿:root {
+  --bg: #f4f1eb;
+  --bg-soft: #ece6dc;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-strong: #ffffff;
+  --text: #1f2328;
+  --text-muted: #5e676e;
+  --line: #d9d1c4;
+  --accent: #ab7a38;
+  --accent-strong: #875f2a;
+  --success: #2f7a4f;
+  --danger: #a33b2c;
+  --radius-xl: 28px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+  --shadow-soft: 0 24px 64px -42px rgba(35, 35, 35, 0.45);
+  --shadow-layer: 0 10px 25px -18px rgba(17, 17, 17, 0.45);
+  --gap-xxs: 0.35rem;
+  --gap-xs: 0.6rem;
+  --gap-sm: 0.9rem;
+  --gap-md: 1.2rem;
+  --gap-lg: 1.7rem;
+  --gap-xl: 2.5rem;
+  --gap-2xl: 3.4rem;
+  --gap-3xl: 4.5rem;
+  --max-content: 1200px;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+}

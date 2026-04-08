@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki | Hoc thong minh cho hoc sinh tieu hoc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">B</span>
+        <span>Boki Learning</span>
+      </a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link active" href="index.html">Trang chu</a>
+        <a class="nav-link" href="student-dashboard.html">Hoc sinh</a>
+        <a class="nav-link" href="admin-dashboard.html">Quan tri</a>
+        <a class="btn btn-ghost" href="auth-register.html">Dang ky</a>
+        <a class="btn btn-primary" href="auth-login.html">Dang nhap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hero">
+    <section class="surface">
+      <div class="hero-copy">
+        <p class="badge">Nen tang E-Learning cho tieu hoc</p>
+        <h1>Hoc vung nen tang, tien bo tung ngay.</h1>
+        <p>Boki ket hop bai giang ngan gon, bai tap co phan hoi tuc thi va dashboard theo doi de giao vien, phu huynh va hoc sinh di cung nhip.</p>
+        <div class="toolbar">
+          <a class="btn btn-primary" href="auth-register.html">Bat dau mien phi</a>
+          <a class="btn btn-secondary" href="student-dashboard.html">Xem giao dien hoc sinh</a>
+        </div>
+        <ul class="kpi-strip">
+          <li>
+            <span>Ty le hoan thanh bai hoc</span>
+            <strong>86%</strong>
+          </li>
+          <li>
+            <span>Thoi gian hoc trung binh</span>
+            <strong>24'</strong>
+          </li>
+          <li>
+            <span>Bai quiz da nop</span>
+            <strong>1,420</strong>
+          </li>
+        </ul>
+      </div>
+      <div class="hero-image" role="img" aria-label="Hoc sinh dang hoc online"></div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="pane" style="padding:1.5rem;">
+        <h2>Mot luong hoc ro rang</h2>
+        <p style="margin-top:0.8rem;color:var(--text-muted);">Tu bai hoc den quiz va ket qua, toan bo hanh trinh duoc sap xep theo thu tu de hoc sinh khong bi roi.</p>
+        <ul class="list-lines" style="margin-top:1rem;">
+          <li><span>Bai hoc ngan 15-30 phut</span><span class="badge">Tap trung</span></li>
+          <li><span>Quiz tu dong cham diem</span><span class="badge success">Nhanh</span></li>
+          <li><span>Phan tich tien do theo mon</span><span class="badge">Minh bach</span></li>
+        </ul>
+      </article>
+      <article class="pane" style="padding:1.5rem;">
+        <h2>Quan tri co du lieu de quyet dinh</h2>
+        <p style="margin-top:0.8rem;color:var(--text-muted);">Bang quan tri theo doi hoc sinh can ho tro, bai hoc co ty le sai cao va xu huong ket qua moi ngay.</p>
+        <div style="margin-top:1rem;" class="split-pane">
+          <div>
+            <span class="badge warn">Can ho tro</span>
+            <p style="margin-top:0.6rem;">12 hoc sinh can kem them mon Toan trong tuan nay.</p>
+          </div>
+          <div>
+            <span class="badge success">Di dung huong</span>
+            <p style="margin-top:0.6rem;">4 lop co diem trung binh tang > 0.7 sau 3 tuan.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section pane" style="padding:1.7rem;">
+      <div class="toolbar">
+        <div>
+          <h2>San sang xem prototype?</h2>
+          <p style="color:var(--text-muted);">Ban co the di truc tiep vao 2 luong: Hoc sinh hoac Quan tri.</p>
+        </div>
+        <div class="toolbar">
+          <a class="btn btn-secondary" href="student-dashboard.html">Vao luong hoc sinh</a>
+          <a class="btn btn-primary" href="admin-dashboard.html">Vao luong quan tri</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

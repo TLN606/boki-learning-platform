@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki Admin | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Admin</span></a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link active" href="admin-dashboard.html">Dashboard</a>
+        <a class="nav-link" href="admin-students.html">Hoc sinh</a>
+        <a class="nav-link" href="admin-lessons.html">Bai hoc</a>
+        <a class="btn btn-secondary" href="student-dashboard.html">Sang trang hoc sinh</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="layout-app">
+    <aside class="sidebar pane">
+      <p class="badge">Quan tri</p>
+      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Truong Tieu hoc Boki</h3>
+      <nav style="margin-top:1rem;">
+        <a class="active" href="admin-dashboard.html">Tong quan <span>01</span></a>
+        <a href="admin-students.html">Hoc sinh <span>02</span></a>
+        <a href="admin-lessons.html">Bai hoc <span>03</span></a>
+        <a href="admin-questions.html">Cau hoi <span>04</span></a>
+        <a href="admin-results.html">Ket qua <span>05</span></a>
+      </nav>
+      <a class="btn btn-ghost" href="auth-login.html" style="margin-top:1rem;">Dang xuat</a>
+    </aside>
+
+    <main>
+      <div class="breadcrumb"><a href="index.html">Boki</a> / <span>Quan tri</span> / <span>Dashboard</span></div>
+      <section class="pane" style="padding:1.6rem;">
+        <h1 style="font-size:2.8rem;">Bang dieu phoi hoc tap</h1>
+        <p style="margin-top:0.6rem;color:var(--text-muted);">Theo doi suc khoe hoc tap toan truong theo ngay, lop va mon hoc.</p>
+        <div class="metric-row" style="margin-top:1rem;">
+          <div class="metric"><span>Tong hoc sinh</span><strong>428</strong></div>
+          <div class="metric"><span>Dang theo dung nhip</span><strong>311</strong></div>
+          <div class="metric"><span>Can ho tro</span><strong>73</strong></div>
+          <div class="metric"><span>Diem TB tuan</span><strong>8.2</strong></div>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <article class="pane" style="padding:1.2rem;">
+          <div class="toolbar"><h2>Canh bao uu tien</h2><a class="btn btn-secondary" href="admin-students.html">Mo danh sach</a></div>
+          <ul class="list-lines" style="margin-top:0.8rem;">
+            <li><span>Lop 2B co 12 hoc sinh duoi 7.0 mon Toan</span><span class="badge warn">Can xu ly</span></li>
+            <li><span>Bai "Quy dong mau" sai nhieu (>44%)</span><span class="badge">Can xem lai</span></li>
+            <li><span>2 lop cham nop quiz > 2 ngay</span><span class="badge warn">Qua han</span></li>
+          </ul>
+        </article>
+        <article class="pane" style="padding:1.2rem;">
+          <div class="toolbar"><h2>Tac vu nhanh</h2><span class="badge">Prototype</span></div>
+          <ul class="list-lines" style="margin-top:0.8rem;">
+            <li><span>Cap nhat danh sach hoc sinh can bo tro</span><a href="admin-students.html">Mo</a></li>
+            <li><span>Rao soat cau hoi do kho cao</span><a href="admin-questions.html">Mo</a></li>
+            <li><span>Xem xu huong diem trong tuan</span><a href="admin-results.html">Mo</a></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </section>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
