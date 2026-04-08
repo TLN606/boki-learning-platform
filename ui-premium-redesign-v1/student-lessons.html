@@ -1,0 +1,93 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boki | Danh sách bài học</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Học sinh</span></a>
+      <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
+      <nav class="nav-links" id="siteNav">
+        <a class="nav-link" href="student-dashboard.html">Bảng điều khiển</a>
+        <a class="nav-link active" href="student-lessons.html">Kho bài học</a>
+        <a class="nav-link" href="student-result.html">Kết quả</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="layout-app">
+    <aside class="sidebar pane">
+      <p class="badge">Học sinh</p>
+      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Minh Châu</h3>
+      <nav style="margin-top:1rem;">
+        <a href="student-dashboard.html">Tổng quan <span>01</span></a>
+        <a class="active" href="student-lessons.html">Danh sách bài học <span>02</span></a>
+        <a href="student-lesson-detail.html">Chi tiết bài học <span>03</span></a>
+        <a href="student-quiz.html">Làm quiz <span>04</span></a>
+        <a href="student-result.html">Kết quả <span>05</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="breadcrumb"><a href="index.html">Boki</a> / <a href="student-dashboard.html">Học sinh</a> / <span>Danh sách bài học</span></div>
+      <section class="pane" style="padding:1.3rem;">
+        <div class="toolbar">
+          <h1 style="font-size:2.5rem;">Kho bài học</h1>
+          <a href="student-lesson-detail.html" class="btn btn-primary">Mở bài đang học</a>
+        </div>
+        <div class="toolbar" style="margin-top:1rem;">
+          <input class="field" placeholder="Tìm theo tên bài học hoặc môn học..." style="max-width:360px;">
+          <div class="toolbar">
+            <select style="width:180px;">
+              <option>Tất cả môn</option>
+              <option>Toán</option>
+              <option>Tiếng Việt</option>
+              <option>Tiếng Anh</option>
+            </select>
+            <select style="width:180px;">
+              <option>Tất cả trạng thái</option>
+              <option>Đang học</option>
+              <option>Hoàn thành</option>
+              <option>Chưa học</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:1rem;">
+          <table class="table">
+            <thead>
+              <tr><th>Mã</th><th>Môn</th><th>Tên bài học</th><th>Thời lượng</th><th>Tiến độ</th><th>Hành động</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>201</td><td>Toán</td><td>Cộng trừ trong phạm vi 100</td><td>22 phút</td><td><span class="badge success">100%</span></td><td><a href="student-result.html">Xem kết quả</a></td></tr>
+              <tr><td>202</td><td>Toán</td><td>So sánh phân số cơ bản</td><td>26 phút</td><td><span class="badge">55%</span></td><td><a href="student-lesson-detail.html">Học tiếp</a></td></tr>
+              <tr><td>203</td><td>Tiếng Việt</td><td>Đọc hiểu: Khu vườn mùa hè</td><td>18 phút</td><td><span class="badge success">100%</span></td><td><a href="student-result.html">Xem kết quả</a></td></tr>
+              <tr><td>204</td><td>Tiếng Việt</td><td>Luyện viết đoạn văn ngắn</td><td>28 phút</td><td><span class="badge">20%</span></td><td><a href="student-lesson-detail.html">Bắt đầu</a></td></tr>
+              <tr><td>205</td><td>TNXH</td><td>Co the nguoi va cham soc suc khoe</td><td>24 phút</td><td><span class="badge warn">0%</span></td><td><a href="student-lesson-detail.html">Bắt đầu</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <div id="toastStack" class="toast-stack"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+
+
+

@@ -19,26 +19,26 @@
 
   const fallback = {
     students: [
-      { id: "HS001", name: "Nguyen Minh Chau", class: "Lop 2A", completed: 14, avg: 8.7, status: "On track" },
-      { id: "HS002", name: "Tran Gia Han", class: "Lop 2A", completed: 10, avg: 7.9, status: "On track" },
-      { id: "HS003", name: "Le Quoc Bao", class: "Lop 2B", completed: 8, avg: 7.1, status: "Need support" },
-      { id: "HS004", name: "Pham Ha My", class: "Lop 2B", completed: 15, avg: 9.2, status: "Excellent" }
+      { id: "HS001", name: "Nguyễn Minh Châu", class: "Lớp 2A", completed: 14, avg: 8.7, status: "Đạt tiến độ" },
+      { id: "HS002", name: "Trần Gia Hân", class: "Lớp 2A", completed: 10, avg: 7.9, status: "Đạt tiến độ" },
+      { id: "HS003", name: "Lê Quốc Bảo", class: "Lớp 2B", completed: 8, avg: 7.1, status: "Cần hỗ trợ" },
+      { id: "HS004", name: "Phạm Hà My", class: "Lớp 2B", completed: 15, avg: 9.2, status: "Xuất sắc" }
     ],
     lessons: [
-      { id: 201, subject: "Toan", title: "Cong tru trong pham vi 100", duration: "22 phut", progress: 100, status: "Hoan thanh", teacher: "Co Thu" },
-      { id: 202, subject: "Toan", title: "So sanh phan so co ban", duration: "26 phut", progress: 55, status: "Dang hoc", teacher: "Co Thu" },
-      { id: 203, subject: "Tieng Viet", title: "Doc hieu: Khu vuon mua he", duration: "18 phut", progress: 100, status: "Hoan thanh", teacher: "Thay Vinh" },
-      { id: 204, subject: "Tieng Viet", title: "Luyen viet doan van ngan", duration: "28 phut", progress: 20, status: "Dang hoc", teacher: "Thay Vinh" }
+      { id: 201, subject: "Toán", title: "Cộng trừ trong phạm vi 100", duration: "22 phút", progress: 100, status: "Hoàn thành", teacher: "Cô Thu" },
+      { id: 202, subject: "Toán", title: "So sánh phân số cơ bản", duration: "26 phút", progress: 55, status: "Đang học", teacher: "Cô Thu" },
+      { id: 203, subject: "Tiếng Việt", title: "Đọc hiểu: Khu vườn mùa hè", duration: "18 phút", progress: 100, status: "Hoàn thành", teacher: "Thầy Vinh" },
+      { id: 204, subject: "Tiếng Việt", title: "Luyện viết đoạn văn ngắn", duration: "28 phút", progress: 20, status: "Đang học", teacher: "Thầy Vinh" }
     ],
     results: [
-      { id: "R-24001", student: "Nguyen Minh Chau", lesson: "Cong tru trong pham vi 100", score: 9.5, correct: "19/20", time: "13:42", date: "2026-04-08" },
-      { id: "R-24002", student: "Tran Gia Han", lesson: "So sanh phan so co ban", score: 8.0, correct: "16/20", time: "15:10", date: "2026-04-08" },
-      { id: "R-24003", student: "Le Quoc Bao", lesson: "Doc hieu: Khu vuon mua he", score: 7.0, correct: "14/20", time: "18:00", date: "2026-04-07" }
+      { id: "R-24001", student: "Nguyễn Minh Châu", lesson: "Cộng trừ trong phạm vi 100", score: 9.5, correct: "19/20", time: "13:42", date: "2026-04-08" },
+      { id: "R-24002", student: "Trần Gia Hân", lesson: "So sánh phân số cơ bản", score: 8.0, correct: "16/20", time: "15:10", date: "2026-04-08" },
+      { id: "R-24003", student: "Lê Quốc Bảo", lesson: "Đọc hiểu: Khu vườn mùa hè", score: 7.0, correct: "14/20", time: "18:00", date: "2026-04-07" }
     ],
     questions: [
-      { id: 1, question: "9 + 14 bang bao nhieu?", answer: "23", lesson: "Cong tru trong pham vi 100", level: "De" },
-      { id: 2, question: "15 - 8 = ?", answer: "7", lesson: "Cong tru trong pham vi 100", level: "Trung binh" },
-      { id: 3, question: "So nao lon hon, 35 hay 53?", answer: "53", lesson: "So sanh phan so co ban", level: "De" }
+      { id: 1, question: "9 + 14 bằng bao nhiêu?", answer: "23", lesson: "Cộng trừ trong phạm vi 100", level: "Dễ" },
+      { id: 2, question: "15 - 8 = ?", answer: "7", lesson: "Cộng trừ trong phạm vi 100", level: "Trung bình" },
+      { id: 3, question: "Số nào lớn hơn, 35 hay 53?", answer: "53", lesson: "So sánh phân số cơ bản", level: "Dễ" }
     ]
   };
 
@@ -55,12 +55,19 @@
   let sortKey = "";
   let sortDir = 1;
 
+  function normalizeText(value) {
+    return String(value || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
   function badgeStatus(value) {
-    const lower = String(value).toLowerCase();
-    if (lower.includes("excellent") || lower.includes("hoan")) {
+    const lower = normalizeText(value);
+    if (lower.includes("xuat sac") || lower.includes("hoan thanh")) {
       return '<span class="badge success">' + value + "</span>";
     }
-    if (lower.includes("need") || lower.includes("chua")) {
+    if (lower.includes("can ho tro") || lower.includes("chua hoc")) {
       return '<span class="badge warn">' + value + "</span>";
     }
     return '<span class="badge">' + value + "</span>";
@@ -80,11 +87,11 @@
   }
 
   function applyFilters() {
-    const q = (search?.value || "").trim().toLowerCase();
-    const s = (status?.value || "").trim().toLowerCase();
+    const q = normalizeText((search?.value || "").trim());
+    const s = normalizeText((status?.value || "").trim());
 
     filtered = items.filter((item) => {
-      const text = Object.values(item).join(" ").toLowerCase();
+      const text = normalizeText(Object.values(item).join(" "));
       const matchText = !q || text.includes(q);
       const matchStatus = !s || text.includes(s);
       return matchText && matchStatus;
@@ -106,12 +113,12 @@
     const start = (pageIndex - 1) * pageSize;
     const pageRows = filtered.slice(start, start + pageSize);
 
-    tableBody.innerHTML = pageRows.map(rowTemplate).join("") || '<tr><td colspan="6">Khong co du lieu phu hop.</td></tr>';
+    tableBody.innerHTML = pageRows.map(rowTemplate).join("") || '<tr><td colspan="6">Không có dữ liệu phù hợp.</td></tr>';
 
     pager.innerHTML = "";
     const prev = document.createElement("button");
     prev.className = "btn btn-secondary";
-    prev.textContent = "Truoc";
+    prev.textContent = "Trước";
     prev.disabled = pageIndex === 1;
     prev.onclick = () => {
       pageIndex -= 1;
@@ -166,10 +173,10 @@
       const q = await loadJson("assets/data/questions.json", []);
       items = q.length ? q.map((x) => ({
         id: x.id,
-        lesson: "Cong tru trong pham vi 100",
+        lesson: "Cộng trừ trong phạm vi 100",
         question: x.question,
         answer: x.choices?.[x.answer] || "",
-        level: x.id % 2 === 0 ? "Trung binh" : "De"
+        level: x.id % 2 === 0 ? "Trung bình" : "Dễ"
       })) : fallback.questions;
     } else {
       items = await loadJson("assets/data/results.json", fallback.results);
@@ -178,3 +185,7 @@
     applyFilters();
   })();
 })();
+
+
+
+

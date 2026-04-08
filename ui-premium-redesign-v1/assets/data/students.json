@@ -1,0 +1,87 @@
+﻿[
+  {
+    "id": "HS001",
+    "name": "Nguyễn Minh Châu",
+    "class": "Lớp 2A",
+    "completed": 14,
+    "avg": 8.7,
+    "status": "Đạt tiến độ"
+  },
+  {
+    "id": "HS002",
+    "name": "Trần Gia Hân",
+    "class": "Lớp 2A",
+    "completed": 10,
+    "avg": 7.9,
+    "status": "Đạt tiến độ"
+  },
+  {
+    "id": "HS003",
+    "name": "Lê Quốc Bảo",
+    "class": "Lớp 2B",
+    "completed": 8,
+    "avg": 7.1,
+    "status": "Cần hỗ trợ"
+  },
+  {
+    "id": "HS004",
+    "name": "Phạm Hà My",
+    "class": "Lớp 2B",
+    "completed": 15,
+    "avg": 9.2,
+    "status": "Xuất sắc"
+  },
+  {
+    "id": "HS005",
+    "name": "Võ Bảo Ngọc",
+    "class": "Lớp 2C",
+    "completed": 9,
+    "avg": 7.4,
+    "status": "Cần hỗ trợ"
+  },
+  {
+    "id": "HS006",
+    "name": "Hoàng Minh Khang",
+    "class": "Lớp 2C",
+    "completed": 12,
+    "avg": 8.1,
+    "status": "Đạt tiến độ"
+  },
+  {
+    "id": "HS007",
+    "name": "Đỗ Anh Thư",
+    "class": "Lớp 2D",
+    "completed": 16,
+    "avg": 9.4,
+    "status": "Xuất sắc"
+  },
+  {
+    "id": "HS008",
+    "name": "Bùi Gia Huy",
+    "class": "Lớp 2D",
+    "completed": 7,
+    "avg": 6.8,
+    "status": "Cần hỗ trợ"
+  },
+  {
+    "id": "HS009",
+    "name": "Ngô Thanh An",
+    "class": "Lớp 2A",
+    "completed": 11,
+    "avg": 8,
+    "status": "Đạt tiến độ"
+  },
+  {
+    "id": "HS010",
+    "name": "Đặng Lam Anh",
+    "class": "Lớp 2B",
+    "completed": 13,
+    "avg": 8.6,
+    "status": "Đạt tiến độ"
+  }
+]
+
+
+
+
+

@@ -47,7 +47,7 @@
   document.querySelectorAll("[data-demo-submit]").forEach((btn) => {
     btn.addEventListener("click", (event) => {
       event.preventDefault();
-      const msg = btn.dataset.demoSubmit || "Da luu du lieu.";
+      const msg = btn.dataset.demoSubmit || "Đã lưu dữ liệu.";
       showToast(msg);
       const href = btn.getAttribute("href");
       if (href) {
@@ -80,7 +80,11 @@
   document.querySelectorAll("[data-link-disabled]").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
-      showToast("Prototype chua mo logic backend cho thao tac nay.");
+      showToast("Prototype chưa mở logic backend cho thao tác này.");
     });
   });
 })();
+
+
+
+

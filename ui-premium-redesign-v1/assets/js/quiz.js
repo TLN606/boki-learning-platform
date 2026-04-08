@@ -12,12 +12,12 @@
   }
 
   const fallbackQuestions = [
-    { id: 1, question: "9 + 14 bang bao nhieu?", choices: ["21", "22", "23", "24"], answer: 2 },
-    { id: 2, question: "So nao lon hon?", choices: ["35", "53", "45", "43"], answer: 1 },
+    { id: 1, question: "9 + 14 bằng bao nhiêu?", choices: ["21", "22", "23", "24"], answer: 2 },
+    { id: 2, question: "Số nào lớn hơn?", choices: ["35", "53", "45", "43"], answer: 1 },
     { id: 3, question: "15 - 8 = ?", choices: ["5", "6", "7", "8"], answer: 2 },
-    { id: 4, question: "3/4 va 2/4, phan so nao lon hon?", choices: ["3/4", "2/4", "Bang nhau", "Khong so sanh duoc"], answer: 0 },
-    { id: 5, question: "So tiep theo cua day 4, 8, 12, ... la?", choices: ["14", "15", "16", "18"], answer: 2 },
-    { id: 6, question: "Hinh nao co 3 canh bang nhau?", choices: ["Tam giac deu", "Tam giac vuong", "Hinh vuong", "Hinh tron"], answer: 0 }
+    { id: 4, question: "3/4 và 2/4, phân số nào lớn hơn?", choices: ["3/4", "2/4", "Bằng nhau", "Không so sánh được"], answer: 0 },
+    { id: 5, question: "Số tiếp theo của dãy 4, 8, 12, ... là?", choices: ["14", "15", "16", "18"], answer: 2 },
+    { id: 6, question: "Hình nào có 3 cạnh bằng nhau?", choices: ["Tam giác đều", "Tam giác vuông", "Hình vuông", "Hình tròn"], answer: 0 }
   ];
 
   const app = document.querySelector("#quizApp");
@@ -114,7 +114,7 @@
   function submitQuiz() {
     scoreQuiz();
     if (window.BokiUI) {
-      window.BokiUI.toast("Da nop bai. Dang chuyen den trang ket qua...");
+      window.BokiUI.toast("Đã nộp bài. Đang chuyển đến trang kết quả...");
     }
     setTimeout(() => {
       window.location.href = "student-result.html";
@@ -153,3 +153,7 @@
     renderQuestion();
   })();
 })();
+
+
+
+

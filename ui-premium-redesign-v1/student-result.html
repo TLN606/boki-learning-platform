@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boki | Ket qua hoc tap</title>
+  <title>Boki | Kết quả học tập</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,58 +15,58 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Student</span></a>
+      <a href="index.html" class="brand"><span class="brand-mark">B</span><span>Boki Học sinh</span></a>
       <button class="btn btn-secondary mobile-menu-btn js-menu-btn" type="button">Menu</button>
       <nav class="nav-links" id="siteNav">
-        <a class="nav-link" href="student-dashboard.html">Dashboard</a>
-        <a class="nav-link" href="student-lessons.html">Kho bai hoc</a>
-        <a class="nav-link active" href="student-result.html">Ket qua</a>
+        <a class="nav-link" href="student-dashboard.html">Bảng điều khiển</a>
+        <a class="nav-link" href="student-lessons.html">Kho bài học</a>
+        <a class="nav-link active" href="student-result.html">Kết quả</a>
       </nav>
     </div>
   </header>
 
   <section class="layout-app">
     <aside class="sidebar pane">
-      <p class="badge">Hoc sinh</p>
-      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Minh Chau</h3>
+      <p class="badge">Học sinh</p>
+      <h3 style="margin-top:0.5rem;font-size:1.8rem;">Minh Châu</h3>
       <nav style="margin-top:1rem;">
-        <a href="student-dashboard.html">Tong quan <span>01</span></a>
-        <a href="student-lessons.html">Danh sach bai hoc <span>02</span></a>
-        <a href="student-lesson-detail.html">Chi tiet bai hoc <span>03</span></a>
-        <a href="student-quiz.html">Lam quiz <span>04</span></a>
-        <a class="active" href="student-result.html">Ket qua <span>05</span></a>
+        <a href="student-dashboard.html">Tổng quan <span>01</span></a>
+        <a href="student-lessons.html">Danh sách bài học <span>02</span></a>
+        <a href="student-lesson-detail.html">Chi tiết bài học <span>03</span></a>
+        <a href="student-quiz.html">Làm quiz <span>04</span></a>
+        <a class="active" href="student-result.html">Kết quả <span>05</span></a>
       </nav>
     </aside>
 
     <main>
-      <div class="breadcrumb"><a href="index.html">Boki</a> / <a href="student-dashboard.html">Hoc sinh</a> / <span>Ket qua</span></div>
+      <div class="breadcrumb"><a href="index.html">Boki</a> / <a href="student-dashboard.html">Học sinh</a> / <span>Kết quả</span></div>
       <section class="pane" style="padding:1.6rem;">
-        <p class="badge">Bao cao ket qua moi nhat</p>
-        <h1 style="font-size:2.8rem;margin-top:0.7rem;">So sanh phan so co ban</h1>
-        <p style="margin-top:0.6rem;color:var(--text-muted);">Ket qua duoc cap nhat ngay sau khi nop bai quiz.</p>
+        <p class="badge">Báo cáo kết quả mới nhất</p>
+        <h1 style="font-size:2.8rem;margin-top:0.7rem;">So sánh phân số cơ bản</h1>
+        <p style="margin-top:0.6rem;color:var(--text-muted);">Kết quả được cập nhật ngay sau khi nộp bài quiz.</p>
         <div class="result-emphasis" id="scoreText">8.5 / 10</div>
         <div class="metric-row" style="margin-top:0.9rem;grid-template-columns:repeat(3,minmax(0,1fr));">
-          <div class="metric"><span>Cau dung</span><strong id="correctText">17/20</strong></div>
-          <div class="metric"><span>Thoi gian con lai</span><strong id="timeLeftText">04:12</strong></div>
-          <div class="metric"><span>Trang thai</span><strong>Da hoan thanh</strong></div>
+          <div class="metric"><span>Câu đúng</span><strong id="correctText">17/20</strong></div>
+          <div class="metric"><span>Thời gian còn lại</span><strong id="timeLeftText">04:12</strong></div>
+          <div class="metric"><span>Trạng thái</span><strong>Đã hoàn thành</strong></div>
         </div>
       </section>
 
       <section class="section grid-2">
         <article class="pane" style="padding:1.2rem;">
-          <h2>Danh gia nhanh</h2>
+          <h2>Đánh giá nhanh</h2>
           <ul class="list-lines" style="margin-top:0.8rem;">
-            <li><span>So sanh phan so cung mau</span><span class="badge success">Rat tot</span></li>
-            <li><span>Quy dong mau so</span><span class="badge">Can luyen them</span></li>
-            <li><span>Bai toan van dung</span><span class="badge">Kha</span></li>
+            <li><span>So sánh phân số cùng mẫu</span><span class="badge success">Rất tốt</span></li>
+            <li><span>Quy đồng mẫu số</span><span class="badge">Cần luyện thêm</span></li>
+            <li><span>Bài toán vận dụng</span><span class="badge">Khá</span></li>
           </ul>
         </article>
         <article class="pane" style="padding:1.2rem;">
-          <h2>Buoc tiep theo</h2>
-          <p style="margin-top:0.7rem;color:var(--text-muted);">Lam them 1 bai luyen tap de cung co ky nang quy dong truoc khi hoc bai moi.</p>
+          <h2>Bước tiếp theo</h2>
+          <p style="margin-top:0.7rem;color:var(--text-muted);">Làm thêm 1 bài luyện tập để củng cố kỹ năng quy đồng trước khi học bài mới.</p>
           <div class="toolbar" style="margin-top:1rem;">
-            <a class="btn btn-secondary" href="student-lessons.html">Chon bai khac</a>
-            <a class="btn btn-primary" href="student-quiz.html">Lam lai quiz</a>
+            <a class="btn btn-secondary" href="student-lessons.html">Chọn bài khác</a>
+            <a class="btn btn-primary" href="student-quiz.html">Làm lại quiz</a>
           </div>
         </article>
       </section>
@@ -94,3 +94,9 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
