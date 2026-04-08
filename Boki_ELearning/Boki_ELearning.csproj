@@ -226,6 +226,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="App_Data\Sql\20260409_BokiV1_ExamModule.sql" />
+    <Content Include="App_Data\Sql\20260409_Redistribute_Questions_RoundRobin.sql" />
     <Content Include="App_Data\Sql\20260409_Reset_Admin.sql" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\templates\boki-frontend\assets\css\style.css" />
@@ -290,6 +291,7 @@
     <Content Include="Views\QuestionBank\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\StudentExam\CreatePractice.cshtml" />
     <Content Include="Views\StudentExam\History.cshtml" />
     <Content Include="Views\StudentExam\Index.cshtml" />
     <Content Include="Views\StudentExam\Take.cshtml" />

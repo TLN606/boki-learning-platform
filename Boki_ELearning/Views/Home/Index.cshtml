@@ -1,30 +1,71 @@
-@{
+﻿@{
     ViewBag.Title = "Trang chủ";
 }
 
-<div class="row g-4">
-    <div class="col-lg-8">
-        <div class="boki-card p-4 p-lg-5">
-            <h1 class="display-6 fw-bold mb-3">Nền tảng học tập cho học sinh tiểu học</h1>
-            <p class="boki-subtitle mb-4">
-                Boki giúp học sinh học lý thuyết, làm quiz theo bài học và làm đề thi tổng hợp với dữ liệu chấm điểm tự động.
-            </p>
-            <div class="d-flex flex-wrap gap-2">
-                <a href="@Url.Action("Register", "Account")" class="btn btn-primary btn-lg">Bắt đầu ngay</a>
-                <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary btn-lg">Đăng nhập</a>
+<div class="boki-landing">
+    <section class="landing-hero">
+        <div class="landing-wrap">
+            <div class="landing-grid">
+                <div>
+                    <span class="landing-badge">Nền tảng học tập tiểu học từ lớp 2 đến lớp 5</span>
+                    <h1 class="landing-title">Học chắc kiến thức, luyện đề mỗi ngày cùng Boki</h1>
+                    <p class="landing-lead">
+                        Kết hợp lý thuyết ngắn gọn, quiz theo bài học và đề tổng hợp tự luyện để học sinh tiến bộ rõ rệt,
+                        giáo viên/phụ huynh theo dõi được kết quả theo thời gian thực.
+                    </p>
+                    <div class="landing-cta">
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-primary btn-lg">Bắt đầu ngay</a>
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-outline-light btn-lg landing-btn-secondary">Đăng nhập</a>
+                    </div>
+                </div>
+                <div class="landing-panel">
+                    <div class="landing-panel-item">
+                        <div class="fw-bold">1. Học lý thuyết theo từng bài</div>
+                        <div class="small text-white-50">Nội dung cô đọng, mẹo ghi nhớ rõ ràng.</div>
+                    </div>
+                    <div class="landing-panel-item">
+                        <div class="fw-bold">2. Làm quiz và xem đáp án tức thì</div>
+                        <div class="small text-white-50">Luyện tập liên tục, ghi nhớ sâu hơn sau mỗi lần làm.</div>
+                    </div>
+                    <div class="landing-panel-item mb-0">
+                        <div class="fw-bold">3. Tạo đề tổng hợp tự luyện</div>
+                        <div class="small text-white-50">Tùy chọn lớp, môn, số câu và thời gian làm bài.</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="boki-card p-4">
-            <h5 class="fw-bold">Các tính năng chính</h5>
-            <ul class="mb-0 mt-3">
-                <li>Dashboard tiến độ học tập theo môn</li>
-                <li>Quiz theo từng bài học và lưu lịch sử kết quả</li>
-                <li>Ngân hàng câu hỏi có lọc/tìm kiếm/import/export</li>
-                <li>Tạo đề thi snapshot ngẫu nhiên theo lớp, môn</li>
-                <li>Nhiều lần làm đề, lấy điểm cao nhất</li>
-            </ul>
+    </section>
+
+    <section class="container landing-section">
+        <h2 class="section-title">Một hệ thống, ba nhu cầu học tập</h2>
+        <p class="boki-subtitle mb-0">Tập trung vào trải nghiệm làm bài thực tế, không rối, không dư thao tác.</p>
+
+        <div class="landing-feature-grid">
+            <article class="landing-feature">
+                <h5>Học tập theo bài</h5>
+                <p class="boki-subtitle mb-0">Xem toàn bộ danh mục bài học, lọc theo lớp/môn và trạng thái có quiz.</p>
+            </article>
+            <article class="landing-feature">
+                <h5>Ngân hàng câu hỏi chuẩn hóa</h5>
+                <p class="boki-subtitle mb-0">Câu hỏi được quản lý theo bài học, mức độ, trạng thái và import/export JSON.</p>
+            </article>
+            <article class="landing-feature">
+                <h5>Đề tổng hợp linh hoạt</h5>
+                <p class="boki-subtitle mb-0">Admin giao đề cho lớp, học sinh tự tạo đề luyện riêng và xem lịch sử điểm.</p>
+            </article>
         </div>
-    </div>
+    </section>
+
+    <section class="container py-4 pb-5">
+        <div class="boki-card p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+            <div>
+                <h3 class="mb-1 fw-bold">Sẵn sàng nâng chất lượng tự học?</h3>
+                <p class="boki-subtitle mb-0">Tạo tài khoản trong vài giây và bắt đầu học ngay hôm nay.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="@Url.Action("Register", "Account")" class="btn btn-primary">Đăng ký học sinh</a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary">Đăng nhập</a>
+            </div>
+        </div>
+    </section>
 </div>

@@ -1,8 +1,9 @@
-@using Boki_ELearning.Helpers
+﻿@using Boki_ELearning.Helpers
 @{
     var isLoggedIn = Session[SessionKeys.AccountId] != null;
     var role = Session[SessionKeys.Role] as string;
     var studentName = Session[SessionKeys.StudentName] as string ?? "Học sinh";
+    var currentController = (ViewContext.RouteData.Values["controller"] ?? string.Empty).ToString();
 }
 <!DOCTYPE html>
 <html lang="vi">
@@ -10,6 +11,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - Boki ELearning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
     @Styles.Render("~/Content/css")
 </head>
 <body>
@@ -20,47 +24,55 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="bokiNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <ul class="navbar-nav me-auto gap-lg-1 mt-2 mt-lg-0">
+                    <li class="nav-item"><a class="nav-link boki-nav-link @(currentController == "Home" ? "active" : "")" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
                     @if (isLoggedIn)
                     {
-                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Learning")">Học tập</a></li>
-                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "StudentExam")">Đề tổng hợp</a></li>
+                        <li class="nav-item"><a class="nav-link boki-nav-link @(currentController == "Learning" ? "active" : "")" href="@Url.Action("Index", "Learning")">Học tập</a></li>
+                        <li class="nav-item"><a class="nav-link boki-nav-link @(currentController == "StudentExam" ? "active" : "")" href="@Url.Action("Index", "StudentExam")">Đề tổng hợp</a></li>
                         if (RoleHelper.IsAdmin(role))
                         {
-                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Dashboard", "Admin")">Quản lý</a></li>
+                            <li class="nav-item"><a class="nav-link boki-nav-link @(currentController == "Admin" || currentController == "QuestionBank" || currentController == "ExamAdmin" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Quản lý</a></li>
                         }
                     }
                 </ul>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav align-items-lg-center gap-2 mt-2 mt-lg-0">
                     @if (isLoggedIn)
                     {
-                        <li class="nav-item"><span class="nav-link">Xin chào, @studentName</span></li>
-                        <li class="nav-item"><a class="btn btn-outline-secondary btn-sm mt-1" href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                        <li class="nav-item text-soft px-1">Xin chào, <strong>@studentName</strong></li>
+                        <li class="nav-item"><a class="btn btn-outline-secondary btn-sm" href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
                     }
                     else
                     {
-                        <li class="nav-item"><a class="btn btn-outline-primary btn-sm mt-1 me-2" href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
-                        <li class="nav-item"><a class="btn btn-primary btn-sm mt-1" href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                        <li class="nav-item"><a class="btn btn-outline-primary btn-sm" href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+                        <li class="nav-item"><a class="btn btn-primary btn-sm" href="@Url.Action("Register", "Account")">Đăng ký</a></li>
                     }
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main class="boki-main">
-        <div class="container">
-            @if (TempData["Message"] != null)
-            {
-                <div class="alert alert-info">@TempData["Message"]</div>
-            }
+    <main class="boki-main boki-page-enter">
+        @if (ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index")
+        {
             @RenderBody()
-        </div>
+        }
+        else
+        {
+            <div class="container">
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-info">@TempData["Message"]</div>
+                }
+                @RenderBody()
+            </div>
+        }
     </main>
 
-    <footer class="border-top bg-white py-3">
-        <div class="container footer-note">
-            &copy; @DateTime.Now.Year Boki ELearning
+    <footer class="boki-footer">
+        <div class="container d-flex flex-wrap justify-content-between gap-2">
+            <span>© @DateTime.Now.Year Boki ELearning</span>
+            <span>Nền tảng học tập tiểu học</span>
         </div>
     </footer>
 

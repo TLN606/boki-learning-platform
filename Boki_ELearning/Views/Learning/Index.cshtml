@@ -1,4 +1,5 @@
-@model Boki_ELearning.Models.ViewModels.LearningIndexViewModel
+﻿@model Boki_ELearning.Models.ViewModels.LearningIndexViewModel
+@using Boki_ELearning.Models.ViewModels
 @{
     ViewBag.Title = "Học tập";
     var completionPercent = Model.TotalLessons > 0 ? (int)((Model.CompletedLessons * 100.0) / Model.TotalLessons) : 0;
@@ -7,47 +8,106 @@
 <div class="row g-3 mb-3">
     <div class="col-lg-8">
         <div class="boki-card p-4">
-            <h2 class="fw-bold mb-2">Xin chào, @Model.StudentName</h2>
-            <p class="boki-subtitle mb-0">Lớp @Model.ClassName · Tiến độ tổng: @completionPercent%</p>
+            <h2 class="fw-bold mb-1">Xin chào, @Model.StudentName</h2>
+            <p class="boki-subtitle mb-2">Lớp hiện tại của bạn: <strong>@Model.ClassName</strong></p>
+            <p class="mb-0 text-soft">Bây giờ bạn có thể xem toàn bộ bài học và lọc theo lớp/môn để luyện tập linh hoạt hơn.</p>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="boki-card p-4">
-            <a class="btn btn-outline-primary w-100 mb-2" href="@Url.Action("Index", "StudentExam")">Làm đề tổng hợp</a>
-            <small class="boki-subtitle">Bạn có thể làm nhiều lần, hệ thống lấy điểm cao nhất.</small>
+        <div class="boki-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+                <h6 class="fw-bold mb-2">Đề tổng hợp</h6>
+                <p class="boki-subtitle mb-0">Làm đề được giao hoặc tự tạo đề luyện riêng.</p>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <a class="btn btn-outline-primary w-100" href="@Url.Action("Index", "StudentExam")">Vào danh sách đề</a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row g-3 mb-4">
-    <div class="col-md-4">
+<div class="row g-3 mb-3">
+    <div class="col-md-3">
         <div class="boki-stat">
-            <div class="boki-subtitle">Tổng bài học</div>
+            <div class="boki-subtitle">Bài đang hiển thị</div>
             <div class="fs-3 fw-bold">@Model.TotalLessons</div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="boki-stat">
             <div class="boki-subtitle">Đã hoàn thành</div>
             <div class="fs-3 fw-bold text-success">@Model.CompletedLessons</div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <div class="boki-stat">
+            <div class="boki-subtitle">Có quiz</div>
+            <div class="fs-3 fw-bold text-primary">@Model.LessonsWithQuiz</div>
+        </div>
+    </div>
+    <div class="col-md-3">
         <div class="boki-stat">
             <div class="boki-subtitle">Tiến độ</div>
-            <div class="fs-3 fw-bold text-primary">@completionPercent%</div>
+            <div class="fs-3 fw-bold">@completionPercent%</div>
         </div>
     </div>
 </div>
 
 <div class="boki-card p-3 mb-4">
+    <h5 class="fw-bold px-2 pt-2">Lọc bài học</h5>
+    @using (Html.BeginForm("Index", "Learning", FormMethod.Get, new { @class = "learning-filter-grid p-2" }))
+    {
+        <div>
+            <label class="form-label boki-form-label">Lớp</label>
+            <select class="form-select" name="classId">
+                <option value="">Tất cả lớp</option>
+                @foreach (var option in Model.ClassOptions ?? new List<LearningFilterOptionViewModel>())
+                {
+                    <option value="@option.Id" @(Model.SelectedClassId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label class="form-label boki-form-label">Môn học</label>
+            <select class="form-select" name="subjectId">
+                <option value="">Tất cả môn</option>
+                @foreach (var option in Model.SubjectOptions ?? new List<LearningFilterOptionViewModel>())
+                {
+                    <option value="@option.Id" @(Model.SelectedSubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label class="form-label boki-form-label">Quiz</label>
+            <select class="form-select" name="hasQuiz">
+                <option value="" @(!Model.SelectedHasQuiz.HasValue ? "selected" : "")>Tất cả</option>
+                <option value="true" @(Model.SelectedHasQuiz == true ? "selected" : "")>Chỉ bài có quiz</option>
+                <option value="false" @(Model.SelectedHasQuiz == false ? "selected" : "")>Chỉ bài chưa có quiz</option>
+            </select>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Áp dụng</button>
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "Learning")">Đặt lại</a>
+        </div>
+    }
+    @if (Model.SuggestedClassId.HasValue)
+    {
+        <div class="px-2 pb-2">
+            <a href="@Url.Action("Index", "Learning", new { classId = Model.SuggestedClassId })" class="btn btn-sm btn-outline-primary">
+                Lọc nhanh lớp của tôi (@Model.ClassName)
+            </a>
+        </div>
+    }
+</div>
+
+<div class="boki-card p-3 mb-4">
     <h5 class="fw-bold px-2 pt-2">Tiến độ theo môn</h5>
     <div class="row g-3 p-2">
-        @foreach (var subject in Model.SubjectProgress ?? new List<Boki_ELearning.Models.ViewModels.SubjectProgressViewModel>())
+        @foreach (var subject in Model.SubjectProgress ?? new List<SubjectProgressViewModel>())
         {
             var percent = subject.TotalLessons > 0 ? (int)((subject.CompletedLessons * 100.0) / subject.TotalLessons) : 0;
             <div class="col-md-4">
-                <div class="border rounded-3 p-3">
+                <div class="border rounded-3 p-3 bg-white h-100">
                     <div class="fw-semibold">@subject.SubjectName</div>
                     <div class="small text-muted mb-2">@subject.CompletedLessons / @subject.TotalLessons bài</div>
                     <div class="progress" style="height:10px;">
@@ -66,7 +126,9 @@
             <thead>
                 <tr>
                     <th>Bài học</th>
+                    <th>Lớp</th>
                     <th>Môn học</th>
+                    <th>Quiz</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -78,7 +140,18 @@
                     {
                         <tr>
                             <td>@lesson.LessonName</td>
+                            <td>@lesson.ClassName</td>
                             <td>@lesson.SubjectName</td>
+                            <td>
+                                @if (lesson.QuestionCount > 0)
+                                {
+                                    <span class="lesson-status"><span class="lesson-status-dot ok"></span>@lesson.QuestionCount câu</span>
+                                }
+                                else
+                                {
+                                    <span class="lesson-status"><span class="lesson-status-dot none"></span>Chưa có câu hỏi</span>
+                                }
+                            </td>
                             <td>
                                 @if (lesson.IsCompleted)
                                 {
@@ -97,7 +170,7 @@
                 }
                 else
                 {
-                    <tr><td colspan="4">Chưa có bài học.</td></tr>
+                    <tr><td colspan="6" class="boki-empty">Không có bài học phù hợp bộ lọc hiện tại.</td></tr>
                 }
             </tbody>
         </table>

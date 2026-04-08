@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,27 +16,68 @@ namespace Boki_ELearning.Controllers
     {
         private readonly BokiDBEntities1 _db = new BokiDBEntities1();
 
-        public ActionResult Index()
+        public ActionResult Index(int? classId = null, int? subjectId = null, bool? hasQuiz = null)
         {
-            var classId = Session[SessionKeys.ClassId] as int?;
             var studentId = Session[SessionKeys.StudentId] as int?;
+            var suggestedClassId = Session[SessionKeys.ClassId] as int?;
             var studentName = Session[SessionKeys.StudentName] as string ?? "Học sinh";
 
-            var lessonsQuery = _db.BAIHOCs.AsNoTracking().Where(x => !x.IsDeleted);
-            if (classId.HasValue)
-            {
-                lessonsQuery = lessonsQuery.Where(x => x.MALOP == classId.Value);
-            }
-
-            var lessons = lessonsQuery
+            var lessons = _db.BAIHOCs.AsNoTracking()
+                .Where(x => !x.IsDeleted)
                 .Select(x => new
                 {
                     x.MABAIHOC,
                     x.TENBAIHOC,
+                    x.MALOP,
+                    x.MAMONHOC,
+                    ClassName = x.LOP.TENLOP,
                     SubjectName = x.MONHOC.TENMONHOC
                 })
-                .OrderBy(x => x.SubjectName)
-                .ThenBy(x => x.TENBAIHOC)
+                .ToList();
+
+            var questionCountMap = _db.Database.SqlQuery<LessonQuestionCountRow>(
+                    @"SELECT C.MABAIHOC AS LessonId,
+                             COUNT(1) AS QuestionCount
+                      FROM CAUHOI C
+                      WHERE C.IsDeleted = 0
+                        AND C.TRANGTHAI = N'Active'
+                      GROUP BY C.MABAIHOC")
+                .ToDictionary(x => x.LessonId, x => x.QuestionCount);
+
+            var lessonRows = lessons
+                .Select(x => new LessonListRow
+                {
+                    LessonId = x.MABAIHOC,
+                    LessonName = x.TENBAIHOC,
+                    ClassId = x.MALOP,
+                    ClassName = x.ClassName,
+                    SubjectId = x.MAMONHOC,
+                    SubjectName = x.SubjectName,
+                    QuestionCount = questionCountMap.ContainsKey(x.MABAIHOC) ? questionCountMap[x.MABAIHOC] : 0
+                })
+                .ToList();
+
+            if (classId.HasValue)
+            {
+                lessonRows = lessonRows.Where(x => x.ClassId == classId.Value).ToList();
+            }
+
+            if (subjectId.HasValue)
+            {
+                lessonRows = lessonRows.Where(x => x.SubjectId == subjectId.Value).ToList();
+            }
+
+            if (hasQuiz.HasValue)
+            {
+                lessonRows = hasQuiz.Value
+                    ? lessonRows.Where(x => x.QuestionCount > 0).ToList()
+                    : lessonRows.Where(x => x.QuestionCount == 0).ToList();
+            }
+
+            lessonRows = lessonRows
+                .OrderBy(x => x.ClassName)
+                .ThenBy(x => x.SubjectName)
+                .ThenBy(x => x.LessonName)
                 .ToList();
 
             var completedLessonIds = new HashSet<int>();
@@ -50,39 +91,67 @@ namespace Boki_ELearning.Controllers
                         .ToList());
             }
 
-            var subjectProgress = lessons
+            var subjectProgress = lessonRows
                 .GroupBy(x => string.IsNullOrWhiteSpace(x.SubjectName) ? "Khác" : x.SubjectName)
                 .Select(g => new SubjectProgressViewModel
                 {
                     SubjectName = g.Key,
                     TotalLessons = g.Count(),
-                    CompletedLessons = g.Count(x => completedLessonIds.Contains(x.MABAIHOC))
+                    CompletedLessons = g.Count(x => completedLessonIds.Contains(x.LessonId))
                 })
                 .OrderBy(x => x.SubjectName)
                 .ToList();
 
             var className = "Chưa gán lớp";
-            if (classId.HasValue)
+            if (suggestedClassId.HasValue)
             {
                 className = _db.LOPs.AsNoTracking()
-                    .Where(x => x.MALOP == classId.Value)
+                    .Where(x => x.MALOP == suggestedClassId.Value)
                     .Select(x => x.TENLOP)
                     .FirstOrDefault() ?? className;
             }
+
+            var classOptions = _db.LOPs.AsNoTracking()
+                .OrderBy(x => x.TENLOP)
+                .Select(x => new LearningFilterOptionViewModel
+                {
+                    Id = x.MALOP,
+                    Name = x.TENLOP
+                })
+                .ToList();
+
+            var subjectOptions = _db.MONHOCs.AsNoTracking()
+                .OrderBy(x => x.TENMONHOC)
+                .Select(x => new LearningFilterOptionViewModel
+                {
+                    Id = x.MAMONHOC,
+                    Name = x.TENMONHOC
+                })
+                .ToList();
 
             var model = new LearningIndexViewModel
             {
                 StudentName = studentName,
                 ClassName = className,
-                TotalLessons = lessons.Count,
-                CompletedLessons = completedLessonIds.Count(x => lessons.Any(y => y.MABAIHOC == x)),
+                SuggestedClassId = suggestedClassId,
+                TotalLessons = lessonRows.Count,
+                CompletedLessons = lessonRows.Count(x => completedLessonIds.Contains(x.LessonId)),
+                LessonsWithQuiz = lessonRows.Count(x => x.QuestionCount > 0),
+                LessonsWithoutQuiz = lessonRows.Count(x => x.QuestionCount == 0),
+                SelectedClassId = classId,
+                SelectedSubjectId = subjectId,
+                SelectedHasQuiz = hasQuiz,
+                ClassOptions = classOptions,
+                SubjectOptions = subjectOptions,
                 SubjectProgress = subjectProgress,
-                Lessons = lessons.Select(x => new LessonItemViewModel
+                Lessons = lessonRows.Select(x => new LessonItemViewModel
                 {
-                    LessonId = x.MABAIHOC,
-                    LessonName = x.TENBAIHOC,
+                    LessonId = x.LessonId,
+                    LessonName = x.LessonName,
+                    ClassName = x.ClassName,
                     SubjectName = x.SubjectName,
-                    IsCompleted = completedLessonIds.Contains(x.MABAIHOC)
+                    QuestionCount = x.QuestionCount,
+                    IsCompleted = completedLessonIds.Contains(x.LessonId)
                 }).ToList()
             };
 
@@ -91,7 +160,6 @@ namespace Boki_ELearning.Controllers
 
         public ActionResult Lesson(int id)
         {
-            var classId = Session[SessionKeys.ClassId] as int?;
             var lesson = _db.BAIHOCs.AsNoTracking()
                 .Where(x => x.MABAIHOC == id && !x.IsDeleted)
                 .Select(x => new
@@ -100,7 +168,6 @@ namespace Boki_ELearning.Controllers
                     x.TENBAIHOC,
                     x.NOIDUNGLYTUYET,
                     x.MEOGHINHO,
-                    x.MALOP,
                     ClassName = x.LOP.TENLOP,
                     SubjectName = x.MONHOC.TENMONHOC
                 })
@@ -109,11 +176,6 @@ namespace Boki_ELearning.Controllers
             if (lesson == null)
             {
                 return HttpNotFound();
-            }
-
-            if (classId.HasValue && lesson.MALOP != classId.Value)
-            {
-                return RedirectToAction("Index");
             }
 
             var questionCount = _db.Database.SqlQuery<int>(
@@ -140,20 +202,14 @@ namespace Boki_ELearning.Controllers
 
         public ActionResult Quiz(int id)
         {
-            var classId = Session[SessionKeys.ClassId] as int?;
             var lesson = _db.BAIHOCs.AsNoTracking()
                 .Where(x => x.MABAIHOC == id && !x.IsDeleted)
-                .Select(x => new { x.MABAIHOC, x.TENBAIHOC, x.MALOP })
+                .Select(x => new { x.MABAIHOC, x.TENBAIHOC })
                 .FirstOrDefault();
 
             if (lesson == null)
             {
                 return HttpNotFound();
-            }
-
-            if (classId.HasValue && lesson.MALOP != classId.Value)
-            {
-                return RedirectToAction("Index");
             }
 
             var rows = _db.Database.SqlQuery<QuizRow>(
@@ -380,6 +436,23 @@ namespace Boki_ELearning.Controllers
             public string QuestionText { get; set; }
             public int AnswerId { get; set; }
             public string AnswerText { get; set; }
+        }
+
+        private sealed class LessonQuestionCountRow
+        {
+            public int LessonId { get; set; }
+            public int QuestionCount { get; set; }
+        }
+
+        private sealed class LessonListRow
+        {
+            public int LessonId { get; set; }
+            public string LessonName { get; set; }
+            public int ClassId { get; set; }
+            public string ClassName { get; set; }
+            public int SubjectId { get; set; }
+            public string SubjectName { get; set; }
+            public int QuestionCount { get; set; }
         }
 
         private sealed class AnswerCheckRow

@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - Boki Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="admin-shell">
+    <div class="admin-shell boki-page-enter">
         <aside class="admin-sidebar">
             <div class="logo">Boki Admin</div>
             <a class="admin-link @(ViewBag.AdminNav == "dashboard" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Tổng quan</a>
@@ -15,12 +18,14 @@
             <a class="admin-link @(ViewBag.AdminNav == "results" ? "active" : "")" href="@Url.Action("Results", "Admin")">Kết quả học tập</a>
             <a class="admin-link @(ViewBag.AdminNav == "questions" ? "active" : "")" href="@Url.Action("Index", "QuestionBank")">Ngân hàng câu hỏi</a>
             <a class="admin-link @(ViewBag.AdminNav == "exams" ? "active" : "")" href="@Url.Action("Index", "ExamAdmin")">Đề thi tổng hợp</a>
+            <hr class="border-secondary-subtle my-3" />
             <a class="admin-link" href="@Url.Action("Index", "Learning")">Về trang học sinh</a>
             <a class="admin-link" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
         </aside>
+
         <div class="admin-content">
             <header class="admin-topbar">
-                <h5 class="mb-0">@ViewBag.Title</h5>
+                <h5 class="mb-0 fw-bold">@ViewBag.Title</h5>
             </header>
             <main class="admin-main">
                 @if (TempData["Message"] != null)

@@ -1,4 +1,4 @@
-@model List<Boki_ELearning.Models.ViewModels.AdminResultListItemViewModel>
+﻿@model List<Boki_ELearning.Models.ViewModels.AdminResultListItemViewModel>
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Kết quả học tập";
@@ -19,16 +19,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (Model.Any())
                 {
-                    <tr>
-                        <td>@item.ResultId</td>
-                        <td>@item.StudentName</td>
-                        <td>@item.SubjectName</td>
-                        <td>@item.LessonName</td>
-                        <td>@item.Score.ToString("0.##")</td>
-                        <td>@item.SubmitAt.ToString("dd/MM/yyyy HH:mm")</td>
-                    </tr>
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ResultId</td>
+                            <td>@item.StudentName</td>
+                            <td>@item.SubjectName</td>
+                            <td>@item.LessonName</td>
+                            <td>@item.Score.ToString("0.##")</td>
+                            <td>@item.SubmitAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" class="boki-empty">Chưa có kết quả nào.</td></tr>
                 }
             </tbody>
         </table>

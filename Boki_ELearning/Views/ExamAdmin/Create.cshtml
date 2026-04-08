@@ -1,4 +1,4 @@
-@model Boki_ELearning.Models.ViewModels.AdminExamCreatePageViewModel
+﻿@model Boki_ELearning.Models.ViewModels.AdminExamCreatePageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Tạo đề thi tổng hợp";
@@ -6,7 +6,7 @@
 }
 
 <div class="admin-card p-4">
-    @using (Html.BeginForm("Create", "ExamAdmin", FormMethod.Post))
+    @using (Html.BeginForm("Create", "ExamAdmin", FormMethod.Post, new { id = "adminExamCreateForm" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
@@ -14,59 +14,113 @@
         <div class="row g-3">
             <div class="col-md-6">
                 <label class="form-label boki-form-label">Tên đề thi</label>
-                @Html.TextBoxFor(x => x.Form.ExamName, new { @class = "form-control", placeholder = "Ví dụ: Đề tổng hợp tháng 4" })
+                <input class="form-control" name="ExamName" value="@Model.Form.ExamName" placeholder="Ví dụ: Đề tổng hợp tuần 2" />
+                @Html.ValidationMessage("ExamName", "", new { @class = "text-danger small" })
             </div>
             <div class="col-md-3">
                 <label class="form-label boki-form-label">Số câu</label>
-                @Html.TextBoxFor(x => x.Form.QuestionCount, new { @class = "form-control", type = "number", min = "1", max = "200" })
+                <input class="form-control" id="questionCountInput" name="QuestionCount" value="@Model.Form.QuestionCount" type="number" min="1" max="200" />
+                @Html.ValidationMessage("QuestionCount", "", new { @class = "text-danger small" })
             </div>
             <div class="col-md-3">
                 <label class="form-label boki-form-label">Thời gian (phút)</label>
-                @Html.TextBoxFor(x => x.Form.DurationMinutes, new { @class = "form-control", type = "number", min = "1", max = "240" })
+                <input class="form-control" name="DurationMinutes" value="@Model.Form.DurationMinutes" type="number" min="1" max="240" />
+                @Html.ValidationMessage("DurationMinutes", "", new { @class = "text-danger small" })
             </div>
             <div class="col-md-6">
                 <label class="form-label boki-form-label">Mở đề lúc (tuỳ chọn)</label>
-                @Html.TextBoxFor(x => x.Form.OpenAt, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                <input class="form-control" name="OpenAt" type="datetime-local" value="@(Model.Form.OpenAt.HasValue ? Model.Form.OpenAt.Value.ToString("yyyy-MM-ddTHH:mm") : string.Empty)" />
             </div>
             <div class="col-md-6">
                 <label class="form-label boki-form-label">Đóng đề lúc (tuỳ chọn)</label>
-                @Html.TextBoxFor(x => x.Form.CloseAt, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                <input class="form-control" name="CloseAt" type="datetime-local" value="@(Model.Form.CloseAt.HasValue ? Model.Form.CloseAt.Value.ToString("yyyy-MM-ddTHH:mm") : string.Empty)" />
             </div>
+        </div>
+
+        <div class="alert alert-info mt-3 mb-0">
+            Câu hỏi khả dụng theo bộ lọc hiện tại: <strong id="availableQuestionCount">@Model.AvailableQuestionCount</strong>
         </div>
 
         <hr />
         <div class="row g-3">
             <div class="col-md-6">
                 <label class="form-label boki-form-label">Môn học (chọn nhiều)</label>
-                <div class="border rounded p-3" style="max-height:240px; overflow:auto;">
+                <div class="form-check-panel" id="subjectPanel">
                     @foreach (var item in Model.SubjectOptions)
                     {
                         var isChecked = Model.Form.SubjectIds != null && Model.Form.SubjectIds.Contains(item.Id);
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="SubjectIds" value="@item.Id" @(isChecked ? "checked" : "") />
+                            <input class="form-check-input exam-subject" type="checkbox" name="SubjectIds" value="@item.Id" @(isChecked ? "checked" : "") />
                             <label class="form-check-label">@item.Name</label>
                         </div>
                     }
                 </div>
+                @Html.ValidationMessage("SubjectIds", "", new { @class = "text-danger small" })
             </div>
             <div class="col-md-6">
                 <label class="form-label boki-form-label">Lớp (chọn nhiều)</label>
-                <div class="border rounded p-3" style="max-height:240px; overflow:auto;">
+                <div class="form-check-panel" id="classPanel">
                     @foreach (var item in Model.ClassOptions)
                     {
                         var isChecked = Model.Form.ClassIds != null && Model.Form.ClassIds.Contains(item.Id);
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="ClassIds" value="@item.Id" @(isChecked ? "checked" : "") />
+                            <input class="form-check-input exam-class" type="checkbox" name="ClassIds" value="@item.Id" @(isChecked ? "checked" : "") />
                             <label class="form-check-label">@item.Name</label>
                         </div>
                     }
                 </div>
+                @Html.ValidationMessage("ClassIds", "", new { @class = "text-danger small" })
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 d-flex gap-2">
             <button type="submit" class="btn btn-primary">Tạo đề</button>
             <a href="@Url.Action("Index", "ExamAdmin")" class="btn btn-outline-secondary">Quay lại</a>
         </div>
     }
 </div>
+
+@section scripts {
+<script>
+(function () {
+    var subjectSelector = '.exam-subject';
+    var classSelector = '.exam-class';
+    var countTarget = document.getElementById('availableQuestionCount');
+    var countInput = document.getElementById('questionCountInput');
+
+    function selectedValues(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector + ':checked')).map(function (item) { return item.value; });
+    }
+
+    function updateCount() {
+        var subjects = selectedValues(subjectSelector);
+        var classes = selectedValues(classSelector);
+
+        if (!subjects.length || !classes.length) {
+            countTarget.textContent = '0';
+            return;
+        }
+
+        var url = '@Url.Action("AvailableQuestionCount", "ExamAdmin")' + '?subjectIds=' + encodeURIComponent(subjects.join(',')) + '&classIds=' + encodeURIComponent(classes.join(','));
+        fetch(url, { credentials: 'same-origin' })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                var count = data && typeof data.count === 'number' ? data.count : 0;
+                countTarget.textContent = count;
+                if (countInput && Number(countInput.value) > count && count > 0) {
+                    countInput.value = count;
+                }
+            })
+            .catch(function () {
+                countTarget.textContent = '0';
+            });
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll(subjectSelector + ', ' + classSelector)).forEach(function (item) {
+        item.addEventListener('change', updateCount);
+    });
+
+    updateCount();
+})();
+</script>
+}

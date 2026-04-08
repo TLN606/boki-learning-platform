@@ -1,4 +1,4 @@
-@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
+﻿@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Ngân hàng câu hỏi";
@@ -80,6 +80,7 @@
             }
         </div>
     </div>
+
     <div class="col-lg-7">
         <div class="admin-card p-3 mb-3">
             @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
@@ -144,24 +145,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Questions)
+                        @if (Model.Questions.Any())
                         {
-                            <tr>
-                                <td>@item.QuestionId</td>
-                                <td>@item.QuestionText</td>
-                                <td>@item.ClassName - @item.SubjectName</td>
-                                <td>@item.Difficulty</td>
-                                <td>@item.Status</td>
-                                <td class="text-nowrap">
-                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Index", "QuestionBank", new { editId = item.QuestionId })">Sửa</a>
-                                    @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="id" value="@item.QuestionId" />
-                                        <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
-                                    }
-                                </td>
-                            </tr>
+                            foreach (var item in Model.Questions)
+                            {
+                                <tr>
+                                    <td>@item.QuestionId</td>
+                                    <td>@item.QuestionText</td>
+                                    <td>@item.ClassName - @item.SubjectName</td>
+                                    <td>@item.Difficulty</td>
+                                    <td>@item.Status</td>
+                                    <td class="text-nowrap">
+                                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Index", "QuestionBank", new { editId = item.QuestionId })">Sửa</a>
+                                        @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.QuestionId" />
+                                            <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="6" class="boki-empty">Không có câu hỏi phù hợp điều kiện lọc.</td></tr>
                         }
                     </tbody>
                 </table>

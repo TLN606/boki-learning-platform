@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -41,6 +41,7 @@ namespace Boki_ELearning.Models.ViewModels
         public AdminExamCreateViewModel Form { get; set; }
         public List<SimpleOptionViewModel> SubjectOptions { get; set; }
         public List<SimpleOptionViewModel> ClassOptions { get; set; }
+        public int AvailableQuestionCount { get; set; }
     }
 
     public class SimpleOptionViewModel
@@ -81,6 +82,7 @@ namespace Boki_ELearning.Models.ViewModels
         public int QuestionCount { get; set; }
         public int DurationMinutes { get; set; }
         public string Status { get; set; }
+        public bool IsPractice { get; set; }
         public double? BestScore { get; set; }
         public int AttemptCount { get; set; }
         public DateTime? LatestAttemptAt { get; set; }
@@ -135,5 +137,28 @@ namespace Boki_ELearning.Models.ViewModels
         public int CorrectCount { get; set; }
         public int TotalCount { get; set; }
         public DateTime SubmitAt { get; set; }
+    }
+
+    public class StudentPracticeCreateViewModel
+    {
+        [Required(ErrorMessage = "Vui lòng chọn lớp.")]
+        public int? ClassId { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn môn học.")]
+        public int? SubjectId { get; set; }
+
+        [Range(1, 200, ErrorMessage = "Số câu phải từ 1 đến 200.")]
+        public int QuestionCount { get; set; }
+
+        [Range(1, 240, ErrorMessage = "Thời gian phải từ 1 đến 240 phút.")]
+        public int DurationMinutes { get; set; }
+    }
+
+    public class StudentPracticeCreatePageViewModel
+    {
+        public StudentPracticeCreateViewModel Form { get; set; }
+        public List<SimpleOptionViewModel> SubjectOptions { get; set; }
+        public List<SimpleOptionViewModel> ClassOptions { get; set; }
+        public int AvailableQuestionCount { get; set; }
     }
 }

@@ -1,0 +1,99 @@
+﻿@model Boki_ELearning.Models.ViewModels.StudentPracticeCreatePageViewModel
+@{
+    ViewBag.Title = "Tạo đề tự luyện";
+}
+
+<div class="boki-card p-4 mb-3">
+    <h3 class="fw-bold mb-1">Tạo đề tự luyện</h3>
+    <p class="boki-subtitle mb-0">Chọn lớp, môn, số câu và thời gian để tạo đề riêng cho bạn.</p>
+</div>
+
+<div class="boki-card p-4">
+    @using (Html.BeginForm("CreatePractice", "StudentExam", FormMethod.Post, new { id = "practiceForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Lớp</label>
+                <select class="form-select" id="practiceClassId" name="ClassId">
+                    <option value="">-- Chọn lớp --</option>
+                    @foreach (var option in Model.ClassOptions)
+                    {
+                        <option value="@option.Id" @(Model.Form.ClassId == option.Id ? "selected" : "")>@option.Name</option>
+                    }
+                </select>
+                @Html.ValidationMessage("ClassId", "", new { @class = "text-danger small" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Môn học</label>
+                <select class="form-select" id="practiceSubjectId" name="SubjectId">
+                    <option value="">-- Chọn môn học --</option>
+                    @foreach (var option in Model.SubjectOptions)
+                    {
+                        <option value="@option.Id" @(Model.Form.SubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                    }
+                </select>
+                @Html.ValidationMessage("SubjectId", "", new { @class = "text-danger small" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Số câu</label>
+                <input class="form-control" id="practiceQuestionCount" name="QuestionCount" type="number" min="1" max="200" value="@Model.Form.QuestionCount" />
+                @Html.ValidationMessage("QuestionCount", "", new { @class = "text-danger small" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Thời gian (phút)</label>
+                <input class="form-control" name="DurationMinutes" type="number" min="1" max="240" value="@Model.Form.DurationMinutes" />
+                @Html.ValidationMessage("DurationMinutes", "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-3 mb-0">
+            Câu hỏi khả dụng theo bộ lọc hiện tại: <strong id="availablePracticeCount">@Model.AvailableQuestionCount</strong>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Tạo đề</button>
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "StudentExam")">Quay lại</a>
+        </div>
+    }
+</div>
+
+@section scripts {
+<script>
+(function () {
+    var classSelect = document.getElementById('practiceClassId');
+    var subjectSelect = document.getElementById('practiceSubjectId');
+    var countTarget = document.getElementById('availablePracticeCount');
+    var countInput = document.getElementById('practiceQuestionCount');
+
+    function updateAvailable() {
+        var classId = classSelect.value;
+        var subjectId = subjectSelect.value;
+
+        if (!classId || !subjectId) {
+            countTarget.textContent = '0';
+            return;
+        }
+
+        var url = '@Url.Action("PracticeAvailableCount", "StudentExam")' + '?classId=' + encodeURIComponent(classId) + '&subjectId=' + encodeURIComponent(subjectId);
+        fetch(url, { credentials: 'same-origin' })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                var count = data && typeof data.count === 'number' ? data.count : 0;
+                countTarget.textContent = count;
+                if (countInput && count > 0 && Number(countInput.value) > count) {
+                    countInput.value = count;
+                }
+            })
+            .catch(function () {
+                countTarget.textContent = '0';
+            });
+    }
+
+    classSelect.addEventListener('change', updateAvailable);
+    subjectSelect.addEventListener('change', updateAvailable);
+})();
+</script>
+}

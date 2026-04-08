@@ -1,11 +1,24 @@
-@model List<Boki_ELearning.Models.ViewModels.StudentExamListItemViewModel>
+﻿@model List<Boki_ELearning.Models.ViewModels.StudentExamListItemViewModel>
 @{
     ViewBag.Title = "Đề thi tổng hợp";
 }
 
-<div class="boki-card p-4 mb-3">
-    <h3 class="fw-bold mb-2">Danh sách đề thi được giao</h3>
-    <p class="boki-subtitle mb-0">Bạn có thể làm nhiều lần, hệ thống sẽ lấy điểm cao nhất.</p>
+<div class="row g-3 mb-3">
+    <div class="col-lg-8">
+        <div class="boki-card p-4">
+            <h3 class="fw-bold mb-1">Danh sách đề thi của bạn</h3>
+            <p class="boki-subtitle mb-0">Bạn có thể làm nhiều lần, hệ thống sẽ ghi nhận điểm cao nhất.</p>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="boki-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+                <h6 class="fw-bold mb-2">Tự tạo đề luyện</h6>
+                <p class="boki-subtitle mb-0">Chọn lớp, môn, số câu và thời gian để tạo đề riêng.</p>
+            </div>
+            <a class="btn btn-primary mt-3" href="@Url.Action("CreatePractice", "StudentExam")">Tạo đề tự luyện</a>
+        </div>
+    </div>
 </div>
 
 <div class="boki-card p-3">
@@ -24,20 +37,35 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ExamId</td>
+                            <td>
+                                @item.ExamName
+                                @if (item.IsPractice)
+                                {
+                                    <span class="boki-pill boki-pill-info ms-1">Tự luyện</span>
+                                }
+                            </td>
+                            <td>@item.QuestionCount</td>
+                            <td>@item.DurationMinutes phút</td>
+                            <td>@item.Status</td>
+                            <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
+                            <td>@item.AttemptCount</td>
+                            <td class="text-nowrap">
+                                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Take", "StudentExam", new { id = item.ExamId })">Làm đề</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("History", "StudentExam", new { id = item.ExamId })">Lịch sử</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@item.ExamId</td>
-                        <td>@item.ExamName</td>
-                        <td>@item.QuestionCount</td>
-                        <td>@item.DurationMinutes phút</td>
-                        <td>@item.Status</td>
-                        <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
-                        <td>@item.AttemptCount</td>
-                        <td class="text-nowrap">
-                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Take", "StudentExam", new { id = item.ExamId })">Làm đề</a>
-                            <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("History", "StudentExam", new { id = item.ExamId })">Lịch sử</a>
-                        </td>
+                        <td colspan="8" class="boki-empty">Bạn chưa có đề thi nào. Hãy tạo đề tự luyện để bắt đầu.</td>
                     </tr>
                 }
             </tbody>

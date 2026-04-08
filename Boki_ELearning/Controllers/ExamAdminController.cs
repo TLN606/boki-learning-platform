@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -55,18 +56,15 @@ namespace Boki_ELearning.Controllers
 
         public ActionResult Create()
         {
-            var model = new AdminExamCreatePageViewModel
+            var form = new AdminExamCreateViewModel
             {
-                Form = new AdminExamCreateViewModel
-                {
-                    QuestionCount = 20,
-                    DurationMinutes = 30,
-                    SubjectIds = new List<int>(),
-                    ClassIds = new List<int>()
-                },
-                SubjectOptions = LoadSubjectOptions(),
-                ClassOptions = LoadClassOptions()
+                QuestionCount = 10,
+                DurationMinutes = 30,
+                SubjectIds = new List<int>(),
+                ClassIds = new List<int>()
             };
+
+            var model = BuildCreatePage(form);
             return View(model);
         }
 
@@ -76,26 +74,27 @@ namespace Boki_ELearning.Controllers
         {
             form.SubjectIds = (form.SubjectIds ?? new List<int>()).Where(x => x > 0).Distinct().ToList();
             form.ClassIds = (form.ClassIds ?? new List<int>()).Where(x => x > 0).Distinct().ToList();
+            var availableCount = CountAvailableQuestions(form.SubjectIds, form.ClassIds);
 
-            if (!ModelState.IsValid || !form.SubjectIds.Any() || !form.ClassIds.Any())
+            if (!form.SubjectIds.Any())
             {
-                if (!form.SubjectIds.Any())
-                {
-                    ModelState.AddModelError("SubjectIds", "Vui lòng chọn ít nhất một môn học.");
-                }
+                ModelState.AddModelError("SubjectIds", "Vui lòng chọn ít nhất một môn học.");
+            }
 
-                if (!form.ClassIds.Any())
-                {
-                    ModelState.AddModelError("ClassIds", "Vui lòng chọn ít nhất một lớp.");
-                }
+            if (!form.ClassIds.Any())
+            {
+                ModelState.AddModelError("ClassIds", "Vui lòng chọn ít nhất một lớp.");
+            }
 
-                var invalidModel = new AdminExamCreatePageViewModel
-                {
-                    Form = form,
-                    SubjectOptions = LoadSubjectOptions(),
-                    ClassOptions = LoadClassOptions()
-                };
-                return View(invalidModel);
+            if (!ModelState.IsValid)
+            {
+                return View(BuildCreatePage(form, availableCount));
+            }
+
+            if (form.QuestionCount > availableCount)
+            {
+                ModelState.AddModelError("QuestionCount", $"Không đủ câu hỏi Active để tạo đề. Hiện có {availableCount}, cần {form.QuestionCount}.");
+                return View(BuildCreatePage(form, availableCount));
             }
 
             var accountId = Session[SessionKeys.AccountId] as int?;
@@ -113,9 +112,9 @@ namespace Boki_ELearning.Controllers
                 conn.Open();
                 using (var tx = conn.BeginTransaction())
                 {
-                    var pool = new List<int>();
+                    var picked = new List<int>();
                     using (var poolCmd = new SqlCommand(
-                        @"SELECT C.MACAUHOI
+                        @"SELECT TOP (@Take) C.MACAUHOI
                           FROM CAUHOI C
                           INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
                           WHERE C.IsDeleted = 0
@@ -125,25 +124,24 @@ namespace Boki_ELearning.Controllers
                             AND B.MALOP IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@ClassCsv, ','))
                           ORDER BY NEWID()", conn, tx))
                     {
+                        poolCmd.Parameters.AddWithValue("@Take", form.QuestionCount);
                         poolCmd.Parameters.AddWithValue("@SubjectCsv", subjectCsv);
                         poolCmd.Parameters.AddWithValue("@ClassCsv", classCsv);
                         using (var reader = poolCmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                pool.Add(reader.GetInt32(0));
+                                picked.Add(reader.GetInt32(0));
                             }
                         }
                     }
 
-                    if (pool.Count < form.QuestionCount)
+                    if (picked.Count < form.QuestionCount)
                     {
                         tx.Rollback();
-                        TempData["Message"] = $"Không đủ câu hỏi active để tạo đề. Hiện có {pool.Count}, cần {form.QuestionCount}.";
-                        return RedirectToAction("Create");
+                        ModelState.AddModelError("QuestionCount", $"Không đủ câu hỏi Active để tạo đề. Hiện có {picked.Count}, cần {form.QuestionCount}.");
+                        return View(BuildCreatePage(form, picked.Count));
                     }
-
-                    var picked = pool.Take(form.QuestionCount).ToList();
 
                     using (var createCmd = new SqlCommand(
                         @"INSERT INTO DETHI (TENDETHI, THOILUONGPHUT, SOCAU, TRANGTHAI, NGAYMO, NGAYDONG, MATAIKHOAN_TAO)
@@ -210,6 +208,15 @@ namespace Boki_ELearning.Controllers
 
             TempData["Message"] = "Tạo đề thi thành công. Bạn có thể bấm Publish để học sinh bắt đầu làm.";
             return RedirectToAction("Detail", new { id = examId });
+        }
+
+        [HttpGet]
+        public JsonResult AvailableQuestionCount(string subjectIds = null, string classIds = null)
+        {
+            var parsedSubjects = ParseCsvIds(subjectIds);
+            var parsedClasses = ParseCsvIds(classIds);
+            var count = CountAvailableQuestions(parsedSubjects, parsedClasses);
+            return Json(new { count }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Detail(int id)
@@ -380,9 +387,72 @@ namespace Boki_ELearning.Controllers
             return RedirectToAction("Detail", new { id });
         }
 
+        private AdminExamCreatePageViewModel BuildCreatePage(AdminExamCreateViewModel form, int availableCount = 0)
+        {
+            form = form ?? new AdminExamCreateViewModel();
+            form.SubjectIds = form.SubjectIds ?? new List<int>();
+            form.ClassIds = form.ClassIds ?? new List<int>();
+
+            return new AdminExamCreatePageViewModel
+            {
+                Form = form,
+                SubjectOptions = LoadSubjectOptions(),
+                ClassOptions = LoadClassOptions(),
+                AvailableQuestionCount = availableCount
+            };
+        }
+
+        private int CountAvailableQuestions(List<int> subjectIds, List<int> classIds)
+        {
+            subjectIds = (subjectIds ?? new List<int>()).Where(x => x > 0).Distinct().ToList();
+            classIds = (classIds ?? new List<int>()).Where(x => x > 0).Distinct().ToList();
+            if (!subjectIds.Any() || !classIds.Any())
+            {
+                return 0;
+            }
+
+            using (var conn = DbConnectionHelper.CreateSqlConnection())
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(
+                    @"SELECT COUNT(1)
+                      FROM CAUHOI C
+                      INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                      WHERE C.IsDeleted = 0
+                        AND C.TRANGTHAI = N'Active'
+                        AND B.IsDeleted = 0
+                        AND B.MAMONHOC IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@SubjectCsv, ','))
+                        AND B.MALOP IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@ClassCsv, ','))", conn))
+                {
+                    cmd.Parameters.AddWithValue("@SubjectCsv", string.Join(",", subjectIds));
+                    cmd.Parameters.AddWithValue("@ClassCsv", string.Join(",", classIds));
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
+        private static List<int> ParseCsvIds(string csv)
+        {
+            if (string.IsNullOrWhiteSpace(csv))
+            {
+                return new List<int>();
+            }
+
+            return csv
+                .Split(',')
+                .Select(x =>
+                {
+                    int value;
+                    return int.TryParse(x, out value) ? value : 0;
+                })
+                .Where(x => x > 0)
+                .Distinct()
+                .ToList();
+        }
+
         private List<SimpleOptionViewModel> LoadSubjectOptions()
         {
-            return _db.MONHOCs
+            return _db.MONHOCs.AsNoTracking()
                 .OrderBy(x => x.TENMONHOC)
                 .Select(x => new SimpleOptionViewModel
                 {
@@ -394,7 +464,7 @@ namespace Boki_ELearning.Controllers
 
         private List<SimpleOptionViewModel> LoadClassOptions()
         {
-            return _db.LOPs
+            return _db.LOPs.AsNoTracking()
                 .OrderBy(x => x.TENLOP)
                 .Select(x => new SimpleOptionViewModel
                 {

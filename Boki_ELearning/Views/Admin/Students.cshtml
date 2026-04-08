@@ -1,4 +1,4 @@
-@model List<Boki_ELearning.Models.ViewModels.AdminStudentListItemViewModel>
+﻿@model List<Boki_ELearning.Models.ViewModels.AdminStudentListItemViewModel>
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Quản lý học sinh";
@@ -18,15 +18,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (Model.Any())
                 {
-                    <tr>
-                        <td>@item.StudentId</td>
-                        <td>@item.FullName</td>
-                        <td>@item.ClassName</td>
-                        <td>@item.Email</td>
-                        <td>@item.AttemptCount</td>
-                    </tr>
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.StudentId</td>
+                            <td>@item.FullName</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.Email</td>
+                            <td>@item.AttemptCount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="boki-empty">Chưa có dữ liệu học sinh.</td></tr>
                 }
             </tbody>
         </table>

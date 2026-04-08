@@ -1,4 +1,4 @@
-@model Boki_ELearning.Models.ViewModels.AdminExamDetailViewModel
+﻿@model Boki_ELearning.Models.ViewModels.AdminExamDetailViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Chi tiết đề thi";
@@ -84,15 +84,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.StudentResults)
+                @if (Model.StudentResults.Any())
                 {
-                    <tr>
-                        <td>@item.StudentName</td>
-                        <td>@item.ClassName</td>
-                        <td>@item.AttemptCount</td>
-                        <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
-                        <td>@(item.LatestAttemptAt.HasValue ? item.LatestAttemptAt.Value.ToString("dd/MM/yyyy HH:mm") : "-")</td>
-                    </tr>
+                    foreach (var item in Model.StudentResults)
+                    {
+                        <tr>
+                            <td>@item.StudentName</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.AttemptCount</td>
+                            <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
+                            <td>@(item.LatestAttemptAt.HasValue ? item.LatestAttemptAt.Value.ToString("dd/MM/yyyy HH:mm") : "-")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="boki-empty">Chưa có học sinh nào làm đề này.</td></tr>
                 }
             </tbody>
         </table>

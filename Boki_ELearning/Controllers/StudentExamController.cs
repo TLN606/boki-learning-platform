@@ -1,10 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using Boki_ELearning.Filters;
 using Boki_ELearning.Helpers;
+using Boki_ELearning.Models;
 using Boki_ELearning.Models.ViewModels;
 
 namespace Boki_ELearning.Controllers
@@ -12,6 +14,8 @@ namespace Boki_ELearning.Controllers
     [SessionAuthorize]
     public class StudentExamController : Controller
     {
+        private readonly BokiDBEntities1 _db = new BokiDBEntities1();
+
         public ActionResult Index()
         {
             var studentId = Session[SessionKeys.StudentId] as int?;
@@ -30,6 +34,7 @@ namespace Boki_ELearning.Controllers
                              E.SOCAU,
                              E.THOILUONGPHUT,
                              E.TRANGTHAI,
+                             CASE WHEN E.TENDETHI LIKE N'[[]Tự luyện]%' THEN 1 ELSE 0 END AS IsPractice,
                              A.BestScore,
                              ISNULL(A.AttemptCount, 0) AS AttemptCount,
                              A.LatestAttemptAt
@@ -60,9 +65,10 @@ namespace Boki_ELearning.Controllers
                                 QuestionCount = reader.GetInt32(2),
                                 DurationMinutes = reader.GetInt32(3),
                                 Status = reader.GetString(4),
-                                BestScore = reader.IsDBNull(5) ? (double?)null : reader.GetDouble(5),
-                                AttemptCount = reader.GetInt32(6),
-                                LatestAttemptAt = reader.IsDBNull(7) ? (DateTime?)null : reader.GetDateTime(7)
+                                IsPractice = reader.GetInt32(5) == 1,
+                                BestScore = reader.IsDBNull(6) ? (double?)null : reader.GetDouble(6),
+                                AttemptCount = reader.GetInt32(7),
+                                LatestAttemptAt = reader.IsDBNull(8) ? (DateTime?)null : reader.GetDateTime(8)
                             });
                         }
                     }
@@ -70,6 +76,183 @@ namespace Boki_ELearning.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult CreatePractice()
+        {
+            var studentId = Session[SessionKeys.StudentId] as int?;
+            if (!studentId.HasValue)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var model = new StudentPracticeCreatePageViewModel
+            {
+                Form = new StudentPracticeCreateViewModel
+                {
+                    ClassId = Session[SessionKeys.ClassId] as int?,
+                    QuestionCount = 10,
+                    DurationMinutes = 20
+                },
+                ClassOptions = LoadClassOptions(),
+                SubjectOptions = LoadSubjectOptions(),
+                AvailableQuestionCount = 0
+            };
+
+            if (model.Form.ClassId.HasValue && model.SubjectOptions.Any())
+            {
+                model.Form.SubjectId = model.SubjectOptions.First().Id;
+                model.AvailableQuestionCount = CountAvailableQuestions(model.Form.SubjectId.Value, model.Form.ClassId.Value);
+                if (model.AvailableQuestionCount > 0)
+                {
+                    model.Form.QuestionCount = Math.Min(model.Form.QuestionCount, model.AvailableQuestionCount);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePractice(StudentPracticeCreateViewModel form)
+        {
+            var studentId = Session[SessionKeys.StudentId] as int?;
+            var accountId = Session[SessionKeys.AccountId] as int?;
+            if (!studentId.HasValue || !accountId.HasValue)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var classId = form.ClassId.GetValueOrDefault();
+            var subjectId = form.SubjectId.GetValueOrDefault();
+            var availableCount = (form.ClassId.HasValue && form.SubjectId.HasValue)
+                ? CountAvailableQuestions(subjectId, classId)
+                : 0;
+
+            if (!ModelState.IsValid)
+            {
+                return View(BuildPracticePage(form, availableCount));
+            }
+
+            if (form.QuestionCount > availableCount)
+            {
+                ModelState.AddModelError("QuestionCount", $"Không đủ câu hỏi để tạo đề. Hiện có {availableCount} câu khả dụng.");
+                return View(BuildPracticePage(form, availableCount));
+            }
+
+            var pickedQuestionIds = new List<int>();
+            int examId;
+            using (var conn = DbConnectionHelper.CreateSqlConnection())
+            {
+                conn.Open();
+                using (var tx = conn.BeginTransaction())
+                {
+                    using (var pickCmd = new SqlCommand(
+                        @"SELECT TOP (@Take) C.MACAUHOI
+                          FROM CAUHOI C
+                          INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                          WHERE C.IsDeleted = 0
+                            AND C.TRANGTHAI = N'Active'
+                            AND B.IsDeleted = 0
+                            AND B.MAMONHOC = @SubjectId
+                            AND B.MALOP = @ClassId
+                          ORDER BY NEWID()", conn, tx))
+                    {
+                        pickCmd.Parameters.AddWithValue("@Take", form.QuestionCount);
+                        pickCmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                        pickCmd.Parameters.AddWithValue("@ClassId", classId);
+
+                        using (var reader = pickCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                pickedQuestionIds.Add(reader.GetInt32(0));
+                            }
+                        }
+                    }
+
+                    if (pickedQuestionIds.Count < form.QuestionCount)
+                    {
+                        tx.Rollback();
+                        ModelState.AddModelError("QuestionCount", $"Không đủ câu hỏi để tạo đề. Hiện có {pickedQuestionIds.Count} câu khả dụng.");
+                        return View(BuildPracticePage(form, pickedQuestionIds.Count));
+                    }
+
+                    var className = _db.LOPs.AsNoTracking()
+                        .Where(x => x.MALOP == classId)
+                        .Select(x => x.TENLOP)
+                        .FirstOrDefault() ?? "Lớp";
+                    var subjectName = _db.MONHOCs.AsNoTracking()
+                        .Where(x => x.MAMONHOC == subjectId)
+                        .Select(x => x.TENMONHOC)
+                        .FirstOrDefault() ?? "Môn";
+
+                    using (var createCmd = new SqlCommand(
+                        @"INSERT INTO DETHI (TENDETHI, THOILUONGPHUT, SOCAU, TRANGTHAI, NGAYMO, MATAIKHOAN_TAO)
+                          VALUES (@Name, @Duration, @Count, N'Published', GETDATE(), @AccountId);
+                          SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tx))
+                    {
+                        createCmd.Parameters.AddWithValue("@Name", $"[Tự luyện] {className} - {subjectName} - {DateTime.Now:dd/MM HH:mm}");
+                        createCmd.Parameters.AddWithValue("@Duration", form.DurationMinutes);
+                        createCmd.Parameters.AddWithValue("@Count", form.QuestionCount);
+                        createCmd.Parameters.AddWithValue("@AccountId", accountId.Value);
+                        examId = Convert.ToInt32(createCmd.ExecuteScalar());
+                    }
+
+                    using (var subjectCmd = new SqlCommand(
+                        "INSERT INTO DETHI_MONHOC (MADETHI, MAMONHOC) VALUES (@ExamId, @SubjectId)", conn, tx))
+                    {
+                        subjectCmd.Parameters.AddWithValue("@ExamId", examId);
+                        subjectCmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                        subjectCmd.ExecuteNonQuery();
+                    }
+
+                    using (var classCmd = new SqlCommand(
+                        "INSERT INTO DETHI_LOP (MADETHI, MALOP) VALUES (@ExamId, @ClassId)", conn, tx))
+                    {
+                        classCmd.Parameters.AddWithValue("@ExamId", examId);
+                        classCmd.Parameters.AddWithValue("@ClassId", classId);
+                        classCmd.ExecuteNonQuery();
+                    }
+
+                    using (var assignCmd = new SqlCommand(
+                        "INSERT INTO DETHI_HOCSINH (MADETHI, MAHOCSINH) VALUES (@ExamId, @StudentId)", conn, tx))
+                    {
+                        assignCmd.Parameters.AddWithValue("@ExamId", examId);
+                        assignCmd.Parameters.AddWithValue("@StudentId", studentId.Value);
+                        assignCmd.ExecuteNonQuery();
+                    }
+
+                    for (var i = 0; i < pickedQuestionIds.Count; i++)
+                    {
+                        using (var questionCmd = new SqlCommand(
+                            "INSERT INTO DETHI_CAUHOI (MADETHI, MACAUHOI, STT) VALUES (@ExamId, @QuestionId, @Order)", conn, tx))
+                        {
+                            questionCmd.Parameters.AddWithValue("@ExamId", examId);
+                            questionCmd.Parameters.AddWithValue("@QuestionId", pickedQuestionIds[i]);
+                            questionCmd.Parameters.AddWithValue("@Order", i + 1);
+                            questionCmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    tx.Commit();
+                }
+            }
+
+            TempData["Message"] = "Đã tạo đề tự luyện thành công.";
+            return RedirectToAction("Take", new { id = examId });
+        }
+
+        [HttpGet]
+        public JsonResult PracticeAvailableCount(int? classId = null, int? subjectId = null)
+        {
+            if (!classId.HasValue || !subjectId.HasValue)
+            {
+                return Json(new { count = 0 }, JsonRequestBehavior.AllowGet);
+            }
+
+            var count = CountAvailableQuestions(subjectId.Value, classId.Value);
+            return Json(new { count }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Take(int id)
@@ -339,6 +522,65 @@ namespace Boki_ELearning.Controllers
             return View(model);
         }
 
+        private StudentPracticeCreatePageViewModel BuildPracticePage(StudentPracticeCreateViewModel form, int availableCount)
+        {
+            form = form ?? new StudentPracticeCreateViewModel();
+
+            return new StudentPracticeCreatePageViewModel
+            {
+                Form = form,
+                ClassOptions = LoadClassOptions(),
+                SubjectOptions = LoadSubjectOptions(),
+                AvailableQuestionCount = availableCount
+            };
+        }
+
+        private List<SimpleOptionViewModel> LoadClassOptions()
+        {
+            return _db.LOPs.AsNoTracking()
+                .OrderBy(x => x.TENLOP)
+                .Select(x => new SimpleOptionViewModel
+                {
+                    Id = x.MALOP,
+                    Name = x.TENLOP
+                })
+                .ToList();
+        }
+
+        private List<SimpleOptionViewModel> LoadSubjectOptions()
+        {
+            return _db.MONHOCs.AsNoTracking()
+                .OrderBy(x => x.TENMONHOC)
+                .Select(x => new SimpleOptionViewModel
+                {
+                    Id = x.MAMONHOC,
+                    Name = x.TENMONHOC
+                })
+                .ToList();
+        }
+
+        private int CountAvailableQuestions(int subjectId, int classId)
+        {
+            using (var conn = DbConnectionHelper.CreateSqlConnection())
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(
+                    @"SELECT COUNT(1)
+                      FROM CAUHOI C
+                      INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                      WHERE C.IsDeleted = 0
+                        AND C.TRANGTHAI = N'Active'
+                        AND B.IsDeleted = 0
+                        AND B.MAMONHOC = @SubjectId
+                        AND B.MALOP = @ClassId", conn))
+                {
+                    cmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                    cmd.Parameters.AddWithValue("@ClassId", classId);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
         private ExamMeta GetExamMeta(int examId, int studentId)
         {
             using (var conn = DbConnectionHelper.CreateSqlConnection())
@@ -398,6 +640,16 @@ namespace Boki_ELearning.Controllers
             }
 
             return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
         private sealed class ExamMeta

@@ -1,4 +1,4 @@
-@model Boki_ELearning.Models.ViewModels.LessonQuizViewModel
+﻿@model Boki_ELearning.Models.ViewModels.LessonQuizViewModel
 @{
     ViewBag.Title = "Làm quiz";
 }
@@ -23,7 +23,7 @@
             {
                 <label class="exam-answer">
                     <input type="radio" name="Answers[@i].AnswerId" value="@answer.AnswerId" required />
-                    <span class="ms-1">@answer.AnswerText</span>
+                    <span>@answer.AnswerText</span>
                 </label>
             }
         </div>
