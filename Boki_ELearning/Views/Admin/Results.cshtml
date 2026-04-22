@@ -1,9 +1,109 @@
-﻿@model List<Boki_ELearning.Models.ViewModels.AdminResultListItemViewModel>
+@model Boki_ELearning.Models.ViewModels.AdminResultsPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Kết quả học tập";
     ViewBag.AdminNav = "results";
 }
+
+<div class="admin-card p-3 mb-3">
+    @using (Html.BeginForm("Results", "Admin", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
+    {
+        <div class="col-lg-3 col-md-4">
+            <label class="form-label boki-form-label">Từ khóa</label>
+            <input class="form-control" name="keyword" value="@Model.Filter.Keyword" placeholder="Tên học sinh hoặc bài học" />
+        </div>
+        <div class="col-lg-2 col-md-4">
+            <label class="form-label boki-form-label">Lớp</label>
+            <select class="form-select" name="classId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.ClassOptions)
+                {
+                    <option value="@option.Id" @(Model.Filter.ClassId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-2 col-md-4">
+            <label class="form-label boki-form-label">Môn học</label>
+            <select class="form-select" name="subjectId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.SubjectOptions)
+                {
+                    <option value="@option.Id" @(Model.Filter.SubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-2 col-md-3">
+            <label class="form-label boki-form-label">Từ ngày</label>
+            <input class="form-control" type="date" name="fromDate" value="@(Model.Filter.FromDate.HasValue ? Model.Filter.FromDate.Value.ToString("yyyy-MM-dd") : string.Empty)" />
+        </div>
+        <div class="col-lg-2 col-md-3">
+            <label class="form-label boki-form-label">Đến ngày</label>
+            <input class="form-control" type="date" name="toDate" value="@(Model.Filter.ToDate.HasValue ? Model.Filter.ToDate.Value.ToString("yyyy-MM-dd") : string.Empty)" />
+        </div>
+        <div class="col-lg-1 col-md-3">
+            <label class="form-label boki-form-label">Điểm từ</label>
+            <input class="form-control" type="number" name="minScore" min="0" max="10" step="0.1" value="@(Model.Filter.MinScore.HasValue ? Model.Filter.MinScore.Value.ToString("0.##") : string.Empty)" />
+        </div>
+        <div class="col-lg-1 col-md-3">
+            <label class="form-label boki-form-label">Điểm đến</label>
+            <input class="form-control" type="number" name="maxScore" min="0" max="10" step="0.1" value="@(Model.Filter.MaxScore.HasValue ? Model.Filter.MaxScore.Value.ToString("0.##") : string.Empty)" />
+        </div>
+        <div class="col-lg-1 col-md-6 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Lọc</button>
+        </div>
+        <div class="col-lg-1 col-md-6 d-grid">
+            <a href="@Url.Action("Results", "Admin")" class="btn btn-outline-secondary">Reset</a>
+        </div>
+    }
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Tổng lượt làm</div>
+            <div class="fs-4 fw-bold">@Model.Stats.TotalResults</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Số học sinh</div>
+            <div class="fs-4 fw-bold">@Model.Stats.TotalStudents</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Điểm trung bình</div>
+            <div class="fs-4 fw-bold">@Model.Stats.AverageScore.ToString("0.##")</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Tỷ lệ đạt (>=5)</div>
+            <div class="fs-4 fw-bold">@Model.Stats.PassRate.ToString("0.##")%</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Điểm cao nhất</div>
+            <div class="fs-5 fw-bold">@Model.Stats.HighestScore.ToString("0.##")</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Điểm thấp nhất</div>
+            <div class="fs-5 fw-bold">@Model.Stats.LowestScore.ToString("0.##")</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Đạt / Chưa đạt</div>
+            <div class="fs-5 fw-bold">@Model.Stats.PassCount / @Model.Stats.FailCount</div>
+        </div>
+    </div>
+</div>
 
 <div class="admin-card p-3">
     <div class="table-responsive">
@@ -12,6 +112,7 @@
                 <tr>
                     <th>Mã KQ</th>
                     <th>Học sinh</th>
+                    <th>Lớp</th>
                     <th>Môn</th>
                     <th>Bài học</th>
                     <th>Điểm</th>
@@ -19,13 +120,14 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.Any())
+                @if (Model.Results.Any())
                 {
-                    foreach (var item in Model)
+                    foreach (var item in Model.Results)
                     {
                         <tr>
                             <td>@item.ResultId</td>
                             <td>@item.StudentName</td>
+                            <td>@item.ClassName</td>
                             <td>@item.SubjectName</td>
                             <td>@item.LessonName</td>
                             <td>@item.Score.ToString("0.##")</td>
@@ -35,7 +137,7 @@
                 }
                 else
                 {
-                    <tr><td colspan="6" class="boki-empty">Chưa có kết quả nào.</td></tr>
+                    <tr><td colspan="7" class="boki-empty">Không có kết quả phù hợp điều kiện lọc.</td></tr>
                 }
             </tbody>
         </table>

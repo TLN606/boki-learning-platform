@@ -32,6 +32,21 @@
     </div>
 </div>
 
+<div class="row g-3 mb-3">
+    <div class="col-md-6">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Tổng lượt làm bài học</div>
+            <div class="fs-3 fw-bold">@Model.TotalLearningResults</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="admin-card p-3">
+            <div class="boki-subtitle">Điểm TB / cao nhất</div>
+            <div class="fs-3 fw-bold">@Model.AverageLearningScore.ToString("0.##") / @Model.HighestLearningScore.ToString("0.##")</div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-3">
     <div class="col-lg-6">
         <div class="admin-card p-3">
