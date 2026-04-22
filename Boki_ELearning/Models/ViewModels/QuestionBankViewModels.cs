@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Boki_ELearning.Models.ViewModels
 {
@@ -42,31 +43,32 @@ namespace Boki_ELearning.Models.ViewModels
     {
         public int? QuestionId { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn bài học.")]
+        [Required(ErrorMessage = "Vui long chon bai hoc.")]
         public int LessonId { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập nội dung câu hỏi.")]
+        [Required(ErrorMessage = "Vui long nhap noi dung cau hoi.")]
+        [AllowHtml]
         public string QuestionText { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn độ khó.")]
+        [Required(ErrorMessage = "Vui long chon do kho.")]
         public string Difficulty { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn trạng thái.")]
+        [Required(ErrorMessage = "Vui long chon trang thai.")]
         public string Status { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập đáp án A.")]
+        [Required(ErrorMessage = "Vui long nhap dap an A.")]
         public string AnswerA { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập đáp án B.")]
+        [Required(ErrorMessage = "Vui long nhap dap an B.")]
         public string AnswerB { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập đáp án C.")]
+        [Required(ErrorMessage = "Vui long nhap dap an C.")]
         public string AnswerC { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập đáp án D.")]
+        [Required(ErrorMessage = "Vui long nhap dap an D.")]
         public string AnswerD { get; set; }
 
-        [Range(0, 3, ErrorMessage = "Đáp án đúng không hợp lệ.")]
+        [Range(0, 3, ErrorMessage = "Dap an dung khong hop le.")]
         public int CorrectIndex { get; set; }
     }
 

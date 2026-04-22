@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Boki_ELearning.Filters;
@@ -69,6 +70,24 @@ namespace Boki_ELearning.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(QuestionBankEditViewModel model)
         {
+            if (model == null)
+            {
+                TempData["Message"] = "Du lieu gui len khong hop le.";
+                return RedirectToAction("Index");
+            }
+
+            var originalQuestionText = model?.QuestionText ?? string.Empty;
+            if (ContainsBlockedHtmlPattern(originalQuestionText))
+            {
+                ModelState.AddModelError("QuestionText", "Noi dung cau hoi chua the script hoac event nguy hiem.");
+            }
+
+            model.QuestionText = SanitizeRichHtml(originalQuestionText);
+            if (string.IsNullOrWhiteSpace(StripHtml(model.QuestionText)))
+            {
+                ModelState.AddModelError("QuestionText", "Noi dung cau hoi khong hop le.");
+            }
+
             if (!ModelState.IsValid)
             {
                 if (model.QuestionId.HasValue)
@@ -89,6 +108,7 @@ namespace Boki_ELearning.Controllers
 
             var normalizedDifficulty = NormalizeDifficulty(model.Difficulty);
             var normalizedStatus = NormalizeStatus(model.Status);
+            var sanitizedQuestionText = model.QuestionText;
 
             using (var conn = DbConnectionHelper.CreateSqlConnection())
             {
@@ -142,7 +162,7 @@ namespace Boki_ELearning.Controllers
                                 AND IsDeleted = 0", conn, tx))
                         {
                             updateCmd.Parameters.AddWithValue("@QuestionId", questionId);
-                            updateCmd.Parameters.AddWithValue("@QuestionText", model.QuestionText.Trim());
+                            updateCmd.Parameters.AddWithValue("@QuestionText", sanitizedQuestionText);
                             updateCmd.Parameters.AddWithValue("@LessonId", model.LessonId);
                             updateCmd.Parameters.AddWithValue("@Difficulty", normalizedDifficulty);
                             updateCmd.Parameters.AddWithValue("@Status", normalizedStatus);
@@ -172,7 +192,7 @@ namespace Boki_ELearning.Controllers
                               VALUES (@QuestionText, @LessonId, 0, @Difficulty, @Status);
                               SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tx))
                         {
-                            insertCmd.Parameters.AddWithValue("@QuestionText", model.QuestionText.Trim());
+                            insertCmd.Parameters.AddWithValue("@QuestionText", sanitizedQuestionText);
                             insertCmd.Parameters.AddWithValue("@LessonId", model.LessonId);
                             insertCmd.Parameters.AddWithValue("@Difficulty", normalizedDifficulty);
                             insertCmd.Parameters.AddWithValue("@Status", normalizedStatus);
@@ -201,6 +221,74 @@ namespace Boki_ELearning.Controllers
 
             TempData["Message"] = model.QuestionId.HasValue ? "Cập nhật câu hỏi thành công." : "Tạo câu hỏi thành công.";
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult UploadMedia(HttpPostedFileBase upload)
+        {
+            if (upload == null || upload.ContentLength <= 0)
+            {
+                return BuildUploadError("Khong tim thay file upload.");
+            }
+
+            const int maxSizeBytes = 25 * 1024 * 1024;
+            if (upload.ContentLength > maxSizeBytes)
+            {
+                return BuildUploadError("Kich thuoc file vuot qua 25MB.");
+            }
+
+            var ext = Path.GetExtension(upload.FileName ?? string.Empty) ?? string.Empty;
+            var imageExt = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp" };
+            var videoExt = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".mp4", ".webm", ".ogg", ".mov" };
+
+            if (!imageExt.Contains(ext) && !videoExt.Contains(ext))
+            {
+                return BuildUploadError("Dinh dang file khong duoc ho tro.");
+            }
+
+            var contentType = (upload.ContentType ?? string.Empty).Trim();
+            var validContentType = contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
+                || contentType.StartsWith("video/", StringComparison.OrdinalIgnoreCase)
+                || contentType.Equals("application/octet-stream", StringComparison.OrdinalIgnoreCase);
+            if (!validContentType)
+            {
+                return BuildUploadError("Mime type khong hop le.");
+            }
+
+            var originalBaseName = Path.GetFileNameWithoutExtension(upload.FileName ?? string.Empty) ?? "media";
+            var safeBaseName = Regex.Replace(originalBaseName, @"[^a-zA-Z0-9_-]", string.Empty);
+            if (string.IsNullOrWhiteSpace(safeBaseName))
+            {
+                safeBaseName = "media";
+            }
+
+            var finalFileName = safeBaseName + "_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss") + "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + ext.ToLowerInvariant();
+            var uploadVirtualDir = "~/Content/uploads/question-media";
+            var uploadPhysicalDir = Server.MapPath(uploadVirtualDir);
+            if (uploadPhysicalDir == null)
+            {
+                return BuildUploadError("Khong the xac dinh thu muc luu file.");
+            }
+
+            Directory.CreateDirectory(uploadPhysicalDir);
+            upload.SaveAs(Path.Combine(uploadPhysicalDir, finalFileName));
+
+            var fileUrl = Url.Content(uploadVirtualDir + "/" + finalFileName);
+            var funcNum = Request["CKEditorFuncNum"];
+            if (!string.IsNullOrWhiteSpace(funcNum))
+            {
+                var safeMessage = HttpUtility.JavaScriptStringEncode("Upload thanh cong.");
+                var safeUrl = HttpUtility.JavaScriptStringEncode(fileUrl);
+                var script = "<script>window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", '" + safeUrl + "', '" + safeMessage + "');</script>";
+                return Content(script, "text/html");
+            }
+
+            return Json(new
+            {
+                uploaded = 1,
+                fileName = finalFileName,
+                url = fileUrl
+            });
         }
 
         [HttpPost]
@@ -366,6 +454,17 @@ namespace Boki_ELearning.Controllers
                             continue;
                         }
 
+                        if (ContainsBlockedHtmlPattern(item.QuestionText))
+                        {
+                            continue;
+                        }
+
+                        var sanitizedQuestionText = SanitizeRichHtml(item.QuestionText);
+                        if (string.IsNullOrWhiteSpace(StripHtml(sanitizedQuestionText)))
+                        {
+                            continue;
+                        }
+
                         int subjectId;
                         using (var lessonCmd = new SqlCommand(
                             @"SELECT MAMONHOC
@@ -389,7 +488,7 @@ namespace Boki_ELearning.Controllers
                               VALUES (@QuestionText, @LessonId, 0, @Difficulty, @Status);
                               SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tx))
                         {
-                            insertCmd.Parameters.AddWithValue("@QuestionText", item.QuestionText.Trim());
+                            insertCmd.Parameters.AddWithValue("@QuestionText", sanitizedQuestionText);
                             insertCmd.Parameters.AddWithValue("@LessonId", item.LessonId);
                             insertCmd.Parameters.AddWithValue("@Difficulty", NormalizeDifficulty(item.Difficulty));
                             insertCmd.Parameters.AddWithValue("@Status", NormalizeStatus(item.Status));
@@ -631,6 +730,63 @@ namespace Boki_ELearning.Controllers
         {
             var value = (status ?? string.Empty).Trim();
             return value.Equals("Draft", StringComparison.OrdinalIgnoreCase) ? "Draft" : "Active";
+        }
+
+        private ActionResult BuildUploadError(string message)
+        {
+            var safeMessage = HttpUtility.JavaScriptStringEncode(message ?? "Upload failed.");
+            var funcNum = Request["CKEditorFuncNum"];
+            if (!string.IsNullOrWhiteSpace(funcNum))
+            {
+                var script = "<script>window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", '', '" + safeMessage + "');</script>";
+                return Content(script, "text/html");
+            }
+
+            return Json(new
+            {
+                uploaded = 0,
+                error = new { message = message ?? "Upload failed." }
+            });
+        }
+
+        private static bool ContainsBlockedHtmlPattern(string html)
+        {
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                return false;
+            }
+
+            return Regex.IsMatch(html, @"<\s*script\b", RegexOptions.IgnoreCase)
+                || Regex.IsMatch(html, @"on\w+\s*=", RegexOptions.IgnoreCase)
+                || Regex.IsMatch(html, @"javascript\s*:", RegexOptions.IgnoreCase);
+        }
+
+        private static string SanitizeRichHtml(string html)
+        {
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                return string.Empty;
+            }
+
+            var sanitized = html.Trim();
+            sanitized = Regex.Replace(sanitized, @"<\s*script\b[^>]*>.*?<\s*/\s*script\s*>", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            sanitized = Regex.Replace(sanitized, @"on\w+\s*=\s*(['""]).*?\1", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            sanitized = Regex.Replace(sanitized, @"on\w+\s*=\s*[^\s>]+", string.Empty, RegexOptions.IgnoreCase);
+            sanitized = Regex.Replace(sanitized, @"(href|src)\s*=\s*(['""])\s*javascript:[^'""]*\2", "$1=\"#\"", RegexOptions.IgnoreCase);
+
+            return sanitized.Trim();
+        }
+
+        private static string StripHtml(string html)
+        {
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                return string.Empty;
+            }
+
+            var plain = Regex.Replace(html, "<.*?>", " ");
+            plain = HttpUtility.HtmlDecode(plain);
+            return string.IsNullOrWhiteSpace(plain) ? string.Empty : plain.Trim();
         }
 
         private sealed class QuestionExportRow

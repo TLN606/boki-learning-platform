@@ -12,11 +12,15 @@
     <div class="col-lg-8">
         <div class="boki-card p-4 mb-3">
             <h5 class="fw-bold">Nội dung lý thuyết</h5>
-            <p class="mb-0" style="white-space:pre-line;">@Model.TheoryContent</p>
+            <div class="boki-rich-content mb-0">
+                @Html.Raw(Model.TheoryContent ?? string.Empty)
+            </div>
         </div>
         <div class="boki-card p-4">
             <h5 class="fw-bold">Mẹo ghi nhớ</h5>
-            <p class="mb-0" style="white-space:pre-line;">@Model.TipContent</p>
+            <div class="boki-rich-content mb-0">
+                @Html.Raw(Model.TipContent ?? string.Empty)
+            </div>
         </div>
     </div>
     <div class="col-lg-4">

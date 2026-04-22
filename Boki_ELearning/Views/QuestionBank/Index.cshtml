@@ -76,7 +76,15 @@
                     {
                         <tr>
                             <td>@item.QuestionId</td>
-                            <td>@item.QuestionText</td>
+                            @{
+                                var plainQuestion = System.Text.RegularExpressions.Regex.Replace(item.QuestionText ?? string.Empty, "<.*?>", " ");
+                                plainQuestion = (System.Web.HttpUtility.HtmlDecode(plainQuestion) ?? string.Empty).Trim();
+                                if (plainQuestion.Length > 160)
+                                {
+                                    plainQuestion = plainQuestion.Substring(0, 160) + "...";
+                                }
+                            }
+                            <td title="@plainQuestion">@plainQuestion</td>
                             <td>@item.ClassName - @item.SubjectName - @item.LessonName</td>
                             <td>@item.Difficulty</td>
                             <td>@item.Status</td>
@@ -186,19 +194,24 @@
 </div>
 
 @section scripts {
+    <script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
     <script>
         (function () {
             var modalElement = document.getElementById('editQuestionModal');
-            if (!modalElement || typeof bootstrap === 'undefined') {
+            var editForm = document.getElementById('editQuestionForm');
+            if (!modalElement || !editForm || typeof bootstrap === 'undefined') {
                 return;
             }
 
             var modalInstance = new bootstrap.Modal(modalElement);
             var editDataUrl = '@Url.Action("EditData", "QuestionBank")';
+            var uploadUrl = '@Url.Action("UploadMedia", "QuestionBank")';
             var modalTitle = document.getElementById('editQuestionModalTitle');
             var errorBox = document.getElementById('editQuestionError');
             var submitButton = document.getElementById('editQuestionSubmit');
             var editButtons = document.querySelectorAll('.js-edit-question');
+            var questionTextarea = document.getElementById('editQuestionText');
+            var editorInstance = null;
 
             function setFieldValue(id, value) {
                 var element = document.getElementById(id);
@@ -219,10 +232,48 @@
                 errorBox.classList.add('d-none');
             }
 
+            function buildEditorConfig() {
+                return {
+                    height: 240,
+                    allowedContent: true,
+                    removePlugins: 'easyimage',
+                    extraPlugins: 'uploadimage,image2',
+                    filebrowserUploadUrl: uploadUrl,
+                    uploadUrl: uploadUrl
+                };
+            }
+
+            function ensureEditor() {
+                if (editorInstance || typeof CKEDITOR === 'undefined' || !questionTextarea) {
+                    return;
+                }
+
+                editorInstance = CKEDITOR.replace('editQuestionText', buildEditorConfig());
+            }
+
+            function destroyEditor() {
+                if (!editorInstance) {
+                    return;
+                }
+
+                editorInstance.destroy(true);
+                editorInstance = null;
+            }
+
+            function setQuestionHtml(value) {
+                var html = value == null ? '' : value;
+                if (editorInstance) {
+                    editorInstance.setData(html);
+                    return;
+                }
+
+                setFieldValue('editQuestionText', html);
+            }
+
             function populateEditor(data) {
                 setFieldValue('editQuestionId', data.QuestionId);
                 setFieldValue('editLessonId', data.LessonId);
-                setFieldValue('editQuestionText', data.QuestionText);
+                setQuestionHtml(data.QuestionText);
                 setFieldValue('editDifficulty', data.Difficulty);
                 setFieldValue('editStatus', data.Status);
                 setFieldValue('editAnswerA', data.AnswerA);
@@ -235,7 +286,7 @@
             function resetEditor() {
                 setFieldValue('editQuestionId', '');
                 setFieldValue('editLessonId', '');
-                setFieldValue('editQuestionText', '');
+                setQuestionHtml('');
                 setFieldValue('editDifficulty', 'TrungBinh');
                 setFieldValue('editStatus', 'Active');
                 setFieldValue('editAnswerA', '');
@@ -244,6 +295,26 @@
                 setFieldValue('editAnswerD', '');
                 setFieldValue('editCorrectIndex', '0');
             }
+
+            modalElement.addEventListener('shown.bs.modal', function () {
+                ensureEditor();
+            });
+
+            modalElement.addEventListener('hidden.bs.modal', function () {
+                destroyEditor();
+                hideError();
+                resetEditor();
+                modalTitle.textContent = 'Cập nhật câu hỏi';
+                submitButton.disabled = false;
+            });
+
+            editForm.addEventListener('submit', function () {
+                if (!editorInstance || !questionTextarea) {
+                    return;
+                }
+
+                questionTextarea.value = editorInstance.getData();
+            });
 
             for (var i = 0; i < editButtons.length; i++) {
                 editButtons[i].addEventListener('click', function () {

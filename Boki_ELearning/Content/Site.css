@@ -506,6 +506,43 @@ a {
     background: #eff5ff;
 }
 
+/* Rich content */
+.boki-rich-content {
+    line-height: 1.65;
+    color: var(--boki-text);
+}
+
+.boki-rich-content > *:last-child {
+    margin-bottom: 0;
+}
+
+.boki-rich-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.boki-rich-content video,
+.boki-rich-content iframe {
+    width: 100%;
+    max-width: 100%;
+    border: 0;
+    border-radius: 10px;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.boki-rich-content table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+}
+
+.boki-rich-content ul,
+.boki-rich-content ol {
+    padding-left: 1.25rem;
+}
+
 /* Small utilities */
 .text-soft {
     color: var(--boki-muted);

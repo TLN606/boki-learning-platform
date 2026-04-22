@@ -17,7 +17,10 @@
     {
         var question = Model.Questions[i];
         <div class="exam-question">
-            <div class="fw-semibold mb-2">Câu @(i + 1): @question.QuestionText</div>
+            <div class="fw-semibold mb-2">Câu @(i + 1):</div>
+            <div class="boki-rich-content mb-2">
+                @Html.Raw(question.QuestionText ?? string.Empty)
+            </div>
             @Html.Hidden($"Answers[{i}].QuestionId", question.QuestionId)
             @foreach (var answer in question.Answers)
             {
