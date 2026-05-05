@@ -294,28 +294,39 @@ namespace Boki_ELearning.Controllers
                 return RedirectToAction("Lesson", new { id = model.LessonId });
             }
 
-            var submitted = (model.Answers ?? new List<LessonQuizSubmitAnswerViewModel>())
-                .ToDictionary(x => x.QuestionId, x => x.AnswerId);
+            var submitted = new Dictionary<int, int?>();
+            foreach (var answer in model.Answers ?? new List<LessonQuizSubmitAnswerViewModel>())
+            {
+                if (!submitted.ContainsKey(answer.QuestionId))
+                {
+                    submitted.Add(answer.QuestionId, answer.AnswerId);
+                }
+            }
 
             var detailRows = new List<QuizDetailInsertRow>();
             var correctCount = 0;
+            var hasInvalidSubmission = false;
 
             foreach (var group in questionGroups)
             {
                 var correctAnswer = group.FirstOrDefault(x => x.IsCorrect);
-                var fallbackAnswer = group.FirstOrDefault();
-                if (fallbackAnswer == null || correctAnswer == null)
+                if (correctAnswer == null)
                 {
                     continue;
                 }
 
                 int? selectedAnswerId;
-                submitted.TryGetValue(group.Key, out selectedAnswerId);
+                if (!submitted.TryGetValue(group.Key, out selectedAnswerId) || !selectedAnswerId.HasValue)
+                {
+                    hasInvalidSubmission = true;
+                    break;
+                }
 
                 var selected = group.FirstOrDefault(x => x.AnswerId == selectedAnswerId);
                 if (selected == null)
                 {
-                    selected = fallbackAnswer;
+                    hasInvalidSubmission = true;
+                    break;
                 }
 
                 var isCorrect = selected.IsCorrect;
@@ -330,6 +341,12 @@ namespace Boki_ELearning.Controllers
                     AnswerId = selected.AnswerId,
                     IsCorrect = isCorrect
                 });
+            }
+
+            if (hasInvalidSubmission)
+            {
+                TempData["Message"] = "Bai nop khong hop le. Vui long chon dap an cho tat ca cau hoi.";
+                return RedirectToAction("Quiz", new { id = model.LessonId });
             }
 
             var totalCount = questionGroups.Count;

@@ -103,9 +103,6 @@ namespace Boki_ELearning.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var subjectCsv = string.Join(",", form.SubjectIds);
-            var classCsv = string.Join(",", form.ClassIds);
-
             int examId;
             using (var conn = DbConnectionHelper.CreateSqlConnection())
             {
@@ -113,20 +110,24 @@ namespace Boki_ELearning.Controllers
                 using (var tx = conn.BeginTransaction())
                 {
                     var picked = new List<int>();
-                    using (var poolCmd = new SqlCommand(
-                        @"SELECT TOP (@Take) C.MACAUHOI
+                    using (var poolCmd = new SqlCommand())
+                    {
+                        poolCmd.Connection = conn;
+                        poolCmd.Transaction = tx;
+                        poolCmd.Parameters.AddWithValue("@Take", form.QuestionCount);
+                        var subjectClause = AddInParameters(poolCmd, "Subject", form.SubjectIds);
+                        var classClause = AddInParameters(poolCmd, "Class", form.ClassIds);
+                        poolCmd.CommandText =
+                        $@"SELECT TOP (@Take) C.MACAUHOI
                           FROM CAUHOI C
                           INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
                           WHERE C.IsDeleted = 0
                             AND C.TRANGTHAI = N'Active'
                             AND B.IsDeleted = 0
-                            AND B.MAMONHOC IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@SubjectCsv, ','))
-                            AND B.MALOP IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@ClassCsv, ','))
-                          ORDER BY NEWID()", conn, tx))
-                    {
-                        poolCmd.Parameters.AddWithValue("@Take", form.QuestionCount);
-                        poolCmd.Parameters.AddWithValue("@SubjectCsv", subjectCsv);
-                        poolCmd.Parameters.AddWithValue("@ClassCsv", classCsv);
+                            AND B.MAMONHOC IN ({subjectClause})
+                            AND B.MALOP IN ({classClause})
+                          ORDER BY NEWID()";
+
                         using (var reader = poolCmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -179,14 +180,18 @@ namespace Boki_ELearning.Controllers
                         }
                     }
 
-                    using (var assignCmd = new SqlCommand(
-                        @"INSERT INTO DETHI_HOCSINH (MADETHI, MAHOCSINH)
+                    using (var assignCmd = new SqlCommand())
+                    {
+                        assignCmd.Connection = conn;
+                        assignCmd.Transaction = tx;
+                        assignCmd.Parameters.AddWithValue("@ExamId", examId);
+                        var assignClassClause = AddInParameters(assignCmd, "Class", form.ClassIds);
+                        assignCmd.CommandText =
+                        $@"INSERT INTO DETHI_HOCSINH (MADETHI, MAHOCSINH)
                           SELECT @ExamId, HS.MAHOCSINH
                           FROM HOCSINH HS
-                          WHERE HS.MALOP IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@ClassCsv, ','))", conn, tx))
-                    {
-                        assignCmd.Parameters.AddWithValue("@ExamId", examId);
-                        assignCmd.Parameters.AddWithValue("@ClassCsv", classCsv);
+                          WHERE HS.MALOP IN ({assignClassClause})";
+
                         assignCmd.ExecuteNonQuery();
                     }
 
@@ -414,21 +419,39 @@ namespace Boki_ELearning.Controllers
             using (var conn = DbConnectionHelper.CreateSqlConnection())
             {
                 conn.Open();
-                using (var cmd = new SqlCommand(
-                    @"SELECT COUNT(1)
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    var subjectClause = AddInParameters(cmd, "Subject", subjectIds);
+                    var classClause = AddInParameters(cmd, "Class", classIds);
+                    cmd.CommandText =
+                    $@"SELECT COUNT(1)
                       FROM CAUHOI C
                       INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
                       WHERE C.IsDeleted = 0
                         AND C.TRANGTHAI = N'Active'
                         AND B.IsDeleted = 0
-                        AND B.MAMONHOC IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@SubjectCsv, ','))
-                        AND B.MALOP IN (SELECT TRY_CAST([value] AS INT) FROM STRING_SPLIT(@ClassCsv, ','))", conn))
-                {
-                    cmd.Parameters.AddWithValue("@SubjectCsv", string.Join(",", subjectIds));
-                    cmd.Parameters.AddWithValue("@ClassCsv", string.Join(",", classIds));
+                        AND B.MAMONHOC IN ({subjectClause})
+                        AND B.MALOP IN ({classClause})";
+
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
+        }
+
+        private static string AddInParameters(SqlCommand cmd, string prefix, IEnumerable<int> ids)
+        {
+            var parameterNames = new List<string>();
+            var index = 0;
+            foreach (var id in ids)
+            {
+                var name = "@" + prefix + index;
+                cmd.Parameters.AddWithValue(name, id);
+                parameterNames.Add(name);
+                index++;
+            }
+
+            return string.Join(",", parameterNames);
         }
 
         private static List<int> ParseCsvIds(string csv)

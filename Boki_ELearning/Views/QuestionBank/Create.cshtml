@@ -1,4 +1,4 @@
-﻿@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
+@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Tạo câu hỏi";
@@ -14,7 +14,7 @@
     }
     else
     {
-        @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post))
+        using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("QuestionId", Model.Editor.QuestionId)
@@ -33,7 +33,8 @@
 
             <div class="mb-2">
                 <label class="form-label boki-form-label">Nội dung câu hỏi</label>
-                <textarea class="form-control js-question-editor" id="createQuestionText" name="QuestionText" rows="6" required>@Model.Editor.QuestionText</textarea>
+                <div id="createQuestionEditor" class="js-question-editor d-none">@Html.Raw(Model.Editor.QuestionText)</div>
+                <textarea class="form-control" id="createQuestionText" name="QuestionText" rows="6">@Model.Editor.QuestionText</textarea>
             </div>
 
             <div class="row g-2 mb-2">
@@ -88,23 +89,135 @@
 </div>
 
 @section scripts {
-    <script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css" />
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 260px;
+        }
+    </style>
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.umd.js"></script>
     <script>
         (function () {
+            var editorElement = document.getElementById('createQuestionEditor');
             var textarea = document.getElementById('createQuestionText');
-            if (!textarea || typeof CKEDITOR === 'undefined') {
+            if (!editorElement || !textarea || typeof CKEDITOR === 'undefined' || !CKEDITOR.ClassicEditor) {
                 return;
             }
 
             var uploadUrl = '@Url.Action("UploadMedia", "QuestionBank")';
-            CKEDITOR.replace('createQuestionText', {
-                height: 260,
-                allowedContent: true,
-                removePlugins: 'easyimage',
-                extraPlugins: 'uploadimage,image2',
-                filebrowserUploadUrl: uploadUrl,
-                uploadUrl: uploadUrl
-            });
+            var editorInstance = null;
+
+            function getAntiForgeryToken() {
+                var tokenInput = textarea.form ? textarea.form.querySelector('input[name="__RequestVerificationToken"]') : null;
+                return tokenInput ? tokenInput.value : '';
+            }
+
+            function BokiUploadAdapter(loader) {
+                this.loader = loader;
+            }
+
+            BokiUploadAdapter.prototype.upload = function () {
+                return this.loader.file.then(function (file) {
+                    var data = new FormData();
+                    data.append('upload', file);
+                    data.append('__RequestVerificationToken', getAntiForgeryToken());
+
+                    return fetch(uploadUrl, {
+                        method: 'POST',
+                        body: data,
+                        credentials: 'same-origin'
+                    })
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error('upload_failed');
+                            }
+
+                            return response.json();
+                        })
+                        .then(function (result) {
+                            if (!result || !result.url) {
+                                throw new Error('upload_failed');
+                            }
+
+                            return {
+                                default: result.url
+                            };
+                        });
+                });
+            };
+
+            BokiUploadAdapter.prototype.abort = function () {
+            };
+
+            function useBokiUploadAdapter(editor) {
+                editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                    return new BokiUploadAdapter(loader);
+                };
+            }
+
+            var editorConfig = {
+                licenseKey: 'GPL',
+                plugins: [
+                    CKEDITOR.Essentials,
+                    CKEDITOR.Paragraph,
+                    CKEDITOR.Heading,
+                    CKEDITOR.Bold,
+                    CKEDITOR.Italic,
+                    CKEDITOR.Underline,
+                    CKEDITOR.Strikethrough,
+                    CKEDITOR.Link,
+                    CKEDITOR.List,
+                    CKEDITOR.BlockQuote,
+                    CKEDITOR.Alignment,
+                    CKEDITOR.Font,
+                    CKEDITOR.Image,
+                    CKEDITOR.ImageCaption,
+                    CKEDITOR.ImageResize,
+                    CKEDITOR.ImageStyle,
+                    CKEDITOR.ImageToolbar,
+                    CKEDITOR.ImageUpload,
+                    CKEDITOR.MediaEmbed,
+                    CKEDITOR.Table,
+                    CKEDITOR.TableToolbar,
+                    useBokiUploadAdapter
+                ],
+                toolbar: {
+                    items: [
+                        'undo', 'redo', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'underline', 'strikethrough', '|',
+                        'fontColor', 'fontBackgroundColor', '|',
+                        'alignment', '|',
+                        'bulletedList', 'numberedList', '|',
+                        'link', 'blockQuote', 'insertTable', 'mediaEmbed', 'uploadImage'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                image: {
+                    toolbar: [
+                        'imageTextAlternative', 'toggleImageCaption', '|',
+                        'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+                        'resizeImage'
+                    ]
+                },
+                table: {
+                    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                }
+            };
+
+            editorElement.classList.remove('d-none');
+
+            CKEDITOR.ClassicEditor
+                .create(editorElement, editorConfig)
+                .then(function (editor) {
+                    editorInstance = editor;
+                    textarea.classList.add('d-none');
+                })
+                .catch(function (error) {
+                    editorElement.classList.add('d-none');
+                    textarea.classList.remove('d-none');
+                    console.error(error);
+                });
 
             var form = textarea.form;
             if (!form) {
@@ -112,8 +225,8 @@
             }
 
             form.addEventListener('submit', function () {
-                if (CKEDITOR.instances.createQuestionText) {
-                    CKEDITOR.instances.createQuestionText.updateElement();
+                if (editorInstance) {
+                    textarea.value = editorInstance.getData();
                 }
             });
         })();

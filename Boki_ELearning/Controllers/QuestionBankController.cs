@@ -224,6 +224,7 @@ namespace Boki_ELearning.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadMedia(HttpPostedFileBase upload)
         {
             if (upload == null || upload.ContentLength <= 0)
@@ -274,15 +275,6 @@ namespace Boki_ELearning.Controllers
             upload.SaveAs(Path.Combine(uploadPhysicalDir, finalFileName));
 
             var fileUrl = Url.Content(uploadVirtualDir + "/" + finalFileName);
-            var funcNum = Request["CKEditorFuncNum"];
-            if (!string.IsNullOrWhiteSpace(funcNum))
-            {
-                var safeMessage = HttpUtility.JavaScriptStringEncode("Upload thanh cong.");
-                var safeUrl = HttpUtility.JavaScriptStringEncode(fileUrl);
-                var script = "<script>window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", '" + safeUrl + "', '" + safeMessage + "');</script>";
-                return Content(script, "text/html");
-            }
-
             return Json(new
             {
                 uploaded = 1,
@@ -734,14 +726,6 @@ namespace Boki_ELearning.Controllers
 
         private ActionResult BuildUploadError(string message)
         {
-            var safeMessage = HttpUtility.JavaScriptStringEncode(message ?? "Upload failed.");
-            var funcNum = Request["CKEditorFuncNum"];
-            if (!string.IsNullOrWhiteSpace(funcNum))
-            {
-                var script = "<script>window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", '', '" + safeMessage + "');</script>";
-                return Content(script, "text/html");
-            }
-
             return Json(new
             {
                 uploaded = 0,
