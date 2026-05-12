@@ -1,4 +1,4 @@
-﻿@model List<Boki_ELearning.Models.ViewModels.AdminExamListItemViewModel>
+@model List<Boki_ELearning.Models.ViewModels.AdminExamListItemViewModel>
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Đề thi tổng hợp";
@@ -35,7 +35,7 @@
                             <td>@item.ExamName</td>
                             <td>@item.QuestionCount</td>
                             <td>@item.DurationMinutes phút</td>
-                            <td>@item.Status</td>
+                            <td>@(item.Status == "Active" ? "Đang mở" : item.Status == "Draft" ? "Nháp" : item.Status == "Published" ? "Đã phát hành" : item.Status == "Closed" ? "Đã đóng" : item.Status)</td>
                             <td>@item.AssignedStudentCount học sinh</td>
                             <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
                             <td><a class="btn btn-sm btn-outline-primary" href="@Url.Action("Detail", "ExamAdmin", new { id = item.ExamId })">Chi tiết</a></td>

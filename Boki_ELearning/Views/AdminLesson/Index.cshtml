@@ -1,0 +1,92 @@
+@model Boki_ELearning.Models.ViewModels.AdminLessonListViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Quản lý bài học";
+    ViewBag.AdminNav = "lessons";
+}
+
+<div class="admin-card p-3 mb-3">
+    @using (Html.BeginForm("Index", "AdminLesson", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
+    {
+        <div class="col-md-4">
+            <label class="form-label boki-form-label">Lớp</label>
+            <select class="form-select" name="classId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.ClassOptions)
+                {
+                    <option value="@option.Id" @(Model.FilterClassId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label boki-form-label">Môn học</label>
+            <select class="form-select" name="subjectId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.SubjectOptions)
+                {
+                    <option value="@option.Id" @(Model.FilterSubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
+        </div>
+        <div class="col-md-2">
+            <a href="@Url.Action("Create", "AdminLesson")" class="btn btn-primary w-100">+ Tạo bài học</a>
+        </div>
+    }
+</div>
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên bài học</th>
+                    <th>Lớp</th>
+                    <th>Môn</th>
+                    <th>Số câu hỏi</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Lessons.Any())
+                {
+                    foreach (var item in Model.Lessons)
+                    {
+                        <tr>
+                            <td>@item.LessonId</td>
+                            <td class="fw-semibold">@item.LessonName</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.SubjectName</td>
+                            <td>
+                                @if (item.QuestionCount > 0)
+                                {
+                                    <span class="boki-pill boki-pill-success">@item.QuestionCount câu</span>
+                                }
+                                else
+                                {
+                                    <span class="boki-pill boki-pill-warning">Chưa có</span>
+                                }
+                            </td>
+                            <td class="text-nowrap">
+                                <a href="@Url.Action("Edit", "AdminLesson", new { id = item.LessonId })" class="btn btn-sm btn-outline-primary">Sửa</a>
+                                @using (Html.BeginForm("Delete", "AdminLesson", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.LessonId" />
+                                    <button class="btn btn-sm btn-outline-danger" type="submit" onclick="return confirm('Bạn có chắc muốn ẩn bài học này?')">Ẩn</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" class="boki-empty">Không có bài học phù hợp.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

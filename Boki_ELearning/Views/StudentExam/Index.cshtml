@@ -1,4 +1,4 @@
-﻿@model List<Boki_ELearning.Models.ViewModels.StudentExamListItemViewModel>
+@model List<Boki_ELearning.Models.ViewModels.StudentExamListItemViewModel>
 @{
     ViewBag.Title = "Đề thi tổng hợp";
 }
@@ -52,7 +52,7 @@
                             </td>
                             <td>@item.QuestionCount</td>
                             <td>@item.DurationMinutes phút</td>
-                            <td>@item.Status</td>
+                            <td>@(item.Status == "Active" ? "Đang mở" : item.Status == "Draft" ? "Nháp" : item.Status == "Published" ? "Đã phát hành" : item.Status == "Closed" ? "Đã đóng" : item.Status)</td>
                             <td>@(item.BestScore.HasValue ? item.BestScore.Value.ToString("0.##") : "-")</td>
                             <td>@item.AttemptCount</td>
                             <td class="text-nowrap">

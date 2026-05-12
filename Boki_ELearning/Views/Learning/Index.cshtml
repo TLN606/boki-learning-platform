@@ -1,4 +1,4 @@
-﻿@model Boki_ELearning.Models.ViewModels.LearningIndexViewModel
+@model Boki_ELearning.Models.ViewModels.LearningIndexViewModel
 @using Boki_ELearning.Models.ViewModels
 @{
     ViewBag.Title = "Học tập";
@@ -7,20 +7,20 @@
 
 <div class="row g-3 mb-3">
     <div class="col-lg-8">
-        <div class="boki-card p-4">
-            <h2 class="fw-bold mb-1">Xin chào, @Model.StudentName</h2>
-            <p class="boki-subtitle mb-2">Lớp hiện tại của bạn: <strong>@Model.ClassName</strong></p>
-            <p class="mb-0 text-soft">Bây giờ bạn có thể xem toàn bộ bài học và lọc theo lớp/môn để luyện tập linh hoạt hơn.</p>
+        <div class="boki-card p-4" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;border:none">
+            <h2 class="fw-bold mb-1">👋 Xin chào, @Model.StudentName</h2>
+            <p style="color:rgba(255,255,255,0.85)" class="mb-2">Lớp hiện tại của bạn: <strong style="color:#fff">@Model.ClassName</strong></p>
+            <p class="mb-0" style="color:rgba(255,255,255,0.75)">Bây giờ bạn có thể xem toàn bộ bài học và lọc theo lớp/môn để luyện tập linh hoạt hơn.</p>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="boki-card p-4 h-100 d-flex flex-column justify-content-between">
+        <div class="boki-card p-4 h-100 d-flex flex-column justify-content-between" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;border:none">
             <div>
-                <h6 class="fw-bold mb-2">Đề tổng hợp</h6>
-                <p class="boki-subtitle mb-0">Làm đề được giao hoặc tự tạo đề luyện riêng.</p>
+                <h6 class="fw-bold mb-2">📝 Đề tổng hợp</h6>
+                <p style="color:rgba(255,255,255,0.85)" class="mb-0">Làm đề được giao hoặc tự tạo đề luyện riêng.</p>
             </div>
             <div class="d-flex gap-2 mt-3">
-                <a class="btn btn-outline-primary w-100" href="@Url.Action("Index", "StudentExam")">Vào danh sách đề</a>
+                <a class="btn w-100" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3)" href="@Url.Action("Index", "StudentExam")">Vào danh sách đề</a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-3">
         <div class="boki-stat">
-            <div class="boki-subtitle">Có quiz</div>
+            <div class="boki-subtitle">Có trắc nghiệm</div>
             <div class="fs-3 fw-bold text-primary">@Model.LessonsWithQuiz</div>
         </div>
     </div>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="boki-card p-3 mb-4">
-    <h5 class="fw-bold px-2 pt-2">Lọc bài học</h5>
+    <h5 class="fw-bold px-2 pt-2">🔍 Lọc bài học</h5>
     @using (Html.BeginForm("Index", "Learning", FormMethod.Get, new { @class = "learning-filter-grid p-2" }))
     {
         <div>
@@ -78,11 +78,11 @@
             </select>
         </div>
         <div>
-            <label class="form-label boki-form-label">Quiz</label>
+            <label class="form-label boki-form-label">Trắc nghiệm</label>
             <select class="form-select" name="hasQuiz">
                 <option value="" @(!Model.SelectedHasQuiz.HasValue ? "selected" : "")>Tất cả</option>
-                <option value="true" @(Model.SelectedHasQuiz == true ? "selected" : "")>Chỉ bài có quiz</option>
-                <option value="false" @(Model.SelectedHasQuiz == false ? "selected" : "")>Chỉ bài chưa có quiz</option>
+                <option value="true" @(Model.SelectedHasQuiz == true ? "selected" : "")>Chỉ bài có trắc nghiệm</option>
+                <option value="false" @(Model.SelectedHasQuiz == false ? "selected" : "")>Chỉ bài chưa có trắc nghiệm</option>
             </select>
         </div>
         <div class="d-flex gap-2">
@@ -101,26 +101,28 @@
 </div>
 
 <div class="boki-card p-3 mb-4">
-    <h5 class="fw-bold px-2 pt-2">Tiến độ theo môn</h5>
+    <h5 class="fw-bold px-2 pt-2">📊 Tiến độ theo môn</h5>
     <div class="row g-3 p-2">
+        @{ var subjectColors = new[] { "linear-gradient(135deg,#dbeafe,#bfdbfe)", "linear-gradient(135deg,#d1fae5,#a7f3d0)", "linear-gradient(135deg,#fef3c7,#fde68a)", "linear-gradient(135deg,#ede9fe,#ddd6fe)" }; var idx = 0; }
         @foreach (var subject in Model.SubjectProgress ?? new List<SubjectProgressViewModel>())
         {
             var percent = subject.TotalLessons > 0 ? (int)((subject.CompletedLessons * 100.0) / subject.TotalLessons) : 0;
             <div class="col-md-4">
-                <div class="border rounded-3 p-3 bg-white h-100">
-                    <div class="fw-semibold">@subject.SubjectName</div>
-                    <div class="small text-muted mb-2">@subject.CompletedLessons / @subject.TotalLessons bài</div>
+                <div class="rounded-4 p-3 h-100" style="background:@subjectColors[idx % subjectColors.Length]">
+                    <div class="fw-bold" style="font-size:1.05rem">@subject.SubjectName</div>
+                    <div class="small mb-2" style="color:#475569">@subject.CompletedLessons / @subject.TotalLessons bài · @percent%</div>
                     <div class="progress" style="height:10px;">
                         <div class="progress-bar" role="progressbar" style="width:@percent%"></div>
                     </div>
                 </div>
             </div>
+            idx++;
         }
     </div>
 </div>
 
 <div class="boki-card p-3">
-    <h5 class="fw-bold px-2 pt-2">Danh sách bài học</h5>
+    <h5 class="fw-bold px-2 pt-2">📚 Danh sách bài học</h5>
     <div class="table-responsive">
         <table class="table boki-table">
             <thead>
@@ -128,7 +130,7 @@
                     <th>Bài học</th>
                     <th>Lớp</th>
                     <th>Môn học</th>
-                    <th>Quiz</th>
+                    <th>Trắc nghiệm</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>

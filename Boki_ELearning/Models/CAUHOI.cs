@@ -24,6 +24,7 @@ namespace Boki_ELearning.Models
         public string NOIDUNGCAUHOI { get; set; }
         public int MABAIHOC { get; set; }
         public bool IsDeleted { get; set; }
+        public string GIAITHICH { get; set; }
     
         public virtual BAIHOC BAIHOC { get; set; }
         public virtual ICollection<CHITIKETQUA> CHITIKETQUAs { get; set; }

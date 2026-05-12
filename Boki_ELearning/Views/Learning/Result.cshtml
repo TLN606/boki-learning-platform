@@ -1,6 +1,6 @@
-﻿@model Boki_ELearning.Models.ViewModels.LessonResultViewModel
+@model Boki_ELearning.Models.ViewModels.LessonResultViewModel
 @{
-    ViewBag.Title = "Kết quả quiz";
+    ViewBag.Title = "Kết quả trắc nghiệm";
 }
 
 <div class="boki-card p-4 mb-3">
@@ -33,36 +33,82 @@
 
 <div class="boki-card p-3 mb-3">
     <h5 class="fw-bold px-2 pt-2">Chi tiết câu trả lời</h5>
-    <div class="table-responsive">
-        <table class="table boki-table">
-            <thead>
-                <tr>
-                    <th>Câu hỏi</th>
-                    <th>Đáp án đã chọn</th>
-                    <th>Kết quả</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var row in Model.Questions)
+
+    @{ var questionIndex = 0; }
+    @foreach (var row in Model.Questions)
+    {
+        questionIndex++;
+        <div class="px-2 py-3 @(questionIndex < Model.Questions.Count ? "border-bottom" : "")">
+            <div class="d-flex align-items-start gap-2 mb-2">
+                <span class="fw-bold" style="min-width: 36px;">Câu @questionIndex:</span>
+                <span>@Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(row.QuestionText), @"\*\*(.+?)\*\*", "<strong class=\"text-primary\">$1</strong>"))</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="boki-subtitle" style="min-width: 120px;">Đáp án đã chọn:</span>
+                <span class="@(row.IsCorrect ? "text-success fw-semibold" : "text-danger fw-semibold")">@row.SelectedAnswer</span>
+                @if (row.IsCorrect)
                 {
-                    <tr>
-                        <td>@row.QuestionText</td>
-                        <td>@row.SelectedAnswer</td>
-                        <td>
-                            @if (row.IsCorrect)
-                            {
-                                <span class="boki-pill boki-pill-success">Đúng</span>
-                            }
-                            else
-                            {
-                                <span class="boki-pill boki-pill-warning">Sai</span>
-                            }
-                        </td>
-                    </tr>
+                    <span class="boki-pill boki-pill-success">✓ Đúng</span>
                 }
-            </tbody>
-        </table>
-    </div>
+                else
+                {
+                    <span class="boki-pill boki-pill-warning">✗ Sai</span>
+                }
+            </div>
+
+            @if (!row.IsCorrect)
+            {
+                <div class="mt-2 p-3 rounded-3" style="background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); border-left: 4px solid #4caf50;">
+                    @if (!string.IsNullOrWhiteSpace(row.CorrectAnswer))
+                    {
+                        <div class="mb-2">
+                            <span class="fw-bold text-success">✅ Đáp án đúng:</span>
+                            <span class="fw-semibold">@row.CorrectAnswer</span>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(row.Explanation))
+                    {
+                        <div class="mb-0">
+                            <span class="fw-bold" style="color: #1565c0;">💡 Giải thích:</span>
+                            <span>@Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(row.Explanation), @"\*\*(.+?)\*\*", "<strong>$1</strong>"))</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted small fst-italic">Chưa có giải thích cho câu hỏi này.</div>
+                    }
+                </div>
+            }
+        </div>
+    }
 </div>
+
+@if (Model.CorrectCount < Model.TotalCount && (!string.IsNullOrWhiteSpace(Model.LessonTip) || !string.IsNullOrWhiteSpace(Model.LessonTheory)))
+{
+    <div class="boki-card p-3 mb-3" style="border-left: 4px solid #ff9800;">
+        <h5 class="fw-bold px-2 pt-2" style="color: #e65100;">📖 Hướng dẫn ôn tập</h5>
+        <div class="px-2 pb-2">
+            <p class="mb-2 boki-subtitle">Bạn có một số câu chưa đúng. Hãy xem lại kiến thức bên dưới để làm tốt hơn lần sau nhé!</p>
+
+            @if (!string.IsNullOrWhiteSpace(Model.LessonTip))
+            {
+                <div class="p-3 rounded-3 mb-2" style="background: #fff3e0;">
+                    <div class="fw-bold mb-1" style="color: #e65100;">🌟 Mẹo ghi nhớ:</div>
+                    <div>@Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(Model.LessonTip), @"\*\*(.+?)\*\*", "<strong>$1</strong>"))</div>
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.LessonTheory))
+            {
+                <div class="p-3 rounded-3" style="background: #e3f2fd;">
+                    <div class="fw-bold mb-1" style="color: #1565c0;">📝 Lý thuyết bài học:</div>
+                    <div>@Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(Model.LessonTheory), @"\*\*(.+?)\*\*", "<strong>$1</strong>"))</div>
+                </div>
+            }
+        </div>
+    </div>
+}
 
 <a class="btn btn-primary" href="@Url.Action("Index", "Learning")">Quay lại trang học tập</a>

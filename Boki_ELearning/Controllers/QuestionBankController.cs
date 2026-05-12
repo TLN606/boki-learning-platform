@@ -19,8 +19,11 @@ namespace Boki_ELearning.Controllers
     {
         private readonly BokiDBEntities1 _db = new BokiDBEntities1();
 
-        public ActionResult Index(string keyword = null, int? lessonId = null, string difficulty = null, string status = null)
+        public ActionResult Index(string subject = null, string keyword = null, int? lessonId = null, string difficulty = null, string status = null)
         {
+            subject = NormalizeSubject(subject);
+            ViewBag.AdminSubject = subject;
+
             var filter = new QuestionBankFilterViewModel
             {
                 Keyword = keyword,
@@ -31,21 +34,26 @@ namespace Boki_ELearning.Controllers
 
             var model = new QuestionBankPageViewModel
             {
+                CurrentSubject = subject,
                 Filter = filter,
-                LessonOptions = LoadLessonOptions(),
-                Questions = LoadQuestionList(filter)
+                LessonOptions = LoadLessonOptions(subject),
+                Questions = LoadQuestionList(filter, subject)
             };
 
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(string subject = null)
         {
+            subject = NormalizeSubject(subject);
+            ViewBag.AdminSubject = subject;
+
             var model = new QuestionBankPageViewModel
             {
+                CurrentSubject = subject,
                 Editor = CreateDefaultEditor(),
-                LessonOptions = LoadLessonOptions(),
+                LessonOptions = LoadLessonOptions(subject),
                 Filter = new QuestionBankFilterViewModel(),
                 Questions = new List<QuestionBankListItemViewModel>()
             };
@@ -67,21 +75,25 @@ namespace Boki_ELearning.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(QuestionBankEditViewModel model)
+        public ActionResult Save(QuestionBankEditViewModel model, string subject = null)
         {
+            subject = NormalizeSubject(subject);
+            ViewBag.AdminSubject = subject;
+
             if (!ModelState.IsValid)
             {
                 if (model.QuestionId.HasValue)
                 {
                     TempData["Message"] = "Du lieu cap nhat khong hop le. Vui long thu lai.";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { subject });
                 }
 
                 var page = new QuestionBankPageViewModel
                 {
+                    CurrentSubject = subject,
                     Filter = new QuestionBankFilterViewModel(),
                     Editor = model,
-                    LessonOptions = LoadLessonOptions(),
+                    LessonOptions = LoadLessonOptions(subject),
                     Questions = new List<QuestionBankListItemViewModel>()
                 };
                 return View("Create", page);
@@ -113,14 +125,15 @@ namespace Boki_ELearning.Controllers
                             if (model.QuestionId.HasValue)
                             {
                                 TempData["Message"] = "Khong tim thay bai hoc hop le de cap nhat cau hoi.";
-                                return RedirectToAction("Index");
+                                return RedirectToAction("Index", new { subject });
                             }
 
                             var page = new QuestionBankPageViewModel
                             {
+                                CurrentSubject = subject,
                                 Filter = new QuestionBankFilterViewModel(),
                                 Editor = model,
-                                LessonOptions = LoadLessonOptions(),
+                                LessonOptions = LoadLessonOptions(subject),
                                 Questions = new List<QuestionBankListItemViewModel>()
                             };
                             return View("Create", page);
@@ -137,7 +150,8 @@ namespace Boki_ELearning.Controllers
                               SET NOIDUNGCAUHOI = @QuestionText,
                                   MABAIHOC = @LessonId,
                                   MUCDO = @Difficulty,
-                                  TRANGTHAI = @Status
+                                  TRANGTHAI = @Status,
+                                  GIAITHICH = @Explanation
                               WHERE MACAUHOI = @QuestionId
                                 AND IsDeleted = 0", conn, tx))
                         {
@@ -146,6 +160,7 @@ namespace Boki_ELearning.Controllers
                             updateCmd.Parameters.AddWithValue("@LessonId", model.LessonId);
                             updateCmd.Parameters.AddWithValue("@Difficulty", normalizedDifficulty);
                             updateCmd.Parameters.AddWithValue("@Status", normalizedStatus);
+                            updateCmd.Parameters.AddWithValue("@Explanation", (object)model.Explanation ?? System.DBNull.Value);
                             var affected = updateCmd.ExecuteNonQuery();
                             if (affected == 0)
                             {
@@ -168,14 +183,15 @@ namespace Boki_ELearning.Controllers
                     else
                     {
                         using (var insertCmd = new SqlCommand(
-                            @"INSERT INTO CAUHOI (NOIDUNGCAUHOI, MABAIHOC, IsDeleted, MUCDO, TRANGTHAI)
-                              VALUES (@QuestionText, @LessonId, 0, @Difficulty, @Status);
+                            @"INSERT INTO CAUHOI (NOIDUNGCAUHOI, MABAIHOC, IsDeleted, MUCDO, TRANGTHAI, GIAITHICH)
+                              VALUES (@QuestionText, @LessonId, 0, @Difficulty, @Status, @Explanation);
                               SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tx))
                         {
                             insertCmd.Parameters.AddWithValue("@QuestionText", model.QuestionText.Trim());
                             insertCmd.Parameters.AddWithValue("@LessonId", model.LessonId);
                             insertCmd.Parameters.AddWithValue("@Difficulty", normalizedDifficulty);
                             insertCmd.Parameters.AddWithValue("@Status", normalizedStatus);
+                            insertCmd.Parameters.AddWithValue("@Explanation", (object)model.Explanation ?? System.DBNull.Value);
                             questionId = Convert.ToInt32(insertCmd.ExecuteScalar());
                         }
                     }
@@ -200,13 +216,15 @@ namespace Boki_ELearning.Controllers
             }
 
             TempData["Message"] = model.QuestionId.HasValue ? "Cập nhật câu hỏi thành công." : "Tạo câu hỏi thành công.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { subject });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string subject = null)
         {
+            subject = NormalizeSubject(subject);
+
             using (var conn = DbConnectionHelper.CreateSqlConnection())
             {
                 conn.Open();
@@ -235,18 +253,18 @@ namespace Boki_ELearning.Controllers
             }
 
             TempData["Message"] = "Đã ẩn câu hỏi khỏi ngân hàng.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { subject });
         }
 
-        public ActionResult Export()
+        public ActionResult Export(string subject = null)
         {
+            subject = NormalizeSubject(subject);
             var items = new List<QuestionBankImportItemViewModel>();
 
             using (var conn = DbConnectionHelper.CreateSqlConnection())
             {
                 conn.Open();
-                var cmd = new SqlCommand(
-                    @"SELECT C.MACAUHOI,
+                var exportSql = @"SELECT C.MACAUHOI,
                              C.MABAIHOC,
                              C.NOIDUNGCAUHOI,
                              C.MUCDO,
@@ -256,9 +274,23 @@ namespace Boki_ELearning.Controllers
                              D.DUNGLSAI
                       FROM CAUHOI C
                       INNER JOIN DAPAN D ON D.MACAUHOI = C.MACAUHOI
+                      INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                      INNER JOIN MONHOC M ON M.MAMONHOC = B.MAMONHOC
                       WHERE C.IsDeleted = 0
-                        AND D.IsDeleted = 0
-                      ORDER BY C.MACAUHOI, D.MADAPAN", conn);
+                        AND D.IsDeleted = 0";
+
+                if (!string.IsNullOrWhiteSpace(subject))
+                {
+                    exportSql += " AND M.TENMONHOC = @Subject";
+                }
+
+                exportSql += " ORDER BY C.MACAUHOI, D.MADAPAN";
+
+                var cmd = new SqlCommand(exportSql, conn);
+                if (!string.IsNullOrWhiteSpace(subject))
+                {
+                    cmd.Parameters.AddWithValue("@Subject", subject);
+                }
                 using (var reader = cmd.ExecuteReader())
                 {
                     var map = new Dictionary<int, QuestionExportRow>();
@@ -318,17 +350,21 @@ namespace Boki_ELearning.Controllers
 
             var json = JsonConvert.SerializeObject(items, Formatting.Indented);
             var bytes = Encoding.UTF8.GetBytes(json);
-            return File(bytes, "application/json", "question-bank-export.json");
+            var fileName = string.IsNullOrWhiteSpace(subject)
+                ? "question-bank-export.json"
+                : "question-bank-" + subject.Replace(" ", "-").ToLower() + "-export.json";
+            return File(bytes, "application/json", fileName);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Import(HttpPostedFileBase file)
+        public ActionResult Import(HttpPostedFileBase file, string subject = null)
         {
+            subject = NormalizeSubject(subject);
             if (file == null || file.ContentLength <= 0)
             {
                 TempData["Message"] = "Vui lòng chọn file JSON để import.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { subject });
             }
 
             List<QuestionBankImportItemViewModel> items;
@@ -344,13 +380,13 @@ namespace Boki_ELearning.Controllers
             catch (Exception)
             {
                 TempData["Message"] = "File JSON không hợp lệ.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { subject });
             }
 
             if (!items.Any())
             {
                 TempData["Message"] = "File không có dữ liệu hợp lệ.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { subject });
             }
 
             var inserted = 0;
@@ -419,7 +455,7 @@ namespace Boki_ELearning.Controllers
             }
 
             TempData["Message"] = $"Import thành công {inserted} câu hỏi.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { subject });
         }
 
         protected override void Dispose(bool disposing)
@@ -432,10 +468,16 @@ namespace Boki_ELearning.Controllers
             base.Dispose(disposing);
         }
 
-        private List<QuestionBankLessonOptionViewModel> LoadLessonOptions()
+        private List<QuestionBankLessonOptionViewModel> LoadLessonOptions(string subject = null)
         {
-            return _db.BAIHOCs
-                .Where(x => !x.IsDeleted)
+            var query = _db.BAIHOCs.Where(x => !x.IsDeleted);
+
+            if (!string.IsNullOrWhiteSpace(subject))
+            {
+                query = query.Where(x => x.MONHOC.TENMONHOC == subject);
+            }
+
+            return query
                 .OrderBy(x => x.LOP.TENLOP)
                 .ThenBy(x => x.MONHOC.TENMONHOC)
                 .ThenBy(x => x.TENBAIHOC)
@@ -447,7 +489,7 @@ namespace Boki_ELearning.Controllers
                 .ToList();
         }
 
-        private List<QuestionBankListItemViewModel> LoadQuestionList(QuestionBankFilterViewModel filter)
+        private List<QuestionBankListItemViewModel> LoadQuestionList(QuestionBankFilterViewModel filter, string subject = null)
         {
             var list = new List<QuestionBankListItemViewModel>();
             using (var conn = DbConnectionHelper.CreateSqlConnection())
@@ -463,15 +505,26 @@ namespace Boki_ELearning.Controllers
                            B.TENBAIHOC,
                            M.TENMONHOC,
                            L.TENLOP,
-                           (SELECT COUNT(1) FROM DAPAN D WHERE D.MACAUHOI = C.MACAUHOI AND D.IsDeleted = 0) AS AnswerCount
+                           (SELECT COUNT(1) FROM DAPAN D WHERE D.MACAUHOI = C.MACAUHOI AND D.IsDeleted = 0) AS AnswerCount,
+                           C.GIAITHICH
                     FROM CAUHOI C
                     INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
                     INNER JOIN MONHOC M ON M.MAMONHOC = B.MAMONHOC
                     INNER JOIN LOP L ON L.MALOP = B.MALOP
                     WHERE C.IsDeleted = 0");
 
+                if (!string.IsNullOrWhiteSpace(subject))
+                {
+                    sql.Append(" AND M.TENMONHOC = @Subject");
+                }
+
                 var cmd = new SqlCommand();
                 cmd.Connection = conn;
+
+                if (!string.IsNullOrWhiteSpace(subject))
+                {
+                    cmd.Parameters.AddWithValue("@Subject", subject);
+                }
 
                 if (!string.IsNullOrWhiteSpace(filter.Keyword))
                 {
@@ -514,7 +567,8 @@ namespace Boki_ELearning.Controllers
                             LessonName = reader.GetString(5),
                             SubjectName = reader.GetString(6),
                             ClassName = reader.GetString(7),
-                            AnswerCount = reader.GetInt32(8)
+                            AnswerCount = reader.GetInt32(8),
+                            Explanation = reader.IsDBNull(9) ? null : reader.GetString(9)
                         });
                     }
                 }
@@ -536,7 +590,8 @@ namespace Boki_ELearning.Controllers
                              C.MUCDO,
                              C.TRANGTHAI,
                              D.NOIDUNGDAPAN,
-                             D.DUNGLSAI
+                             D.DUNGLSAI,
+                             C.GIAITHICH
                       FROM CAUHOI C
                       INNER JOIN DAPAN D ON D.MACAUHOI = C.MACAUHOI
                       WHERE C.MACAUHOI = @QuestionId
@@ -553,6 +608,7 @@ namespace Boki_ELearning.Controllers
                     string questionText = null;
                     string difficulty = null;
                     string status = null;
+                    string explanation = null;
                     var idx = 0;
 
                     while (reader.Read())
@@ -563,6 +619,7 @@ namespace Boki_ELearning.Controllers
                             questionText = reader.GetString(2);
                             difficulty = reader.GetString(3);
                             status = reader.GetString(4);
+                            explanation = reader.IsDBNull(7) ? null : reader.GetString(7);
                         }
 
                         answers.Add(reader.GetString(5));
@@ -595,7 +652,8 @@ namespace Boki_ELearning.Controllers
                         AnswerB = answers[1],
                         AnswerC = answers[2],
                         AnswerD = answers[3],
-                        CorrectIndex = correctIndex
+                        CorrectIndex = correctIndex,
+                        Explanation = explanation
                     };
                 }
             }
@@ -631,6 +689,50 @@ namespace Boki_ELearning.Controllers
         {
             var value = (status ?? string.Empty).Trim();
             return value.Equals("Draft", StringComparison.OrdinalIgnoreCase) ? "Draft" : "Active";
+        }
+
+        private static string NormalizeSubject(string subject)
+        {
+            if (string.IsNullOrWhiteSpace(subject))
+            {
+                return null;
+            }
+
+            var value = subject.Trim().ToLower();
+            switch (value)
+            {
+                case "toán":
+                case "toan":
+                    return "toán";
+                case "tiếng việt":
+                case "tieng viet":
+                    return "tiếng việt";
+                case "tiếng anh":
+                case "tieng anh":
+                    return "tiếng anh";
+                default:
+                    return subject.Trim();
+            }
+        }
+
+        private static string GetSubjectDisplayName(string subject)
+        {
+            if (string.IsNullOrWhiteSpace(subject))
+            {
+                return "Ngân hàng câu hỏi";
+            }
+
+            switch (subject.ToLower())
+            {
+                case "toán":
+                    return "Ngân hàng Toán";
+                case "tiếng việt":
+                    return "Ngân hàng Tiếng Việt";
+                case "tiếng anh":
+                    return "Ngân hàng Tiếng Anh";
+                default:
+                    return "Ngân hàng " + subject;
+            }
         }
 
         private sealed class QuestionExportRow

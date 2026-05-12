@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
@@ -13,6 +13,7 @@
           <Property Name="TENBAIHOC" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="NOIDUNGLYTUYET" Type="nvarchar(max)" />
           <Property Name="MEOGHINHO" Type="nvarchar(max)" />
+          <Property Name="VIDU" Type="nvarchar(max)" />
           <Property Name="MAMONHOC" Type="int" Nullable="false" />
           <Property Name="MALOP" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -25,6 +26,7 @@
           <Property Name="NOIDUNGCAUHOI" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MABAIHOC" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="GIAITHICH" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CHITIKETQUA">
           <Key>
@@ -314,6 +316,7 @@
           <Property Name="TENBAIHOC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NOIDUNGLYTUYET" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MEOGHINHO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VIDU" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MAMONHOC" Type="Int32" Nullable="false" />
           <Property Name="MALOP" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -330,6 +333,7 @@
           <Property Name="NOIDUNGCAUHOI" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MABAIHOC" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="GIAITHICH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BAIHOC" Relationship="Self.FK_CAUHOI_BAIHOC" FromRole="CAUHOI" ToRole="BAIHOC" />
           <NavigationProperty Name="CHITIKETQUAs" Relationship="Self.FK_CHITIKETQUA_CAUHOI" FromRole="CAUHOI" ToRole="CHITIKETQUA" />
           <NavigationProperty Name="DAPANs" Relationship="Self.FK_DAPAN_CAUHOI" FromRole="CAUHOI" ToRole="DAPAN" />
@@ -665,6 +669,7 @@
                 <ScalarProperty Name="TENBAIHOC" ColumnName="TENBAIHOC" />
                 <ScalarProperty Name="NOIDUNGLYTUYET" ColumnName="NOIDUNGLYTUYET" />
                 <ScalarProperty Name="MEOGHINHO" ColumnName="MEOGHINHO" />
+                <ScalarProperty Name="VIDU" ColumnName="VIDU" />
                 <ScalarProperty Name="MAMONHOC" ColumnName="MAMONHOC" />
                 <ScalarProperty Name="MALOP" ColumnName="MALOP" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -678,6 +683,7 @@
                 <ScalarProperty Name="NOIDUNGCAUHOI" ColumnName="NOIDUNGCAUHOI" />
                 <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GIAITHICH" ColumnName="GIAITHICH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

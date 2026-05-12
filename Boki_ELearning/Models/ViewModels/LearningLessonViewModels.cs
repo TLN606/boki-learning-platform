@@ -12,6 +12,7 @@ namespace Boki_ELearning.Models.ViewModels
         public string ClassName { get; set; }
         public string TheoryContent { get; set; }
         public string TipContent { get; set; }
+        public string ExampleContent { get; set; }
         public int QuestionCount { get; set; }
     }
 
@@ -48,6 +49,15 @@ namespace Boki_ELearning.Models.ViewModels
         public int? AnswerId { get; set; }
     }
 
+    public class LessonResultQuestionViewModel
+    {
+        public string QuestionText { get; set; }
+        public string SelectedAnswer { get; set; }
+        public bool IsCorrect { get; set; }
+        public string CorrectAnswer { get; set; }
+        public string Explanation { get; set; }
+    }
+
     public class LessonResultViewModel
     {
         public int ResultId { get; set; }
@@ -56,13 +66,8 @@ namespace Boki_ELearning.Models.ViewModels
         public int CorrectCount { get; set; }
         public int TotalCount { get; set; }
         public double Score { get; set; }
+        public string LessonTheory { get; set; }
+        public string LessonTip { get; set; }
         public List<LessonResultQuestionViewModel> Questions { get; set; }
-    }
-
-    public class LessonResultQuestionViewModel
-    {
-        public string QuestionText { get; set; }
-        public string SelectedAnswer { get; set; }
-        public bool IsCorrect { get; set; }
     }
 }

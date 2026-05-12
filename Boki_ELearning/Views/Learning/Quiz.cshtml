@@ -1,6 +1,6 @@
-﻿@model Boki_ELearning.Models.ViewModels.LessonQuizViewModel
+@model Boki_ELearning.Models.ViewModels.LessonQuizViewModel
 @{
-    ViewBag.Title = "Làm quiz";
+    ViewBag.Title = "Làm trắc nghiệm";
 }
 
 <div class="boki-card p-4 mb-3">
@@ -17,7 +17,7 @@
     {
         var question = Model.Questions[i];
         <div class="exam-question">
-            <div class="fw-semibold mb-2">Câu @(i + 1): @question.QuestionText</div>
+            <div class="fw-semibold mb-2">Câu @(i + 1): @Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(question.QuestionText), @"\*\*(.+?)\*\*", "<strong class=\"text-primary\">$1</strong>"))</div>
             @Html.Hidden($"Answers[{i}].QuestionId", question.QuestionId)
             @foreach (var answer in question.Answers)
             {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Boki_ELearning.Models.ViewModels
@@ -25,5 +26,17 @@ namespace Boki_ELearning.Models.ViewModels
         [Compare("Password", ErrorMessage = "Xác nhận mật khẩu không khớp.")]
         [Display(Name = "Xác nhận mật khẩu")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn lớp.")]
+        [Display(Name = "Lớp")]
+        public int ClassId { get; set; }
+
+        public List<SelectOptionViewModel> ClassOptions { get; set; }
+    }
+
+    public class SelectOptionViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

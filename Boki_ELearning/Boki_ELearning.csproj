@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminLessonController.cs" />
     <Compile Include="Controllers\ExamAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearningController.cs" />
@@ -198,6 +199,7 @@
       <DependentUpon>BokiModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\AdminDashboardViewModels.cs" />
+    <Compile Include="Models\ViewModels\AdminLessonViewModels.cs" />
     <Compile Include="Models\ViewModels\ExamViewModels.cs" />
     <Compile Include="Models\ViewModels\LearningLessonViewModels.cs" />
     <Compile Include="Models\ViewModels\LearningIndexViewModel.cs" />
@@ -279,6 +281,9 @@
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Admin\Results.cshtml" />
     <Content Include="Views\Admin\Students.cshtml" />
+    <Content Include="Views\AdminLesson\Index.cshtml" />
+    <Content Include="Views\AdminLesson\Create.cshtml" />
+    <Content Include="Views\AdminLesson\Edit.cshtml" />
     <Content Include="Views\ExamAdmin\Create.cshtml" />
     <Content Include="Views\ExamAdmin\Detail.cshtml" />
     <Content Include="Views\ExamAdmin\Index.cshtml" />
@@ -299,21 +304,7 @@
     <Content Include="Views\Layouts\_AdminLayout.cshtml" />
     <Content Include="Views\Layouts\_UserLayout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="App_Data\Sql\" />
-    <Folder Include="Filters\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\Admin\" />
-    <Folder Include="Views\ExamAdmin\" />
-    <Folder Include="Views\Home\" />
-    <Folder Include="Views\Layouts\" />
-    <Folder Include="Views\Learning\" />
-    <Folder Include="Views\QuestionBank\" />
-    <Folder Include="Views\StudentExam\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />

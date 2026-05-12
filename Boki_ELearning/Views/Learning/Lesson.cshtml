@@ -1,6 +1,6 @@
-﻿@model Boki_ELearning.Models.ViewModels.LessonDetailViewModel
+@model Boki_ELearning.Models.ViewModels.LessonDetailViewModel
 @{
-    ViewBag.Title = "Chi tiết bài học";
+    ViewBag.Title = Model.LessonName;
 }
 
 <div class="boki-card p-4 mb-3">
@@ -11,25 +11,37 @@
 <div class="row g-3">
     <div class="col-lg-8">
         <div class="boki-card p-4 mb-3">
-            <h5 class="fw-bold">Nội dung lý thuyết</h5>
+            <h5 class="fw-bold"><span style="color:var(--boki-primary)">📘</span> Nội dung lý thuyết</h5>
             <p class="mb-0" style="white-space:pre-line;">@Model.TheoryContent</p>
         </div>
-        <div class="boki-card p-4">
-            <h5 class="fw-bold">Mẹo ghi nhớ</h5>
-            <p class="mb-0" style="white-space:pre-line;">@Model.TipContent</p>
-        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.ExampleContent))
+        {
+            <div class="boki-card p-4 mb-3" style="border-left: 4px solid var(--boki-secondary); background: linear-gradient(135deg, #f0fafa 0%, #ffffff 100%);">
+                <h5 class="fw-bold" style="color:var(--boki-secondary)"><span>✏️</span> Ví dụ minh họa</h5>
+                <p class="mb-0" style="white-space:pre-line;">@Model.ExampleContent</p>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.TipContent))
+        {
+            <div class="boki-card p-4" style="border-left: 4px solid var(--boki-warning); background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);">
+                <h5 class="fw-bold" style="color:#b8860b"><span>💡</span> Mẹo ghi nhớ</h5>
+                <p class="mb-0" style="white-space:pre-line;">@Model.TipContent</p>
+            </div>
+        }
     </div>
     <div class="col-lg-4">
-        <div class="boki-card p-4">
-            <div class="mb-2 fw-semibold">Số câu hỏi quiz</div>
+        <div class="boki-card p-4" style="position:sticky; top:1rem;">
+            <div class="mb-2 fw-semibold">Số câu hỏi trắc nghiệm</div>
             <div class="display-6 fw-bold @(Model.QuestionCount > 0 ? "text-primary" : "text-warning")">@Model.QuestionCount</div>
             @if (Model.QuestionCount > 0)
             {
-                <a href="@Url.Action("Quiz", "Learning", new { id = Model.LessonId })" class="btn btn-primary w-100 mt-3">Làm quiz ngay</a>
+                <a href="@Url.Action("Quiz", "Learning", new { id = Model.LessonId })" class="btn btn-primary w-100 mt-3">Làm trắc nghiệm ngay</a>
             }
             else
             {
-                <button class="btn btn-outline-secondary w-100 mt-3" disabled>Chưa có quiz cho bài này</button>
+                <button class="btn btn-outline-secondary w-100 mt-3" disabled>Chưa có trắc nghiệm cho bài này</button>
             }
             <a href="@Url.Action("Index", "Learning")" class="btn btn-outline-secondary w-100 mt-2">Quay lại danh sách</a>
         </div>

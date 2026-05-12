@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -16,7 +16,13 @@
             <a class="admin-link @(ViewBag.AdminNav == "dashboard" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Tổng quan</a>
             <a class="admin-link @(ViewBag.AdminNav == "students" ? "active" : "")" href="@Url.Action("Students", "Admin")">Học sinh</a>
             <a class="admin-link @(ViewBag.AdminNav == "results" ? "active" : "")" href="@Url.Action("Results", "Admin")">Kết quả học tập</a>
-            <a class="admin-link @(ViewBag.AdminNav == "questions" ? "active" : "")" href="@Url.Action("Index", "QuestionBank")">Ngân hàng câu hỏi</a>
+            <a class="admin-link @(ViewBag.AdminNav == "lessons" ? "active" : "")" href="@Url.Action("Index", "AdminLesson")">Quản lý bài học</a>
+            <hr class="border-secondary-subtle my-2" />
+            <span class="admin-link-group-label">Ngân hàng câu hỏi</span>
+            <a class="admin-link admin-link-sub @(ViewBag.AdminNav == "questions" && ViewBag.AdminSubject as string == "toán" ? "active" : "")" href="@Url.Action("Index", "QuestionBank", new { subject = "toán" })">📐 NH Toán</a>
+            <a class="admin-link admin-link-sub @(ViewBag.AdminNav == "questions" && ViewBag.AdminSubject as string == "tiếng việt" ? "active" : "")" href="@Url.Action("Index", "QuestionBank", new { subject = "tiếng việt" })">📖 NH Tiếng Việt</a>
+            <a class="admin-link admin-link-sub @(ViewBag.AdminNav == "questions" && ViewBag.AdminSubject as string == "tiếng anh" ? "active" : "")" href="@Url.Action("Index", "QuestionBank", new { subject = "tiếng anh" })">🌐 NH Tiếng Anh</a>
+            <hr class="border-secondary-subtle my-2" />
             <a class="admin-link @(ViewBag.AdminNav == "exams" ? "active" : "")" href="@Url.Action("Index", "ExamAdmin")">Đề thi tổng hợp</a>
             <hr class="border-secondary-subtle my-3" />
             <a class="admin-link" href="@Url.Action("Index", "Learning")">Về trang học sinh</a>

@@ -24,6 +24,7 @@ namespace Boki_ELearning.Models
         public string TENBAIHOC { get; set; }
         public string NOIDUNGLYTUYET { get; set; }
         public string MEOGHINHO { get; set; }
+        public string VIDU { get; set; }
         public int MAMONHOC { get; set; }
         public int MALOP { get; set; }
         public bool IsDeleted { get; set; }

@@ -158,3 +158,246 @@ D:\01_Workspaces\Coding\Websites\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.
 D:\01_Workspaces\Coding\Websites\Boki_ELearning\obj\Debug\Boki_ELe.C5BFD025.Up2Date
 D:\01_Workspaces\Coding\Websites\Boki_ELearning\obj\Debug\Boki_ELearning.dll
 D:\01_Workspaces\Coding\Websites\Boki_ELearning\obj\Debug\Boki_ELearning.pdb
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.pdb
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll.config
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.pdb
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe.config
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.rsp
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe.config
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.rsp
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.AppContext.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Console.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Http.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Sockets.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.ValueTuple.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe.config
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.rsp
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\WebGrease.dll
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.pdb
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.AssemblyReference.cache
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.CoreCompileInputs.cache
+C:\Users\Quang Duy\Downloads\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELe.C5BFD025.Up2Date
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll.config
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.pdb
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe.config
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.rsp
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe.config
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.rsp
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Managed.Core.targets
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.AppContext.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Collections.Immutable.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Console.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Globalization.Calendars.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Http.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Sockets.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Reflection.Metadata.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.ValueTuple.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XmlDocument.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe.config
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.rsp
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe.config
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.Web.Infrastructure.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\WebGrease.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.pdb
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.AssemblyReference.cache
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.CoreCompileInputs.cache
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELe.C5BFD025.Up2Date
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.dll
+D:\ĐỒ ÁN LTPMEM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.pdb
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll.config
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Boki_ELearning.pdb
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.exe.config
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csc.rsp
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.exe.config
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\csi.rsp
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Managed.Core.targets
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.AppContext.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Collections.Immutable.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Console.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Globalization.Calendars.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Http.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Net.Sockets.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Reflection.Metadata.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.ValueTuple.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XmlDocument.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.exe.config
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\vbc.rsp
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\roslyn\VBCSCompiler.exe.config
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.Web.Infrastructure.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\WebGrease.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\EntityFramework.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Helpers.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Mvc.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Optimization.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.Razor.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Deployment.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\System.Web.WebPages.Razor.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Newtonsoft.Json.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Antlr3.Runtime.pdb
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.AssemblyReference.cache
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.csproj.CoreCompileInputs.cache
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELe.C5BFD025.Up2Date
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.dll
+D:\HỆ THỐNG TRẮC NGHIỆM\boki-learning-platform-main (2)\boki-learning-platform-main\Boki_ELearning\obj\Debug\Boki_ELearning.pdb

@@ -1,13 +1,19 @@
-﻿@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
+@model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
-    ViewBag.Title = "Ngân hàng câu hỏi";
+    var subjectDisplay = string.IsNullOrWhiteSpace(Model.CurrentSubject) ? "Ngân hàng câu hỏi" :
+        (Model.CurrentSubject.ToLower() == "toán" ? "Ngân hàng Toán" :
+         Model.CurrentSubject.ToLower() == "tiếng việt" ? "Ngân hàng Tiếng Việt" :
+         Model.CurrentSubject.ToLower() == "tiếng anh" ? "Ngân hàng Tiếng Anh" :
+         "Ngân hàng " + Model.CurrentSubject);
+    ViewBag.Title = subjectDisplay;
     ViewBag.AdminNav = "questions";
 }
 
 <div class="admin-card p-3 mb-3">
     @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
     {
+        <input type="hidden" name="subject" value="@Model.CurrentSubject" />
         <div class="col-md-4">
             <label class="form-label boki-form-label">Từ khóa</label>
             <input class="form-control" name="keyword" value="@Model.Filter.Keyword" />
@@ -35,8 +41,8 @@
             <label class="form-label boki-form-label">Trạng thái</label>
             <select class="form-select" name="status">
                 <option value="">Tất cả</option>
-                <option value="Active" @(Model.Filter.Status == "Active" ? "selected" : "")>Active</option>
-                <option value="Draft" @(Model.Filter.Status == "Draft" ? "selected" : "")>Draft</option>
+                <option value="Active" @(Model.Filter.Status == "Active" ? "selected" : "")>Đang dùng</option>
+                <option value="Draft" @(Model.Filter.Status == "Draft" ? "selected" : "")>Nháp</option>
             </select>
         </div>
         <div class="col-md-1">
@@ -45,13 +51,14 @@
     }
 
     <div class="d-flex flex-wrap gap-2 mt-3">
-        <a href="@Url.Action("Create", "QuestionBank")" class="btn btn-primary btn-sm">Tạo câu hỏi</a>
-        <a href="@Url.Action("Export", "QuestionBank")" class="btn btn-outline-secondary btn-sm">Export JSON</a>
+        <a href="@Url.Action("Create", "QuestionBank", new { subject = Model.CurrentSubject })" class="btn btn-primary btn-sm">Tạo câu hỏi</a>
+        <a href="@Url.Action("Export", "QuestionBank", new { subject = Model.CurrentSubject })" class="btn btn-outline-secondary btn-sm">Xuất JSON</a>
         @using (Html.BeginForm("Import", "QuestionBank", FormMethod.Post, new { enctype = "multipart/form-data", @class = "d-flex gap-2" }))
         {
             @Html.AntiForgeryToken()
+            <input type="hidden" name="subject" value="@Model.CurrentSubject" />
             <input type="file" class="form-control form-control-sm" name="file" accept=".json" required />
-            <button type="submit" class="btn btn-outline-success btn-sm">Import</button>
+            <button type="submit" class="btn btn-outline-success btn-sm">Nhập</button>
         }
     </div>
 </div>
@@ -64,7 +71,7 @@
                     <th>#</th>
                     <th>Nội dung</th>
                     <th>Bài học</th>
-                    <th>Mức</th>
+                    <th>Mức độ</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -76,16 +83,17 @@
                     {
                         <tr>
                             <td>@item.QuestionId</td>
-                            <td>@item.QuestionText</td>
+                            <td>@Html.Raw(System.Text.RegularExpressions.Regex.Replace(Html.Encode(item.QuestionText), @"\*\*(.+?)\*\*", "<strong class=\"text-primary\">$1</strong>"))</td>
                             <td>@item.ClassName - @item.SubjectName - @item.LessonName</td>
-                            <td>@item.Difficulty</td>
-                            <td>@item.Status</td>
+                            <td>@(item.Difficulty == "De" ? "Dễ" : item.Difficulty == "TrungBinh" ? "Trung bình" : item.Difficulty == "Kho" ? "Khó" : item.Difficulty)</td>
+                            <td>@(item.Status == "Active" ? "Đang dùng" : item.Status == "Draft" ? "Nháp" : item.Status)</td>
                             <td class="text-nowrap">
                                 <button type="button" class="btn btn-sm btn-outline-primary js-edit-question" data-question-id="@item.QuestionId">Sửa</button>
                                 @using (Html.BeginForm("Delete", "QuestionBank", FormMethod.Post, new { @class = "d-inline" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@item.QuestionId" />
+                                    <input type="hidden" name="subject" value="@Model.CurrentSubject" />
                                     <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
                                 }
                             </td>
@@ -107,6 +115,7 @@
             @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post, new { id = "editQuestionForm" }))
             {
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="subject" value="@Model.CurrentSubject" />
                 <div class="modal-header">
                     <h5 class="modal-title" id="editQuestionModalTitle">Cập nhật câu hỏi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -143,8 +152,8 @@
                         <div class="col-md-6">
                             <label class="form-label boki-form-label">Trạng thái</label>
                             <select class="form-select" name="Status" id="editStatus">
-                                <option value="Active">Active</option>
-                                <option value="Draft">Draft</option>
+                                <option value="Active">Đang dùng</option>
+                                <option value="Draft">Nháp</option>
                             </select>
                         </div>
                     </div>
@@ -166,7 +175,7 @@
                         <input class="form-control" name="AnswerD" id="editAnswerD" required />
                     </div>
 
-                    <div class="mb-0">
+                    <div class="mb-2">
                         <label class="form-label boki-form-label">Đáp án đúng</label>
                         <select class="form-select" name="CorrectIndex" id="editCorrectIndex">
                             <option value="0">A</option>
@@ -174,6 +183,11 @@
                             <option value="2">C</option>
                             <option value="3">D</option>
                         </select>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label boki-form-label">Giải thích đáp án <span class="text-muted small">(hiển thị khi học sinh làm sai)</span></label>
+                        <textarea class="form-control" name="Explanation" id="editExplanation" rows="3" placeholder="Ví dụ: Đáp án B là đúng vì..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -230,6 +244,7 @@
                 setFieldValue('editAnswerC', data.AnswerC);
                 setFieldValue('editAnswerD', data.AnswerD);
                 setFieldValue('editCorrectIndex', data.CorrectIndex);
+                setFieldValue('editExplanation', data.Explanation);
             }
 
             function resetEditor() {
@@ -243,6 +258,7 @@
                 setFieldValue('editAnswerC', '');
                 setFieldValue('editAnswerD', '');
                 setFieldValue('editCorrectIndex', '0');
+                setFieldValue('editExplanation', '');
             }
 
             for (var i = 0; i < editButtons.length; i++) {

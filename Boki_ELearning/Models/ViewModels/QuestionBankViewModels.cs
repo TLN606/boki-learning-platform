@@ -5,6 +5,7 @@ namespace Boki_ELearning.Models.ViewModels
 {
     public class QuestionBankPageViewModel
     {
+        public string CurrentSubject { get; set; }
         public QuestionBankFilterViewModel Filter { get; set; }
         public QuestionBankEditViewModel Editor { get; set; }
         public List<QuestionBankListItemViewModel> Questions { get; set; }
@@ -36,6 +37,7 @@ namespace Boki_ELearning.Models.ViewModels
         public string Difficulty { get; set; }
         public string Status { get; set; }
         public int AnswerCount { get; set; }
+        public string Explanation { get; set; }
     }
 
     public class QuestionBankEditViewModel
@@ -68,6 +70,8 @@ namespace Boki_ELearning.Models.ViewModels
 
         [Range(0, 3, ErrorMessage = "Đáp án đúng không hợp lệ.")]
         public int CorrectIndex { get; set; }
+
+        public string Explanation { get; set; }
     }
 
     public class QuestionBankImportItemViewModel
@@ -81,5 +85,6 @@ namespace Boki_ELearning.Models.ViewModels
         public string AnswerC { get; set; }
         public string AnswerD { get; set; }
         public int CorrectIndex { get; set; }
+        public string Explanation { get; set; }
     }
 }

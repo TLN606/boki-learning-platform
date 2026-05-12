@@ -1,4 +1,4 @@
-﻿@model Boki_ELearning.Models.ViewModels.AdminExamDetailViewModel
+@model Boki_ELearning.Models.ViewModels.AdminExamDetailViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
     ViewBag.Title = "Chi tiết đề thi";
@@ -11,7 +11,7 @@
         <div>
             <h4 class="fw-bold mb-1">@Model.ExamName</h4>
             <div class="boki-subtitle">
-                Mã đề #@Model.ExamId · @Model.QuestionCount câu · @Model.DurationMinutes phút · Trạng thái: <strong>@Model.Status</strong>
+                Mã đề #@Model.ExamId · @Model.QuestionCount câu · @Model.DurationMinutes phút · Trạng thái: <strong>@(Model.Status == "Active" ? "Đang mở" : Model.Status == "Draft" ? "Nháp" : Model.Status == "Published" ? "Đã phát hành" : Model.Status == "Closed" ? "Đã đóng" : Model.Status)</strong>
             </div>
             <div class="boki-subtitle">
                 Tạo lúc: @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
@@ -32,7 +32,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="id" value="@Model.ExamId" />
-                    <button class="btn btn-success" type="submit">Publish</button>
+                    <button class="btn btn-success" type="submit">Phát hành</button>
                 }
             }
             @if (statusValue != "CLOSED")

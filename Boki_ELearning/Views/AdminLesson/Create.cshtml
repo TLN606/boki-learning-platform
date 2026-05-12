@@ -1,0 +1,66 @@
+@model Boki_ELearning.Models.ViewModels.AdminLessonEditViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Tạo bài học mới";
+    ViewBag.AdminNav = "lessons";
+}
+
+<div class="admin-card p-3" style="max-width: 900px;">
+    <h6 class="fw-bold mb-3">📝 Tạo bài học mới</h6>
+
+    @using (Html.BeginForm("Create", "AdminLesson", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="mb-3">
+            <label class="form-label boki-form-label">Tên bài học <span class="text-danger">*</span></label>
+            <input class="form-control" name="LessonName" value="@Model.LessonName" placeholder="Ví dụ: Phép cộng trong phạm vi 100" required maxlength="255" />
+        </div>
+
+        <div class="row g-2 mb-3">
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Lớp <span class="text-danger">*</span></label>
+                <select class="form-select" name="ClassId" required>
+                    <option value="">-- Chọn lớp --</option>
+                    @foreach (var option in Model.ClassOptions)
+                    {
+                        <option value="@option.Id" @(Model.ClassId == option.Id ? "selected" : "")>@option.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label boki-form-label">Môn học <span class="text-danger">*</span></label>
+                <select class="form-select" name="SubjectId" required>
+                    <option value="">-- Chọn môn --</option>
+                    @foreach (var option in Model.SubjectOptions)
+                    {
+                        <option value="@option.Id" @(Model.SubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label boki-form-label">Nội dung lý thuyết</label>
+            <textarea class="form-control" name="TheoryContent" rows="6" placeholder="Nhập nội dung lý thuyết bài học...">@Model.TheoryContent</textarea>
+            <div class="form-text">Đây là phần kiến thức chính sẽ hiển thị cho học sinh. Có thể dùng **in đậm** để nhấn mạnh từ khóa.</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label boki-form-label">Ví dụ minh hoạ</label>
+            <textarea class="form-control" name="ExampleContent" rows="4" placeholder="Ví dụ: 25 + 37 = 62. Ta đặt tính theo cột dọc...">@Model.ExampleContent</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label boki-form-label">Mẹo ghi nhớ</label>
+            <textarea class="form-control" name="TipContent" rows="3" placeholder="Mẹo giúp học sinh nhớ bài nhanh hơn...">@Model.TipContent</textarea>
+            <div class="form-text">Phần này sẽ hiển thị cho học sinh khi làm sai câu hỏi, giúp các em ôn tập lại.</div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Tạo bài học</button>
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "AdminLesson")">Quay lại danh sách</a>
+        </div>
+    }
+</div>
