@@ -132,6 +132,7 @@
     <Compile Include="Controllers\ExamAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearningController.cs" />
+    <Compile Include="Controllers\LessonAdminController.cs" />
     <Compile Include="Controllers\QuestionBankController.cs" />
     <Compile Include="Controllers\StudentExamController.cs" />
     <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\ViewModels\ExamViewModels.cs" />
     <Compile Include="Models\ViewModels\LearningLessonViewModels.cs" />
     <Compile Include="Models\ViewModels\LearningIndexViewModel.cs" />
+    <Compile Include="Models\ViewModels\LessonAdminViewModels.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\QuestionBankViewModels.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
@@ -241,6 +243,18 @@
       <DependentUpon>BokiModel.edmx</DependentUpon>
       <LastGenOutput>BokiModel.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Models\BokiModel.csdl">
+      <LogicalName>Models.BokiModel.csdl</LogicalName>
+      <DependentUpon>BokiModel.edmx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\BokiModel.ssdl">
+      <LogicalName>Models.BokiModel.ssdl</LogicalName>
+      <DependentUpon>BokiModel.edmx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\BokiModel.msl">
+      <LogicalName>Models.BokiModel.msl</LogicalName>
+      <DependentUpon>BokiModel.edmx</DependentUpon>
+    </EmbeddedResource>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -288,6 +302,8 @@
     <Content Include="Views\Learning\Quiz.cshtml" />
     <Content Include="Views\Learning\Result.cshtml" />
     <Content Include="Views\Learning\Index.cshtml" />
+    <Content Include="Views\LessonAdmin\Edit.cshtml" />
+    <Content Include="Views\LessonAdmin\Index.cshtml" />
     <Content Include="Views\QuestionBank\Create.cshtml" />
     <Content Include="Views\QuestionBank\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -311,6 +327,7 @@
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Layouts\" />
     <Folder Include="Views\Learning\" />
+    <Folder Include="Views\LessonAdmin\" />
     <Folder Include="Views\QuestionBank\" />
     <Folder Include="Views\StudentExam\" />
   </ItemGroup>

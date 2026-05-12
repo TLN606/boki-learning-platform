@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BokiDBModelStoreContainer" CdmEntityContainer="BokiDBEntities1">
+    <EntitySetMapping Name="BAIHOCs">
+      <EntityTypeMapping TypeName="BokiDBModel.BAIHOC">
+        <MappingFragment StoreEntitySet="BAIHOC">
+          <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
+          <ScalarProperty Name="TENBAIHOC" ColumnName="TENBAIHOC" />
+          <ScalarProperty Name="NOIDUNGLYTUYET" ColumnName="NOIDUNGLYTUYET" />
+          <ScalarProperty Name="MEOGHINHO" ColumnName="MEOGHINHO" />
+          <ScalarProperty Name="MAMONHOC" ColumnName="MAMONHOC" />
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAUHOIs">
+      <EntityTypeMapping TypeName="BokiDBModel.CAUHOI">
+        <MappingFragment StoreEntitySet="CAUHOI">
+          <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+          <ScalarProperty Name="NOIDUNGCAUHOI" ColumnName="NOIDUNGCAUHOI" />
+          <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHITIKETQUAs">
+      <EntityTypeMapping TypeName="BokiDBModel.CHITIKETQUA">
+        <MappingFragment StoreEntitySet="CHITIKETQUA">
+          <ScalarProperty Name="MACHITIKET" ColumnName="MACHITIKET" />
+          <ScalarProperty Name="MAKETQUA" ColumnName="MAKETQUA" />
+          <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+          <ScalarProperty Name="MADAPANCHON" ColumnName="MADAPANCHON" />
+          <ScalarProperty Name="DUNG" ColumnName="DUNG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DAPANs">
+      <EntityTypeMapping TypeName="BokiDBModel.DAPAN">
+        <MappingFragment StoreEntitySet="DAPAN">
+          <ScalarProperty Name="MADAPAN" ColumnName="MADAPAN" />
+          <ScalarProperty Name="NOIDUNGDAPAN" ColumnName="NOIDUNGDAPAN" />
+          <ScalarProperty Name="DUNGLSAI" ColumnName="DUNGLSAI" />
+          <ScalarProperty Name="MAMONHOC" ColumnName="MAMONHOC" />
+          <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HOCSINHs">
+      <EntityTypeMapping TypeName="BokiDBModel.HOCSINH">
+        <MappingFragment StoreEntitySet="HOCSINH">
+          <ScalarProperty Name="MAHOCSINH" ColumnName="MAHOCSINH" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+          <ScalarProperty Name="NOIDUNGLYTUYET" ColumnName="NOIDUNGLYTUYET" />
+          <ScalarProperty Name="NGAYLAM" ColumnName="NGAYLAM" />
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="MATAIKHOAN" ColumnName="MATAIKHOAN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KETQUAs">
+      <EntityTypeMapping TypeName="BokiDBModel.KETQUA">
+        <MappingFragment StoreEntitySet="KETQUA">
+          <ScalarProperty Name="MAKETQUA" ColumnName="MAKETQUA" />
+          <ScalarProperty Name="DIEMSO" ColumnName="DIEMSO" />
+          <ScalarProperty Name="NOIDUNGLYTUYET" ColumnName="NOIDUNGLYTUYET" />
+          <ScalarProperty Name="NGAYLAM" ColumnName="NGAYLAM" />
+          <ScalarProperty Name="MAHOCSINH" ColumnName="MAHOCSINH" />
+          <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOPs">
+      <EntityTypeMapping TypeName="BokiDBModel.LOP">
+        <MappingFragment StoreEntitySet="LOP">
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="TENLOP" ColumnName="TENLOP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MONHOCs">
+      <EntityTypeMapping TypeName="BokiDBModel.MONHOC">
+        <MappingFragment StoreEntitySet="MONHOC">
+          <ScalarProperty Name="MAMONHOC" ColumnName="MAMONHOC" />
+          <ScalarProperty Name="TENMONHOC" ColumnName="TENMONHOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAIKHOANs">
+      <EntityTypeMapping TypeName="BokiDBModel.TAIKHOAN">
+        <MappingFragment StoreEntitySet="TAIKHOAN">
+          <ScalarProperty Name="MATAIKHOAN" ColumnName="MATAIKHOAN" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="TENDANGNHAP" ColumnName="TENDANGNHAP" />
+          <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+          <ScalarProperty Name="VAITRO" ColumnName="VAITRO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetBaiHocByLopAndMon" FunctionName="BokiDBModel.Store.sp_GetBaiHocByLopAndMon">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BokiDBModel.sp_GetBaiHocByLopAndMon_Result">
+          <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
+          <ScalarProperty Name="TENBAIHOC" ColumnName="TENBAIHOC" />
+          <ScalarProperty Name="NOIDUNGLYTUYET" ColumnName="NOIDUNGLYTUYET" />
+          <ScalarProperty Name="MEOGHINHO" ColumnName="MEOGHINHO" />
+          <ScalarProperty Name="MAMONHOC" ColumnName="MAMONHOC" />
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetCauHoiByBaiHoc" FunctionName="BokiDBModel.Store.sp_GetCauHoiByBaiHoc">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BokiDBModel.sp_GetCauHoiByBaiHoc_Result">
+          <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+          <ScalarProperty Name="NOIDUNGCAUHOI" ColumnName="NOIDUNGCAUHOI" />
+          <ScalarProperty Name="MADAPAN" ColumnName="MADAPAN" />
+          <ScalarProperty Name="NOIDUNGDAPAN" ColumnName="NOIDUNGDAPAN" />
+          <ScalarProperty Name="DUNGLSAI" ColumnName="DUNGLSAI" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetKetQuaChiTiet" FunctionName="BokiDBModel.Store.sp_GetKetQuaChiTiet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BokiDBModel.sp_GetKetQuaChiTiet_Result">
+          <ScalarProperty Name="NOIDUNGCAUHOI" ColumnName="NOIDUNGCAUHOI" />
+          <ScalarProperty Name="DapAnHocSinhChon" ColumnName="DapAnHocSinhChon" />
+          <ScalarProperty Name="TrangThaiTraLoi" ColumnName="TrangThaiTraLoi" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetTienDoHocSinh" FunctionName="BokiDBModel.Store.sp_GetTienDoHocSinh">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BokiDBModel.sp_GetTienDoHocSinh_Result">
+          <ScalarProperty Name="TENLOP" ColumnName="TENLOP" />
+          <ScalarProperty Name="TENMONHOC" ColumnName="TENMONHOC" />
+          <ScalarProperty Name="TENBAIHOC" ColumnName="TENBAIHOC" />
+          <ScalarProperty Name="DIEMSO" ColumnName="DIEMSO" />
+          <ScalarProperty Name="NGAYLAM" ColumnName="NGAYLAM" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_LuuKetQua" FunctionName="BokiDBModel.Store.sp_LuuKetQua" />
+  </EntityContainerMapping>
+</Mapping>

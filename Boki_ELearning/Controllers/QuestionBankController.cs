@@ -152,6 +152,21 @@ namespace Boki_ELearning.Controllers
                     if (model.QuestionId.HasValue)
                     {
                         questionId = model.QuestionId.Value;
+                        var currentLessonId = GetCurrentQuestionLessonId(conn, tx, questionId);
+                        if (!currentLessonId.HasValue)
+                        {
+                            tx.Rollback();
+                            TempData["Message"] = "Khong tim thay cau hoi de cap nhat.";
+                            return RedirectToAction("Index");
+                        }
+
+                        if (currentLessonId.Value != model.LessonId && IsQuestionLessonLocked(conn, tx, questionId))
+                        {
+                            tx.Rollback();
+                            TempData["Message"] = "Khong the doi bai hoc cua cau hoi da co trong de thi hoac lich su ket qua.";
+                            return RedirectToAction("Index");
+                        }
+
                         using (var updateCmd = new SqlCommand(
                             @"UPDATE CAUHOI
                               SET NOIDUNGCAUHOI = @QuestionText,
@@ -689,6 +704,48 @@ namespace Boki_ELearning.Controllers
                         CorrectIndex = correctIndex
                     };
                 }
+            }
+        }
+
+        private static int? GetCurrentQuestionLessonId(SqlConnection conn, SqlTransaction tx, int questionId)
+        {
+            using (var cmd = new SqlCommand(
+                @"SELECT MABAIHOC
+                  FROM CAUHOI
+                  WHERE MACAUHOI = @QuestionId
+                    AND IsDeleted = 0", conn, tx))
+            {
+                cmd.Parameters.AddWithValue("@QuestionId", questionId);
+                var result = cmd.ExecuteScalar();
+                return result == null ? (int?)null : Convert.ToInt32(result);
+            }
+        }
+
+        private static bool IsQuestionLessonLocked(SqlConnection conn, SqlTransaction tx, int questionId)
+        {
+            using (var cmd = new SqlCommand(
+                @"SELECT CASE WHEN EXISTS
+                  (
+                      SELECT 1
+                      FROM DETHI_CAUHOI
+                      WHERE MACAUHOI = @QuestionId
+                  )
+                  OR EXISTS
+                  (
+                      SELECT 1
+                      FROM CHITIKETQUA
+                      WHERE MACAUHOI = @QuestionId
+                  )
+                  OR EXISTS
+                  (
+                      SELECT 1
+                      FROM DETHI_LANLAM_CHITIET
+                      WHERE MACAUHOI = @QuestionId
+                  )
+                  THEN 1 ELSE 0 END", conn, tx))
+            {
+                cmd.Parameters.AddWithValue("@QuestionId", questionId);
+                return Convert.ToInt32(cmd.ExecuteScalar()) == 1;
             }
         }
 

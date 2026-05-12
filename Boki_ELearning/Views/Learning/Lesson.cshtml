@@ -39,3 +39,74 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        (function () {
+            function getYouTubeId(url) {
+                if (!url) {
+                    return '';
+                }
+
+                try {
+                    var parsed = new URL(url, window.location.origin);
+                    var host = parsed.hostname.replace(/^www\./, '');
+
+                    if (host === 'youtu.be') {
+                        return parsed.pathname.split('/').filter(Boolean)[0] || '';
+                    }
+
+                    if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'music.youtube.com') {
+                        if (parsed.searchParams.get('v')) {
+                            return parsed.searchParams.get('v');
+                        }
+
+                        var parts = parsed.pathname.split('/').filter(Boolean);
+                        var markerIndex = Math.max(parts.indexOf('embed'), parts.indexOf('shorts'));
+                        if (markerIndex >= 0 && parts[markerIndex + 1]) {
+                            return parts[markerIndex + 1];
+                        }
+                    }
+                } catch (e) {
+                    var match = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/);
+                    return match ? match[1] : '';
+                }
+
+                return '';
+            }
+
+            function replaceOembed(oembed) {
+                var url = oembed.getAttribute('url') || oembed.getAttribute('data-url') || '';
+                var youtubeId = getYouTubeId(url);
+                var wrapper = document.createElement('div');
+                wrapper.className = 'boki-media-embed';
+
+                if (youtubeId) {
+                    var iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(youtubeId);
+                    iframe.title = 'YouTube video';
+                    iframe.loading = 'lazy';
+                    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                    iframe.allowFullscreen = true;
+                    wrapper.appendChild(iframe);
+                    oembed.replaceWith(wrapper);
+                    return;
+                }
+
+                if (url) {
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.textContent = url;
+                    oembed.replaceWith(link);
+                }
+            }
+
+            var embeds = document.querySelectorAll('.boki-rich-content figure.media oembed, .boki-rich-content oembed');
+            for (var i = 0; i < embeds.length; i++) {
+                replaceOembed(embeds[i]);
+            }
+        })();
+    </script>
+}

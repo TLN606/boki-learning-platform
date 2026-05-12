@@ -144,6 +144,13 @@ namespace Boki_ELearning.Controllers
                         return View(BuildCreatePage(form, picked.Count));
                     }
 
+                    if (!AreQuestionsEligibleForExam(conn, tx, picked, form.SubjectIds, form.ClassIds))
+                    {
+                        tx.Rollback();
+                        ModelState.AddModelError("QuestionCount", "Danh sach cau hoi chon duoc khong con khop mon/lop cua de. Vui long thu lai.");
+                        return View(BuildCreatePage(form, CountAvailableQuestions(form.SubjectIds, form.ClassIds)));
+                    }
+
                     using (var createCmd = new SqlCommand(
                         @"INSERT INTO DETHI (TENDETHI, THOILUONGPHUT, SOCAU, TRANGTHAI, NGAYMO, NGAYDONG, MATAIKHOAN_TAO)
                           VALUES (@Name, @Duration, @Count, N'Draft', @OpenAt, @CloseAt, @AccountId);
@@ -436,6 +443,41 @@ namespace Boki_ELearning.Controllers
 
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
+            }
+        }
+
+        private static bool AreQuestionsEligibleForExam(
+            SqlConnection conn,
+            SqlTransaction tx,
+            List<int> questionIds,
+            List<int> subjectIds,
+            List<int> classIds)
+        {
+            if (questionIds == null || !questionIds.Any())
+            {
+                return false;
+            }
+
+            using (var cmd = new SqlCommand())
+            {
+                cmd.Connection = conn;
+                cmd.Transaction = tx;
+                var distinctQuestionIds = questionIds.Distinct().ToList();
+                var questionClause = AddInParameters(cmd, "PickedQuestion", distinctQuestionIds);
+                var subjectClause = AddInParameters(cmd, "PickedSubject", subjectIds);
+                var classClause = AddInParameters(cmd, "PickedClass", classIds);
+                cmd.CommandText =
+                $@"SELECT COUNT(DISTINCT C.MACAUHOI)
+                  FROM CAUHOI C
+                  INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                  WHERE C.MACAUHOI IN ({questionClause})
+                    AND C.IsDeleted = 0
+                    AND C.TRANGTHAI = N'Active'
+                    AND B.IsDeleted = 0
+                    AND B.MAMONHOC IN ({subjectClause})
+                    AND B.MALOP IN ({classClause})";
+
+                return Convert.ToInt32(cmd.ExecuteScalar()) == distinctQuestionIds.Count;
             }
         }
 

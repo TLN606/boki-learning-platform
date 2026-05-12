@@ -178,6 +178,13 @@ namespace Boki_ELearning.Controllers
                         return View(BuildPracticePage(form, pickedQuestionIds.Count));
                     }
 
+                    if (!AreQuestionsEligibleForPracticeExam(conn, tx, pickedQuestionIds, subjectId, classId))
+                    {
+                        tx.Rollback();
+                        ModelState.AddModelError("QuestionCount", "Danh sach cau hoi chon duoc khong con khop mon/lop cua de. Vui long thu lai.");
+                        return View(BuildPracticePage(form, CountAvailableQuestions(subjectId, classId)));
+                    }
+
                     var className = _db.LOPs.AsNoTracking()
                         .Where(x => x.MALOP == classId)
                         .Select(x => x.TENLOP)
@@ -533,6 +540,56 @@ namespace Boki_ELearning.Controllers
                 SubjectOptions = LoadSubjectOptions(),
                 AvailableQuestionCount = availableCount
             };
+        }
+
+        private static bool AreQuestionsEligibleForPracticeExam(
+            SqlConnection conn,
+            SqlTransaction tx,
+            List<int> questionIds,
+            int subjectId,
+            int classId)
+        {
+            if (questionIds == null || !questionIds.Any())
+            {
+                return false;
+            }
+
+            using (var cmd = new SqlCommand())
+            {
+                cmd.Connection = conn;
+                cmd.Transaction = tx;
+                cmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+                var distinctQuestionIds = questionIds.Distinct().ToList();
+                var questionClause = AddInParameters(cmd, "PickedQuestion", distinctQuestionIds);
+                cmd.CommandText =
+                $@"SELECT COUNT(DISTINCT C.MACAUHOI)
+                  FROM CAUHOI C
+                  INNER JOIN BAIHOC B ON B.MABAIHOC = C.MABAIHOC
+                  WHERE C.MACAUHOI IN ({questionClause})
+                    AND C.IsDeleted = 0
+                    AND C.TRANGTHAI = N'Active'
+                    AND B.IsDeleted = 0
+                    AND B.MAMONHOC = @SubjectId
+                    AND B.MALOP = @ClassId";
+
+                return Convert.ToInt32(cmd.ExecuteScalar()) == distinctQuestionIds.Count;
+            }
+        }
+
+        private static string AddInParameters(SqlCommand cmd, string prefix, IEnumerable<int> ids)
+        {
+            var parameterNames = new List<string>();
+            var index = 0;
+            foreach (var id in ids)
+            {
+                var name = "@" + prefix + index;
+                cmd.Parameters.AddWithValue(name, id);
+                parameterNames.Add(name);
+                index++;
+            }
+
+            return string.Join(",", parameterNames);
         }
 
         private List<SimpleOptionViewModel> LoadClassOptions()

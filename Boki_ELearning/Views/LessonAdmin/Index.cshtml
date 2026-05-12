@@ -1,0 +1,99 @@
+@model Boki_ELearning.Models.ViewModels.LessonAdminPageViewModel
+@{
+    Layout = "~/Views/Layouts/_AdminLayout.cshtml";
+    ViewBag.Title = "Quản lý bài học";
+    ViewBag.AdminNav = "lessons";
+}
+
+<div class="admin-card p-3 mb-3">
+    @using (Html.BeginForm("Index", "LessonAdmin", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
+    {
+        <div class="col-md-4">
+            <label class="form-label boki-form-label">Từ khóa</label>
+            <input class="form-control" name="keyword" value="@Model.Filter.Keyword" placeholder="Tìm tên bài học" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label boki-form-label">Lớp</label>
+            <select class="form-select" name="classId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.ClassOptions)
+                {
+                    <option value="@option.Id" @(Model.Filter.ClassId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label boki-form-label">Môn học</label>
+            <select class="form-select" name="subjectId">
+                <option value="">Tất cả</option>
+                @foreach (var option in Model.SubjectOptions)
+                {
+                    <option value="@option.Id" @(Model.Filter.SubjectId == option.Id ? "selected" : "")>@option.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "LessonAdmin")">Xóa</a>
+        </div>
+    }
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+        <a href="@Url.Action("Create", "LessonAdmin")" class="btn btn-primary btn-sm">Thêm bài học</a>
+    </div>
+</div>
+
+<div class="admin-card p-3">
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Bài học</th>
+                    <th>Lớp</th>
+                    <th>Môn học</th>
+                    <th>Tóm tắt nội dung</th>
+                    <th>Quiz</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Lessons.Any())
+                {
+                    foreach (var item in Model.Lessons)
+                    {
+                        var plainContent = System.Text.RegularExpressions.Regex.Replace(item.TheoryContent ?? string.Empty, "<.*?>", " ");
+                        plainContent = (System.Web.HttpUtility.HtmlDecode(plainContent) ?? string.Empty).Trim();
+                        if (plainContent.Length > 140)
+                        {
+                            plainContent = plainContent.Substring(0, 140) + "...";
+                        }
+
+                        <tr>
+                            <td>@item.LessonId</td>
+                            <td class="fw-semibold">@item.LessonName</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.SubjectName</td>
+                            <td title="@plainContent">@plainContent</td>
+                            <td>@item.QuestionCount câu</td>
+                            <td class="text-nowrap text-end">
+                                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Index", "QuestionBank", new { lessonId = item.LessonId })">Quiz</a>
+                                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", "LessonAdmin", new { id = item.LessonId })">Sửa bài học</a>
+                                @using (Html.BeginForm("Delete", "LessonAdmin", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.LessonId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Ẩn</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="7" class="boki-empty">Không có bài học phù hợp điều kiện lọc.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

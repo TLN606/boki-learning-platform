@@ -15,6 +15,7 @@
             <div class="logo">Boki Admin</div>
             <a class="admin-link @(ViewBag.AdminNav == "dashboard" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Tổng quan</a>
             <a class="admin-link @(ViewBag.AdminNav == "students" ? "active" : "")" href="@Url.Action("Students", "Admin")">Học sinh</a>
+            <a class="admin-link @(ViewBag.AdminNav == "lessons" ? "active" : "")" href="@Url.Action("Index", "LessonAdmin")">Bài học</a>
             <a class="admin-link @(ViewBag.AdminNav == "results" ? "active" : "")" href="@Url.Action("Results", "Admin")">Kết quả học tập</a>
             <a class="admin-link @(ViewBag.AdminNav == "questions" ? "active" : "")" href="@Url.Action("Index", "QuestionBank")">Ngân hàng câu hỏi</a>
             <a class="admin-link @(ViewBag.AdminNav == "exams" ? "active" : "")" href="@Url.Action("Index", "ExamAdmin")">Đề thi tổng hợp</a>

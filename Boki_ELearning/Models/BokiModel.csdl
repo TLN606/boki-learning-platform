@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BokiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BAIHOC">
+    <Key>
+      <PropertyRef Name="MABAIHOC" />
+    </Key>
+    <Property Name="MABAIHOC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENBAIHOC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NOIDUNGLYTUYET" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MEOGHINHO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MAMONHOC" Type="Int32" Nullable="false" />
+    <Property Name="MALOP" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="LOP" Relationship="Self.FK_BAIHOC_LOP" FromRole="BAIHOC" ToRole="LOP" />
+    <NavigationProperty Name="MONHOC" Relationship="Self.FK_BAIHOC_MONHOC" FromRole="BAIHOC" ToRole="MONHOC" />
+    <NavigationProperty Name="CAUHOIs" Relationship="Self.FK_CAUHOI_BAIHOC" FromRole="BAIHOC" ToRole="CAUHOI" />
+    <NavigationProperty Name="KETQUAs" Relationship="Self.FK_KETQUA_BAIHOC" FromRole="BAIHOC" ToRole="KETQUA" />
+  </EntityType>
+  <EntityType Name="CAUHOI">
+    <Key>
+      <PropertyRef Name="MACAUHOI" />
+    </Key>
+    <Property Name="MACAUHOI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOIDUNGCAUHOI" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MABAIHOC" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BAIHOC" Relationship="Self.FK_CAUHOI_BAIHOC" FromRole="CAUHOI" ToRole="BAIHOC" />
+    <NavigationProperty Name="CHITIKETQUAs" Relationship="Self.FK_CHITIKETQUA_CAUHOI" FromRole="CAUHOI" ToRole="CHITIKETQUA" />
+    <NavigationProperty Name="DAPANs" Relationship="Self.FK_DAPAN_CAUHOI" FromRole="CAUHOI" ToRole="DAPAN" />
+  </EntityType>
+  <EntityType Name="CHITIKETQUA">
+    <Key>
+      <PropertyRef Name="MACHITIKET" />
+    </Key>
+    <Property Name="MACHITIKET" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAKETQUA" Type="Int32" Nullable="false" />
+    <Property Name="MACAUHOI" Type="Int32" Nullable="false" />
+    <Property Name="MADAPANCHON" Type="Int32" Nullable="false" />
+    <Property Name="DUNG" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CAUHOI" Relationship="Self.FK_CHITIKETQUA_CAUHOI" FromRole="CHITIKETQUA" ToRole="CAUHOI" />
+    <NavigationProperty Name="DAPAN" Relationship="Self.FK_CHITIKETQUA_DAPAN" FromRole="CHITIKETQUA" ToRole="DAPAN" />
+    <NavigationProperty Name="KETQUA" Relationship="Self.FK_CHITIKETQUA_KETQUA" FromRole="CHITIKETQUA" ToRole="KETQUA" />
+  </EntityType>
+  <EntityType Name="DAPAN">
+    <Key>
+      <PropertyRef Name="MADAPAN" />
+    </Key>
+    <Property Name="MADAPAN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOIDUNGDAPAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DUNGLSAI" Type="Boolean" Nullable="false" />
+    <Property Name="MAMONHOC" Type="Int32" />
+    <Property Name="MACAUHOI" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CAUHOI" Relationship="Self.FK_DAPAN_CAUHOI" FromRole="DAPAN" ToRole="CAUHOI" />
+    <NavigationProperty Name="CHITIKETQUAs" Relationship="Self.FK_CHITIKETQUA_DAPAN" FromRole="DAPAN" ToRole="CHITIKETQUA" />
+  </EntityType>
+  <EntityType Name="HOCSINH">
+    <Key>
+      <PropertyRef Name="MAHOCSINH" />
+    </Key>
+    <Property Name="MAHOCSINH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HOTEN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NGAYSINH" Type="DateTime" Precision="0" />
+    <Property Name="GIOITINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NOIDUNGLYTUYET" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYLAM" Type="DateTime" Precision="0" />
+    <Property Name="MALOP" Type="Int32" Nullable="false" />
+    <Property Name="MATAIKHOAN" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LOP" Relationship="Self.FK_HOCSINH_LOP" FromRole="HOCSINH" ToRole="LOP" />
+    <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK_HOCSINH_TAIKHOAN" FromRole="HOCSINH" ToRole="TAIKHOAN" />
+    <NavigationProperty Name="KETQUAs" Relationship="Self.FK_KETQUA_HOCSINH" FromRole="HOCSINH" ToRole="KETQUA" />
+  </EntityType>
+  <EntityType Name="KETQUA">
+    <Key>
+      <PropertyRef Name="MAKETQUA" />
+    </Key>
+    <Property Name="MAKETQUA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DIEMSO" Type="Double" Nullable="false" />
+    <Property Name="NOIDUNGLYTUYET" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYLAM" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MAHOCSINH" Type="Int32" Nullable="false" />
+    <Property Name="MABAIHOC" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BAIHOC" Relationship="Self.FK_KETQUA_BAIHOC" FromRole="KETQUA" ToRole="BAIHOC" />
+    <NavigationProperty Name="CHITIKETQUAs" Relationship="Self.FK_CHITIKETQUA_KETQUA" FromRole="KETQUA" ToRole="CHITIKETQUA" />
+    <NavigationProperty Name="HOCSINH" Relationship="Self.FK_KETQUA_HOCSINH" FromRole="KETQUA" ToRole="HOCSINH" />
+  </EntityType>
+  <EntityType Name="LOP">
+    <Key>
+      <PropertyRef Name="MALOP" />
+    </Key>
+    <Property Name="MALOP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENLOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="BAIHOCs" Relationship="Self.FK_BAIHOC_LOP" FromRole="LOP" ToRole="BAIHOC" />
+    <NavigationProperty Name="HOCSINHs" Relationship="Self.FK_HOCSINH_LOP" FromRole="LOP" ToRole="HOCSINH" />
+  </EntityType>
+  <EntityType Name="MONHOC">
+    <Key>
+      <PropertyRef Name="MAMONHOC" />
+    </Key>
+    <Property Name="MAMONHOC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENMONHOC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="BAIHOCs" Relationship="Self.FK_BAIHOC_MONHOC" FromRole="MONHOC" ToRole="BAIHOC" />
+  </EntityType>
+  <EntityType Name="TAIKHOAN">
+    <Key>
+      <PropertyRef Name="MATAIKHOAN" />
+    </Key>
+    <Property Name="MATAIKHOAN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TENDANGNHAP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MATKHAU" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VAITRO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="HOCSINHs" Relationship="Self.FK_HOCSINH_TAIKHOAN" FromRole="TAIKHOAN" ToRole="HOCSINH" />
+  </EntityType>
+  <Association Name="FK_BAIHOC_LOP">
+    <End Role="LOP" Type="Self.LOP" Multiplicity="1" />
+    <End Role="BAIHOC" Type="Self.BAIHOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP">
+        <PropertyRef Name="MALOP" />
+      </Principal>
+      <Dependent Role="BAIHOC">
+        <PropertyRef Name="MALOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BAIHOC_MONHOC">
+    <End Role="MONHOC" Type="Self.MONHOC" Multiplicity="1" />
+    <End Role="BAIHOC" Type="Self.BAIHOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONHOC">
+        <PropertyRef Name="MAMONHOC" />
+      </Principal>
+      <Dependent Role="BAIHOC">
+        <PropertyRef Name="MAMONHOC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CAUHOI_BAIHOC">
+    <End Role="BAIHOC" Type="Self.BAIHOC" Multiplicity="1" />
+    <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BAIHOC">
+        <PropertyRef Name="MABAIHOC" />
+      </Principal>
+      <Dependent Role="CAUHOI">
+        <PropertyRef Name="MABAIHOC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KETQUA_BAIHOC">
+    <End Role="BAIHOC" Type="Self.BAIHOC" Multiplicity="1" />
+    <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BAIHOC">
+        <PropertyRef Name="MABAIHOC" />
+      </Principal>
+      <Dependent Role="KETQUA">
+        <PropertyRef Name="MABAIHOC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CHITIKETQUA_CAUHOI">
+    <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="1" />
+    <End Role="CHITIKETQUA" Type="Self.CHITIKETQUA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAUHOI">
+        <PropertyRef Name="MACAUHOI" />
+      </Principal>
+      <Dependent Role="CHITIKETQUA">
+        <PropertyRef Name="MACAUHOI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAPAN_CAUHOI">
+    <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="1" />
+    <End Role="DAPAN" Type="Self.DAPAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAUHOI">
+        <PropertyRef Name="MACAUHOI" />
+      </Principal>
+      <Dependent Role="DAPAN">
+        <PropertyRef Name="MACAUHOI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CHITIKETQUA_DAPAN">
+    <End Role="DAPAN" Type="Self.DAPAN" Multiplicity="1" />
+    <End Role="CHITIKETQUA" Type="Self.CHITIKETQUA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAPAN">
+        <PropertyRef Name="MADAPAN" />
+      </Principal>
+      <Dependent Role="CHITIKETQUA">
+        <PropertyRef Name="MADAPANCHON" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CHITIKETQUA_KETQUA">
+    <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="1" />
+    <End Role="CHITIKETQUA" Type="Self.CHITIKETQUA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KETQUA">
+        <PropertyRef Name="MAKETQUA" />
+      </Principal>
+      <Dependent Role="CHITIKETQUA">
+        <PropertyRef Name="MAKETQUA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOCSINH_LOP">
+    <End Role="LOP" Type="Self.LOP" Multiplicity="1" />
+    <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP">
+        <PropertyRef Name="MALOP" />
+      </Principal>
+      <Dependent Role="HOCSINH">
+        <PropertyRef Name="MALOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOCSINH_TAIKHOAN">
+    <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+    <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAIKHOAN">
+        <PropertyRef Name="MATAIKHOAN" />
+      </Principal>
+      <Dependent Role="HOCSINH">
+        <PropertyRef Name="MATAIKHOAN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KETQUA_HOCSINH">
+    <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="1" />
+    <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HOCSINH">
+        <PropertyRef Name="MAHOCSINH" />
+      </Principal>
+      <Dependent Role="KETQUA">
+        <PropertyRef Name="MAHOCSINH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BokiDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BAIHOCs" EntityType="Self.BAIHOC" />
+    <EntitySet Name="CAUHOIs" EntityType="Self.CAUHOI" />
+    <EntitySet Name="CHITIKETQUAs" EntityType="Self.CHITIKETQUA" />
+    <EntitySet Name="DAPANs" EntityType="Self.DAPAN" />
+    <EntitySet Name="HOCSINHs" EntityType="Self.HOCSINH" />
+    <EntitySet Name="KETQUAs" EntityType="Self.KETQUA" />
+    <EntitySet Name="LOPs" EntityType="Self.LOP" />
+    <EntitySet Name="MONHOCs" EntityType="Self.MONHOC" />
+    <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+    <AssociationSet Name="FK_BAIHOC_LOP" Association="Self.FK_BAIHOC_LOP">
+      <End Role="LOP" EntitySet="LOPs" />
+      <End Role="BAIHOC" EntitySet="BAIHOCs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BAIHOC_MONHOC" Association="Self.FK_BAIHOC_MONHOC">
+      <End Role="MONHOC" EntitySet="MONHOCs" />
+      <End Role="BAIHOC" EntitySet="BAIHOCs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CAUHOI_BAIHOC" Association="Self.FK_CAUHOI_BAIHOC">
+      <End Role="BAIHOC" EntitySet="BAIHOCs" />
+      <End Role="CAUHOI" EntitySet="CAUHOIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KETQUA_BAIHOC" Association="Self.FK_KETQUA_BAIHOC">
+      <End Role="BAIHOC" EntitySet="BAIHOCs" />
+      <End Role="KETQUA" EntitySet="KETQUAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CHITIKETQUA_CAUHOI" Association="Self.FK_CHITIKETQUA_CAUHOI">
+      <End Role="CAUHOI" EntitySet="CAUHOIs" />
+      <End Role="CHITIKETQUA" EntitySet="CHITIKETQUAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAPAN_CAUHOI" Association="Self.FK_DAPAN_CAUHOI">
+      <End Role="CAUHOI" EntitySet="CAUHOIs" />
+      <End Role="DAPAN" EntitySet="DAPANs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CHITIKETQUA_DAPAN" Association="Self.FK_CHITIKETQUA_DAPAN">
+      <End Role="DAPAN" EntitySet="DAPANs" />
+      <End Role="CHITIKETQUA" EntitySet="CHITIKETQUAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CHITIKETQUA_KETQUA" Association="Self.FK_CHITIKETQUA_KETQUA">
+      <End Role="KETQUA" EntitySet="KETQUAs" />
+      <End Role="CHITIKETQUA" EntitySet="CHITIKETQUAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOCSINH_LOP" Association="Self.FK_HOCSINH_LOP">
+      <End Role="LOP" EntitySet="LOPs" />
+      <End Role="HOCSINH" EntitySet="HOCSINHs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOCSINH_TAIKHOAN" Association="Self.FK_HOCSINH_TAIKHOAN">
+      <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+      <End Role="HOCSINH" EntitySet="HOCSINHs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KETQUA_HOCSINH" Association="Self.FK_KETQUA_HOCSINH">
+      <End Role="HOCSINH" EntitySet="HOCSINHs" />
+      <End Role="KETQUA" EntitySet="KETQUAs" />
+    </AssociationSet>
+    <FunctionImport Name="sp_GetBaiHocByLopAndMon" ReturnType="Collection(BokiDBModel.sp_GetBaiHocByLopAndMon_Result)">
+      <Parameter Name="MaLop" Mode="In" Type="Int32" />
+      <Parameter Name="MaMonHoc" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetCauHoiByBaiHoc" ReturnType="Collection(BokiDBModel.sp_GetCauHoiByBaiHoc_Result)">
+      <Parameter Name="MaBaiHoc" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetKetQuaChiTiet" ReturnType="Collection(BokiDBModel.sp_GetKetQuaChiTiet_Result)">
+      <Parameter Name="MaKetQua" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetTienDoHocSinh" ReturnType="Collection(BokiDBModel.sp_GetTienDoHocSinh_Result)">
+      <Parameter Name="MaHocSinh" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_LuuKetQua" ReturnType="Collection(Decimal)">
+      <Parameter Name="MaHocSinh" Mode="In" Type="Int32" />
+      <Parameter Name="MaBaiHoc" Mode="In" Type="Int32" />
+      <Parameter Name="DiemSo" Mode="In" Type="Double" />
+      <Parameter Name="NoiDungLyTuyet" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_GetBaiHocByLopAndMon_Result">
+    <Property Type="Int32" Name="MABAIHOC" Nullable="false" />
+    <Property Type="String" Name="TENBAIHOC" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="NOIDUNGLYTUYET" Nullable="true" />
+    <Property Type="String" Name="MEOGHINHO" Nullable="true" />
+    <Property Type="Int32" Name="MAMONHOC" Nullable="false" />
+    <Property Type="Int32" Name="MALOP" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_GetCauHoiByBaiHoc_Result">
+    <Property Type="Int32" Name="MACAUHOI" Nullable="false" />
+    <Property Type="String" Name="NOIDUNGCAUHOI" Nullable="false" />
+    <Property Type="Int32" Name="MADAPAN" Nullable="false" />
+    <Property Type="String" Name="NOIDUNGDAPAN" Nullable="false" />
+    <Property Type="Boolean" Name="DUNGLSAI" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_GetKetQuaChiTiet_Result">
+    <Property Type="String" Name="NOIDUNGCAUHOI" Nullable="false" />
+    <Property Type="String" Name="DapAnHocSinhChon" Nullable="false" />
+    <Property Type="Boolean" Name="TrangThaiTraLoi" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_GetTienDoHocSinh_Result">
+    <Property Type="String" Name="TENLOP" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="TENMONHOC" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="TENBAIHOC" Nullable="false" MaxLength="255" />
+    <Property Type="Double" Name="DIEMSO" Nullable="false" />
+    <Property Type="DateTime" Name="NGAYLAM" Nullable="false" />
+  </ComplexType>
+</Schema>
