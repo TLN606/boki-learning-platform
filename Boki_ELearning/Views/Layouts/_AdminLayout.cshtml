@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="admin-shell boki-page-enter">
+    <div class="admin-shell">
         <aside class="admin-sidebar">
             <div class="logo">Boki Admin</div>
             <a class="admin-link @(ViewBag.AdminNav == "dashboard" ? "active" : "")" href="@Url.Action("Dashboard", "Admin")">Tổng quan</a>
@@ -40,6 +40,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Fix Bootstrap Modal focus trap for CKEditor 5
+        document.addEventListener('focusin', function (e) {
+            if (e.target.closest('.ck-editor__editable, .ck-editor__dialog, .ck')) {
+                e.stopImmediatePropagation();
+            }
+        });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
