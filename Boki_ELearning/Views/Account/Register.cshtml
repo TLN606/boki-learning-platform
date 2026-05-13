@@ -21,6 +21,21 @@
                 </div>
 
                 <div class="mb-3">
+                    @Html.LabelFor(x => x.ClassId, new { @class = "form-label boki-form-label" })
+                    <select class="form-select" name="ClassId" required>
+                        <option value="">-- Chọn lớp --</option>
+                        @if (Model.ClassOptions != null)
+                        {
+                            foreach (var cls in Model.ClassOptions)
+                            {
+                                <option value="@cls.Id" @(Model.ClassId == cls.Id ? "selected" : "")>@cls.Name</option>
+                            }
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(x => x.ClassId, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
                     @Html.LabelFor(x => x.Email, new { @class = "form-label boki-form-label" })
                     @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "student@boki.vn" })
                     @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger small" })

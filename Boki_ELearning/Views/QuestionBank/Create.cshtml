@@ -1,12 +1,18 @@
 @model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
-    ViewBag.Title = "Tạo câu hỏi";
+    var subjectDisplay = string.IsNullOrWhiteSpace(Model.CurrentSubject) ? "Tạo câu hỏi" :
+        (Model.CurrentSubject.ToLower() == "toán" ? "Tạo câu hỏi - Toán" :
+         Model.CurrentSubject.ToLower() == "tiếng việt" ? "Tạo câu hỏi - Tiếng Việt" :
+         Model.CurrentSubject.ToLower() == "tiếng anh" ? "Tạo câu hỏi - Tiếng Anh" :
+         "Tạo câu hỏi - " + Model.CurrentSubject);
+    ViewBag.Title = subjectDisplay;
     ViewBag.AdminNav = "questions";
+    ViewBag.AdminSubject = Model.CurrentSubject;
 }
 
 <div class="admin-card p-3" style="max-width: 860px;">
-    <h6 class="fw-bold mb-3">Tạo câu hỏi mới</h6>
+    <h6 class="fw-bold mb-3">@subjectDisplay</h6>
 
     @if (!Model.LessonOptions.Any())
     {
@@ -18,6 +24,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("QuestionId", Model.Editor.QuestionId)
+            <input type="hidden" name="subject" value="@Model.CurrentSubject" />
             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
             <div class="mb-2">
@@ -82,8 +89,13 @@
                 </select>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label boki-form-label">Giải thích đáp án</label>
+                <textarea class="form-control" name="Explanation" rows="3" placeholder="Ví dụ: Đáp án B đúng vì...">@Model.Editor.Explanation</textarea>
+            </div>
+
             <button type="submit" class="btn btn-primary">Lưu câu hỏi</button>
-            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "QuestionBank")">Quay lại danh sách</a>
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "QuestionBank", new { subject = Model.CurrentSubject })">Quay lại danh sách</a>
         }
     }
 </div>

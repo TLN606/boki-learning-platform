@@ -24,6 +24,7 @@
     <Property Name="NOIDUNGCAUHOI" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="MABAIHOC" Type="Int32" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="GIAITHICH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BAIHOC" Relationship="Self.FK_CAUHOI_BAIHOC" FromRole="CAUHOI" ToRole="BAIHOC" />
     <NavigationProperty Name="CHITIKETQUAs" Relationship="Self.FK_CHITIKETQUA_CAUHOI" FromRole="CAUHOI" ToRole="CHITIKETQUA" />
     <NavigationProperty Name="DAPANs" Relationship="Self.FK_DAPAN_CAUHOI" FromRole="CAUHOI" ToRole="DAPAN" />

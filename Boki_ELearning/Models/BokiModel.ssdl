@@ -20,6 +20,7 @@
     <Property Name="NOIDUNGCAUHOI" Type="nvarchar(max)" Nullable="false" />
     <Property Name="MABAIHOC" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="GIAITHICH" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="CHITIKETQUA">
     <Key>

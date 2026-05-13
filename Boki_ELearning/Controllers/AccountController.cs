@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
@@ -42,7 +43,7 @@ namespace Boki_ELearning.Controllers
 
             if (account == null || !PasswordHelper.Verify(model.Password, account.MATKHAU))
             {
-                ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng.");
+                ModelState.AddModelError(string.Empty, "Email hoac mat khau khong dung.");
                 return View(model);
             }
 
@@ -51,7 +52,7 @@ namespace Boki_ELearning.Controllers
 
             SignIn(account, student, normalizedRole);
 
-            TempData["Message"] = "Đăng nhập thành công.";
+            TempData["Message"] = "Dang nhap thanh cong.";
             return RedirectToLocal(returnUrl);
         }
 
@@ -62,7 +63,10 @@ namespace Boki_ELearning.Controllers
                 return RedirectToAction("Index", "Learning");
             }
 
-            return View(new RegisterViewModel());
+            return View(new RegisterViewModel
+            {
+                ClassOptions = LoadClassOptions()
+            });
         }
 
         [HttpPost]
@@ -71,6 +75,7 @@ namespace Boki_ELearning.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.ClassOptions = LoadClassOptions();
                 return View(model);
             }
 
@@ -81,24 +86,15 @@ namespace Boki_ELearning.Controllers
 
             if (existed)
             {
-                ModelState.AddModelError("Email", "Email đã được sử dụng.");
+                ModelState.AddModelError("Email", "Email da duoc su dung.");
+                model.ClassOptions = LoadClassOptions();
                 return View(model);
             }
 
-            int defaultClassId;
-            try
+            if (!_db.LOPs.AsNoTracking().Any(x => x.MALOP == model.ClassId))
             {
-                defaultClassId = EnsureDefaultClass();
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Không thể khởi tạo lớp mặc định. Vui lòng thử lại.");
-                return View(model);
-            }
-
-            if (defaultClassId <= 0)
-            {
-                ModelState.AddModelError(string.Empty, "Không thể khởi tạo lớp mặc định. Vui lòng thử lại.");
+                ModelState.AddModelError("ClassId", "Vui long chon lop hop le.");
+                model.ClassOptions = LoadClassOptions();
                 return View(model);
             }
 
@@ -121,7 +117,7 @@ namespace Boki_ELearning.Controllers
                     var student = new HOCSINH
                     {
                         HOTEN = (model.FullName ?? string.Empty).Trim(),
-                        MALOP = defaultClassId,
+                        MALOP = model.ClassId,
                         MATAIKHOAN = account.MATAIKHOAN
                     };
 
@@ -131,13 +127,14 @@ namespace Boki_ELearning.Controllers
                     scope.Complete();
                     SignIn(account, student, RoleHelper.Student);
 
-                    TempData["Message"] = "Đăng ký thành công. Chào mừng bạn đến với Boki.";
+                    TempData["Message"] = "Dang ky thanh cong. Chao mung ban den voi Boki.";
                     return RedirectToAction("Index", "Learning");
                 }
             }
             catch
             {
-                ModelState.AddModelError(string.Empty, "Không thể đăng ký lúc này. Vui lòng thử lại.");
+                ModelState.AddModelError(string.Empty, "Khong the dang ky luc nay. Vui long thu lai.");
+                model.ClassOptions = LoadClassOptions();
                 return View(model);
             }
         }
@@ -146,7 +143,7 @@ namespace Boki_ELearning.Controllers
         {
             Session.Clear();
             Session.Abandon();
-            TempData["Message"] = "Bạn đã đăng xuất.";
+            TempData["Message"] = "Ban da dang xuat.";
             return RedirectToAction("Login");
         }
 
@@ -196,23 +193,16 @@ namespace Boki_ELearning.Controllers
             return RedirectToAction("Index", "Learning");
         }
 
-        private int EnsureDefaultClass()
+        private List<SelectOptionViewModel> LoadClassOptions()
         {
-            var firstClass = _db.LOPs.OrderBy(x => x.MALOP).FirstOrDefault();
-            if (firstClass != null)
-            {
-                return firstClass.MALOP;
-            }
-
-            var defaultClass = new LOP
-            {
-                TENLOP = "Lớp 2"
-            };
-
-            _db.LOPs.Add(defaultClass);
-            _db.SaveChanges();
-
-            return defaultClass.MALOP;
+            return _db.LOPs.AsNoTracking()
+                .OrderBy(x => x.TENLOP)
+                .Select(x => new SelectOptionViewModel
+                {
+                    Id = x.MALOP,
+                    Name = x.TENLOP
+                })
+                .ToList();
         }
     }
 }

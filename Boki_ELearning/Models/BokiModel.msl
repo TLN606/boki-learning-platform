@@ -21,6 +21,7 @@
           <ScalarProperty Name="NOIDUNGCAUHOI" ColumnName="NOIDUNGCAUHOI" />
           <ScalarProperty Name="MABAIHOC" ColumnName="MABAIHOC" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="GIAITHICH" ColumnName="GIAITHICH" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

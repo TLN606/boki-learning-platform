@@ -1,13 +1,20 @@
 @model Boki_ELearning.Models.ViewModels.QuestionBankPageViewModel
 @{
     Layout = "~/Views/Layouts/_AdminLayout.cshtml";
-    ViewBag.Title = "Ngân hàng câu hỏi";
+    var subjectDisplay = string.IsNullOrWhiteSpace(Model.CurrentSubject) ? "Ngân hàng câu hỏi" :
+        (Model.CurrentSubject.ToLower() == "toán" ? "Ngân hàng Toán" :
+         Model.CurrentSubject.ToLower() == "tiếng việt" ? "Ngân hàng Tiếng Việt" :
+         Model.CurrentSubject.ToLower() == "tiếng anh" ? "Ngân hàng Tiếng Anh" :
+         "Ngân hàng " + Model.CurrentSubject);
+    ViewBag.Title = subjectDisplay;
     ViewBag.AdminNav = "questions";
+    ViewBag.AdminSubject = Model.CurrentSubject;
 }
 
 <div class="admin-card p-3 mb-3">
     @using (Html.BeginForm("Index", "QuestionBank", FormMethod.Get, new { @class = "row g-2 align-items-end" }))
     {
+        <input type="hidden" name="subject" value="@Model.CurrentSubject" />
         <div class="col-md-4">
             <label class="form-label boki-form-label">Từ khóa</label>
             <input class="form-control" name="keyword" value="@Model.Filter.Keyword" />
@@ -45,11 +52,12 @@
     }
 
     <div class="d-flex flex-wrap gap-2 mt-3">
-        <a href="@Url.Action("Create", "QuestionBank")" class="btn btn-primary btn-sm">Tạo câu hỏi</a>
-        <a href="@Url.Action("Export", "QuestionBank")" class="btn btn-outline-secondary btn-sm">Export JSON</a>
+        <a href="@Url.Action("Create", "QuestionBank", new { subject = Model.CurrentSubject })" class="btn btn-primary btn-sm">Tạo câu hỏi</a>
+        <a href="@Url.Action("Export", "QuestionBank", new { subject = Model.CurrentSubject })" class="btn btn-outline-secondary btn-sm">Export JSON</a>
         @using (Html.BeginForm("Import", "QuestionBank", FormMethod.Post, new { enctype = "multipart/form-data", @class = "d-flex gap-2" }))
         {
             @Html.AntiForgeryToken()
+            <input type="hidden" name="subject" value="@Model.CurrentSubject" />
             <input type="file" class="form-control form-control-sm" name="file" accept=".json" required />
             <button type="submit" class="btn btn-outline-success btn-sm">Import</button>
         }
@@ -94,6 +102,7 @@
                                 {
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@item.QuestionId" />
+                                    <input type="hidden" name="subject" value="@Model.CurrentSubject" />
                                     <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn</button>
                                 }
                             </td>
@@ -114,6 +123,7 @@
         @using (Html.BeginForm("Save", "QuestionBank", FormMethod.Post, new { id = "editQuestionForm", @class = "modal-content" }))
         {
             @Html.AntiForgeryToken()
+            <input type="hidden" name="subject" value="@Model.CurrentSubject" />
             <div class="modal-header">
                     <h5 class="modal-title" id="editQuestionModalTitle">Cập nhật câu hỏi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -182,6 +192,11 @@
                             <option value="2">C</option>
                             <option value="3">D</option>
                         </select>
+                    </div>
+
+                    <div class="mb-0 mt-2">
+                        <label class="form-label boki-form-label">Giải thích đáp án</label>
+                        <textarea class="form-control" name="Explanation" id="editExplanation" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -403,6 +418,7 @@
                 setFieldValue('editAnswerC', data.AnswerC);
                 setFieldValue('editAnswerD', data.AnswerD);
                 setFieldValue('editCorrectIndex', data.CorrectIndex);
+                setFieldValue('editExplanation', data.Explanation);
             }
 
             function resetEditor() {
@@ -416,6 +432,7 @@
                 setFieldValue('editAnswerC', '');
                 setFieldValue('editAnswerD', '');
                 setFieldValue('editCorrectIndex', '0');
+                setFieldValue('editExplanation', '');
             }
 
             modalElement.addEventListener('shown.bs.modal', function () {

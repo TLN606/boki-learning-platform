@@ -39,7 +39,9 @@
                 <tr>
                     <th>Câu hỏi</th>
                     <th>Đáp án đã chọn</th>
+                    <th>Đáp án đúng</th>
                     <th>Kết quả</th>
+                    <th>Giải thích</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +54,7 @@
                             </div>
                         </td>
                         <td>@row.SelectedAnswer</td>
+                        <td>@(row.IsCorrect ? "-" : row.CorrectAnswer)</td>
                         <td>
                             @if (row.IsCorrect)
                             {
@@ -60,6 +63,16 @@
                             else
                             {
                                 <span class="boki-pill boki-pill-warning">Sai</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!row.IsCorrect && !string.IsNullOrWhiteSpace(row.Explanation))
+                            {
+                                @row.Explanation
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
                             }
                         </td>
                     </tr>

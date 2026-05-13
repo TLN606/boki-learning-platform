@@ -230,6 +230,8 @@
     <Content Include="App_Data\Sql\20260409_BokiV1_ExamModule.sql" />
     <Content Include="App_Data\Sql\20260409_Redistribute_Questions_RoundRobin.sql" />
     <Content Include="App_Data\Sql\20260409_Reset_Admin.sql" />
+    <Content Include="App_Data\Sql\20260513_AddGiaiThichToCauHoi.sql" />
+    <Content Include="App_Data\Sql\20260513_MergeViduIntoNoiDungLyThuyet.sql" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\templates\boki-frontend\assets\css\style.css" />
     <Content Include="Content\templates\boki-frontend\assets\js\theme.js" />

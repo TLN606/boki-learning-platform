@@ -443,6 +443,16 @@ a {
     transition: all .2s ease;
 }
 
+.admin-link-group-label {
+    color: rgba(255, 255, 255, 0.55);
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0.75rem 0 0.35rem;
+    text-transform: uppercase;
+}
+
 .admin-link:hover,
 .admin-link.active {
     background: var(--boki-admin-hover);

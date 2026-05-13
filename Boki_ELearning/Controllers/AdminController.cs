@@ -32,6 +32,7 @@ namespace Boki_ELearning.Controllers
                 TotalExamAttempts = _db.Database.SqlQuery<int>(
                     "SELECT COUNT(1) FROM DETHI_LANLAM")
                     .FirstOrDefault(),
+                TotalQuizAttempts = totalLearningResults,
                 TotalLearningResults = totalLearningResults,
                 AverageLearningScore = averageLearningScore,
                 HighestLearningScore = highestLearningScore,
@@ -55,6 +56,34 @@ namespace Boki_ELearning.Controllers
                         Score = x.DIEMSO,
                         SubmitAt = x.NGAYLAM
                     })
+                    .ToList(),
+                LessonProgress = _db.KETQUAs
+                    .GroupBy(x => new { x.BAIHOC.TENBAIHOC, x.BAIHOC.MONHOC.TENMONHOC, x.BAIHOC.LOP.TENLOP })
+                    .Select(g => new AdminLessonProgressViewModel
+                    {
+                        LessonName = g.Key.TENBAIHOC,
+                        SubjectName = g.Key.TENMONHOC,
+                        ClassName = g.Key.TENLOP,
+                        StudentCount = g.Select(x => x.MAHOCSINH).Distinct().Count(),
+                        AttemptCount = g.Count(),
+                        AvgScore = g.Average(x => x.DIEMSO)
+                    })
+                    .OrderBy(x => x.ClassName)
+                    .ThenBy(x => x.SubjectName)
+                    .ThenBy(x => x.LessonName)
+                    .ToList(),
+                ClassProgress = _db.LOPs
+                    .Select(l => new AdminClassProgressViewModel
+                    {
+                        ClassName = l.TENLOP,
+                        StudentCount = l.HOCSINHs.Count(),
+                        LessonsCompleted = l.HOCSINHs.SelectMany(s => s.KETQUAs).Select(k => k.MABAIHOC).Distinct().Count(),
+                        TotalAttempts = l.HOCSINHs.SelectMany(s => s.KETQUAs).Count(),
+                        AvgScore = l.HOCSINHs.SelectMany(s => s.KETQUAs).Any()
+                            ? l.HOCSINHs.SelectMany(s => s.KETQUAs).Average(k => k.DIEMSO)
+                            : 0
+                    })
+                    .OrderBy(x => x.ClassName)
                     .ToList()
             };
 

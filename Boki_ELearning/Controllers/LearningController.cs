@@ -398,7 +398,9 @@ namespace Boki_ELearning.Controllers
                     x.MAKETQUA,
                     x.DIEMSO,
                     x.NGAYLAM,
-                    LessonName = x.BAIHOC.TENBAIHOC
+                    LessonName = x.BAIHOC.TENBAIHOC,
+                    LessonTheory = x.BAIHOC.NOIDUNGLYTUYET,
+                    LessonTip = x.BAIHOC.MEOGHINHO
                 })
                 .FirstOrDefault();
 
@@ -410,7 +412,13 @@ namespace Boki_ELearning.Controllers
             var detailRows = _db.Database.SqlQuery<ResultRow>(
                 @"SELECT C.NOIDUNGCAUHOI AS QuestionText,
                          D.NOIDUNGDAPAN AS SelectedAnswer,
-                         CK.DUNG AS IsCorrect
+                         CK.DUNG AS IsCorrect,
+                         C.GIAITHICH AS Explanation,
+                         (SELECT TOP 1 D2.NOIDUNGDAPAN
+                          FROM DAPAN D2
+                          WHERE D2.MACAUHOI = C.MACAUHOI
+                            AND D2.DUNGLSAI = 1
+                            AND D2.IsDeleted = 0) AS CorrectAnswer
                   FROM CHITIKETQUA CK
                   INNER JOIN CAUHOI C ON C.MACAUHOI = CK.MACAUHOI
                   INNER JOIN DAPAN D ON D.MADAPAN = CK.MADAPANCHON
@@ -426,11 +434,15 @@ namespace Boki_ELearning.Controllers
                 Score = resultInfo.DIEMSO,
                 TotalCount = detailRows.Count,
                 CorrectCount = detailRows.Count(x => x.IsCorrect),
+                LessonTheory = resultInfo.LessonTheory,
+                LessonTip = resultInfo.LessonTip,
                 Questions = detailRows.Select(x => new LessonResultQuestionViewModel
                 {
                     QuestionText = x.QuestionText,
                     SelectedAnswer = x.SelectedAnswer,
-                    IsCorrect = x.IsCorrect
+                    IsCorrect = x.IsCorrect,
+                    CorrectAnswer = x.CorrectAnswer,
+                    Explanation = x.Explanation
                 }).ToList()
             };
 
@@ -491,6 +503,8 @@ namespace Boki_ELearning.Controllers
             public string QuestionText { get; set; }
             public string SelectedAnswer { get; set; }
             public bool IsCorrect { get; set; }
+            public string Explanation { get; set; }
+            public string CorrectAnswer { get; set; }
         }
     }
 }

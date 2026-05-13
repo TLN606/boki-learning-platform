@@ -26,8 +26,9 @@
     </div>
     <div class="col-md-3">
         <div class="admin-card p-3">
-            <div class="boki-subtitle">Lượt làm đề tổng hợp</div>
-            <div class="fs-3 fw-bold">@Model.TotalExamAttempts</div>
+            <div class="boki-subtitle">Lượt làm bài</div>
+            <div class="fs-3 fw-bold">@(Model.TotalQuizAttempts + Model.TotalExamAttempts)</div>
+            <div class="boki-subtitle small mt-1">Quiz: @Model.TotalQuizAttempts · Đề: @Model.TotalExamAttempts</div>
         </div>
     </div>
 </div>
@@ -44,6 +45,94 @@
             <div class="boki-subtitle">Điểm TB / cao nhất</div>
             <div class="fs-3 fw-bold">@Model.AverageLearningScore.ToString("0.##") / @Model.HighestLearningScore.ToString("0.##")</div>
         </div>
+    </div>
+</div>
+
+<div class="admin-card p-3 mb-3">
+    <h6 class="fw-bold mb-3">Thống kê theo lớp</h6>
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Lớp</th>
+                    <th>Số học sinh</th>
+                    <th>Bài đã học</th>
+                    <th>Tổng lượt làm</th>
+                    <th>Điểm TB</th>
+                    <th>Tiến độ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ClassProgress != null && Model.ClassProgress.Any())
+                {
+                    foreach (var cls in Model.ClassProgress)
+                    {
+                        var progressPct = Model.TotalLessons > 0
+                            ? Math.Min(100, (int)Math.Round(100.0 * cls.LessonsCompleted / Model.TotalLessons))
+                            : 0;
+                        var barColor = progressPct >= 80 ? "#22c55e" : progressPct >= 40 ? "#f59e0b" : "#ef4444";
+                        <tr>
+                            <td class="fw-semibold">@cls.ClassName</td>
+                            <td>@cls.StudentCount</td>
+                            <td>@cls.LessonsCompleted / @Model.TotalLessons</td>
+                            <td>@cls.TotalAttempts</td>
+                            <td>@cls.AvgScore.ToString("0.#")</td>
+                            <td style="min-width:140px">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="flex:1;background:#e5e7eb;border-radius:6px;height:10px;overflow:hidden">
+                                        <div style="width:@(progressPct)%;height:100%;background:@barColor;border-radius:6px"></div>
+                                    </div>
+                                    <span class="small fw-semibold" style="min-width:36px">@(progressPct)%</span>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" class="boki-empty">Chưa có dữ liệu.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="admin-card p-3 mb-3">
+    <h6 class="fw-bold mb-3">Tiến độ từng bài học</h6>
+    <div class="table-responsive">
+        <table class="table boki-table">
+            <thead>
+                <tr>
+                    <th>Bài học</th>
+                    <th>Môn</th>
+                    <th>Lớp</th>
+                    <th>Học sinh đã làm</th>
+                    <th>Số lượt làm</th>
+                    <th>Điểm TB</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.LessonProgress != null && Model.LessonProgress.Any())
+                {
+                    foreach (var lp in Model.LessonProgress)
+                    {
+                        var scoreColor = lp.AvgScore >= 8 ? "color:#22c55e" : lp.AvgScore >= 5 ? "color:#f59e0b" : "color:#ef4444";
+                        <tr>
+                            <td>@lp.LessonName</td>
+                            <td>@lp.SubjectName</td>
+                            <td>@lp.ClassName</td>
+                            <td>@lp.StudentCount</td>
+                            <td>@lp.AttemptCount</td>
+                            <td class="fw-bold" style="@scoreColor">@lp.AvgScore.ToString("0.#")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" class="boki-empty">Chưa có học sinh nào làm bài.</td></tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
